@@ -50,31 +50,31 @@ class App extends Component<{}, AppState> { // Fix class signature
 
     return (
       <ErrorBoundary>
-        <div className="min-h-screen flex flex-col bg-dark-bg text-text-light font-sans">
+        <div style={{minHeight: '100vh', display: 'flex', flexDirection: 'column', backgroundColor: '#1A1A1A', color: '#E0E0E0', fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif'}}>
           {/* Header */}
-          <header className="w-full max-w-5xl mx-auto px-6 pt-10 pb-4 flex items-center justify-between border border-border-gray rounded-t-xl shadow-sm bg-dark-card">
-            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-pokemon-orange drop-shadow-lg">Pokédex Search</h1>
+          <header style={{width: '100%', maxWidth: '1200px', margin: '0 auto', padding: '40px 24px 16px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', border: '1px solid #424242', borderRadius: '12px 12px 0 0', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', backgroundColor: '#212121'}}>
+            <h1 style={{fontSize: '2rem', fontWeight: '800', letterSpacing: '-0.025em', color: '#FF7043', textShadow: '0 2px 4px rgba(0,0,0,0.3)'}}>Pokédex Search</h1>
           </header>
           {/* Search Section */}
-          <main className="w-full max-w-3xl mx-auto flex flex-col gap-6 px-6 border-x border-b border-border-gray rounded-b-xl shadow bg-dark-card">
-            <div className="p-6 border-b border-border-gray">
-              <label htmlFor="search" className="block text-lg font-semibold mb-1 text-text-light">Wyszukaj pokemony po nazwie lub jej fragmencie:</label>
+          <main style={{width: '100%', maxWidth: '768px', margin: '0 auto', display: 'flex', flexDirection: 'column', gap: '24px', padding: '0 24px', border: '1px solid #424242', borderTop: 'none', borderRadius: '0 0 12px 12px', boxShadow: '0 4px 6px rgba(0,0,0,0.1)', backgroundColor: '#212121'}}>
+            <div style={{padding: '24px', borderBottom: '1px solid #424242'}}>
+              <label htmlFor="search" style={{display: 'block', fontSize: '1.125rem', fontWeight: '600', marginBottom: '4px', color: '#F5F5F5'}}>Wyszukaj pokemony po nazwie lub jej fragmencie:</label>
               <Search onSearch={this.fetchData} loading={loading} />
             </div>
             {/* Results */}
-            <section className="p-6">
+            <section style={{padding: '24px'}}>
               {loading && <Loader />}
-              {error && <div className="text-pokemon-red text-center font-semibold py-4">Błąd: {error}</div>}
+              {error && <div style={{color: '#E53935', textAlign: 'center', fontWeight: '600', padding: '16px 0'}}>Błąd: {error}</div>}
               {!loading && !error && <CardList items={items} />}
             </section>
           </main>
           {/* Error Button - fixed bottom right */}
-          <div className="fixed bottom-8 right-8 z-50">
+          <div style={{position: 'fixed', bottom: '32px', right: '32px', zIndex: 50}}>
             <button
-              className="error-button flex items-center gap-2 bg-pokemon-red hover:bg-pokemon-orange text-white font-bold py-3 px-6 rounded-full shadow-xl text-lg transition-transform duration-150 active:scale-95 border-4 border-dark-card"
+              style={{display: 'flex', alignItems: 'center', gap: '8px', backgroundColor: '#E53935', color: 'white', fontWeight: 'bold', padding: '12px 24px', borderRadius: '9999px', boxShadow: '0 10px 15px rgba(0,0,0,0.3)', fontSize: '1.125rem', transition: 'transform 0.15s', border: '4px solid #212121'}}
               onClick={() => { throw new Error('Testowy błąd!'); }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" style={{width: '28px', height: '28px'}}>
                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
               Rzuć błędem

@@ -30,9 +30,9 @@ class Search extends Component<SearchProps, SearchState> {
   render() {
     const { loading } = this.props;
     return (
-      <form className="flex w-full max-w-xl" onSubmit={e => { e.preventDefault(); this.handleSearch(); }}>
-        <div className="relative flex-1">
-          <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none text-pokemon-orange text-lg">
+      <form style={{display: 'flex', width: '100%', maxWidth: '512px'}} onSubmit={e => { e.preventDefault(); this.handleSearch(); }}>
+        <div style={{position: 'relative', flex: '1'}}>
+          <span style={{position: 'absolute', inset: '0', display: 'flex', alignItems: 'center', paddingLeft: '8px', pointerEvents: 'none', color: '#FF7043', fontSize: '1.125rem', zIndex: 1}}>
             🔍
           </span>
           <input
@@ -40,21 +40,21 @@ class Search extends Component<SearchProps, SearchState> {
             type="text"
             value={this.state.searchTerm}
             onChange={this.handleChange}
-            className="block w-full pl-8 pr-4 py-2 rounded-l-lg bg-dark-card border border-border-gray text-text-light placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-pokemon-orange text-base transition-all duration-150 disabled:opacity-60 h-12"
-            placeholder="Wpisz nazwę Pokémona..."
+            style={{display: 'block', width: '100%', paddingLeft: '32px', paddingRight: '16px', paddingTop: '8px', paddingBottom: '8px', borderRadius: '8px 0 0 8px', backgroundColor: '#212121', border: '1px solid #424242', color: '#F5F5F5', fontSize: '1rem', height: '48px', outline: 'none', zIndex: 2}}
+            placeholder="Enter Pokémon name..."
             disabled={loading}
             onKeyDown={e => { if (e.key === 'Enter') this.handleSearch(); }}
             autoComplete="off"
-            aria-label="Wpisz nazwę Pokémona"
+            aria-label="Enter Pokémon name"
           />
         </div>
         <button
           type="submit"
-          className="px-6 h-12 rounded-r-lg bg-pokemon-orange hover:bg-pokemon-red text-white font-semibold text-base shadow transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed"
+          style={{padding: '0 24px', height: '48px', borderRadius: '0 8px 8px 0', backgroundColor: '#FF7043', color: 'white', fontWeight: '600', fontSize: '1rem', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', border: 'none', cursor: 'pointer', zIndex: 1}}
           disabled={loading}
-          aria-label="Szukaj"
+          aria-label="Search"
         >
-          Szukaj
+          Search
         </button>
       </form>
     );
