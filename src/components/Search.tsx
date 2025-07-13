@@ -28,13 +28,16 @@ class Search extends Component<SearchProps, SearchState> {
 
   render() {
     return (
-      <div>
+      <div className="search-container">
         <input
           type="text"
           value={this.state.searchTerm}
           onChange={this.handleChange}
+          className="search-input"
         />
-        <button onClick={this.handleSearch}>Search</button>
+        <button onClick={this.handleSearch} className="search-button">
+          Search
+        </button>
       </div>
     );
   }

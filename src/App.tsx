@@ -29,12 +29,17 @@ class App extends Component<{}, AppState> { // Fix class signature
   fetchData = (searchTerm: string = localStorage.getItem('searchTerm') || '') => {
     this.setState({ loading: true, error: null });
 
-    const apiCall = searchTerm ? searchItems(searchTerm) : getItems();
+    const apiCall = searchItems(searchTerm); // zawsze pobieramy całą listę
 
     apiCall
       .then(items => {
-          this.setState({ items: items, loading: false }); // Używamy bezpośrednio pobranych danych
-        })
+        let filteredItems = items;
+        if (searchTerm) {
+          const lower = searchTerm.toLowerCase();
+          filteredItems = items.filter(item => item.name.toLowerCase().includes(lower));
+        }
+        this.setState({ items: filteredItems, loading: false });
+      })
       .catch(error => {
         this.setState({ error: error.message, loading: false });
       });
@@ -50,7 +55,7 @@ class App extends Component<{}, AppState> { // Fix class signature
 
           {loading && <Loader />}
 
-          {error && <div>Błąd: {error}</div>}
+          {error && <div className="error">Błąd: {error}</div>}  {/* Komunikat błędu z klasą */}
 
           {!loading && !error && <CardList items={items} />}
 
