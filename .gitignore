@@ -24,5 +24,6 @@ dist-ssr
 *.sw?
 diagrams
 *.mmd
-req_*
-*.txt
+# req_*
+# *.txt
+*stackdump
