@@ -25,6 +25,6 @@ interface Pokemon {
 }
 
 export const searchItems = (): Promise<Pokemon[]> =>
-  fetchData<Pokemon>(`pokemon`); // Nie przekazujemy searchTerm do API
+  fetchData<Pokemon>(`pokemon`);
 
 export const getItems = () => fetchData<Pokemon>('pokemon');
