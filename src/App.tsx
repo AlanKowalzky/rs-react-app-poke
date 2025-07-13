@@ -50,30 +50,28 @@ class App extends Component<{}, AppState> { // Fix class signature
 
     return (
       <ErrorBoundary>
-        <div className="min-h-screen flex flex-col items-center justify-start bg-gradient-to-br from-yellow-100 via-yellow-200 to-yellow-50 text-gray-900 p-0 relative">
-          <div className="w-full max-w-4xl mt-10 mb-24 px-4">
-            {/* App Header */}
-            <header className="mb-10 text-center">
-              <h1 className="text-4xl font-extrabold tracking-tight text-yellow-600 drop-shadow-lg mb-2">Pokédex Search</h1>
-              <p className="text-gray-700 text-lg font-medium">Wyszukuj pokemony po nazwie lub jej fragmencie</p>
-            </header>
-            {/* Top controls */}
-            <div className="mb-10 flex justify-center">
+        <div className="min-h-screen flex flex-col bg-dark-bg text-text-light font-sans">
+          {/* Header */}
+          <header className="w-full max-w-5xl mx-auto px-6 pt-10 pb-4 flex items-center justify-between border border-border-gray rounded-t-xl shadow-sm bg-dark-card">
+            <h1 className="text-3xl md:text-4xl font-extrabold tracking-tight text-pokemon-orange drop-shadow-lg">Pokédex Search</h1>
+          </header>
+          {/* Search Section */}
+          <main className="w-full max-w-3xl mx-auto flex flex-col gap-6 px-6 border-x border-b border-border-gray rounded-b-xl shadow bg-dark-card">
+            <div className="p-6 border-b border-border-gray">
+              <label htmlFor="search" className="block text-lg font-semibold mb-1 text-text-light">Wyszukaj pokemony po nazwie lub jej fragmencie:</label>
               <Search onSearch={this.fetchData} loading={loading} />
             </div>
             {/* Results */}
-            <div className="mb-4 flex justify-center">
-              <div className="w-full">
-                {loading && <Loader />}
-                {error && <div className="text-red-500 text-center font-semibold py-4">Błąd: {error}</div>}
-                {!loading && !error && <CardList items={items} />}
-              </div>
-            </div>
-          </div>
+            <section className="p-6">
+              {loading && <Loader />}
+              {error && <div className="text-pokemon-red text-center font-semibold py-4">Błąd: {error}</div>}
+              {!loading && !error && <CardList items={items} />}
+            </section>
+          </main>
           {/* Error Button - fixed bottom right */}
           <div className="fixed bottom-8 right-8 z-50">
             <button
-              className="error-button flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-full shadow-xl text-lg transition-transform duration-150 active:scale-95 border-4 border-white/80"
+              className="error-button flex items-center gap-2 bg-pokemon-red hover:bg-pokemon-orange text-white font-bold py-3 px-6 rounded-full shadow-xl text-lg transition-transform duration-150 active:scale-95 border-4 border-dark-card"
               onClick={() => { throw new Error('Testowy błąd!'); }}
             >
               <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-7 h-7">

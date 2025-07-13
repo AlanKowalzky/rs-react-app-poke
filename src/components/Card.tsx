@@ -17,13 +17,15 @@ class Card extends Component<CardProps> {
     const imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${itemId}.png`;
     return (
       <tr className={
-        `transition-colors duration-150 ${zebra ? 'bg-gradient-to-r from-yellow-50 via-yellow-100 to-yellow-50' : 'bg-white'} hover:bg-yellow-200`
+        `transition-colors duration-150 ${zebra ? 'bg-dark-header' : 'bg-dark-card'} hover:bg-gray-700`
       }>
-        <td className="px-4 py-3 border-b border-gray-200 text-center align-middle">
-          <img src={imgUrl} alt={item.name} className="w-14 h-14 mx-auto rounded-full shadow-md bg-white border-2 border-yellow-300" />
+        <td className="px-4 py-3 border-b border-border-gray text-center align-middle">
+          <img src={imgUrl} alt={item.name} className="w-16 h-16 mx-auto rounded-full shadow-lg border-2 border-pokemon-orange bg-dark-bg" />
         </td>
-        <td className="px-6 py-3 border-b border-gray-200 font-bold text-lg text-gray-800 align-middle capitalize">{item.name}</td>
-        <td className="px-6 py-3 border-b border-gray-200 text-sm text-gray-600 align-middle">URL: {item.url}</td>
+        <td className="px-6 py-3 border-b border-border-gray font-bold text-lg text-text-light align-middle capitalize">{item.name}</td>
+        <td className="px-6 py-3 border-b border-border-gray text-sm text-text-muted align-middle break-all">
+          <a href={item.url} target="_blank" rel="noopener noreferrer" className="underline hover:text-pokemon-orange transition-colors duration-150">{item.url}</a>
+        </td>
       </tr>
     );
   }

@@ -30,27 +30,33 @@ class Search extends Component<SearchProps, SearchState> {
   render() {
     const { loading } = this.props;
     return (
-      <div className="flex gap-2 w-full max-w-md">
-        <input
-          type="text"
-          value={this.state.searchTerm}
-          onChange={this.handleChange}
-          className="flex-1 px-4 py-2 rounded-l-lg border border-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-400 transition-all duration-150 placeholder-gray-400 disabled:opacity-60"
-          placeholder="Wpisz nazwę pokemona, np. pikachu..."
-          disabled={loading}
-          onKeyDown={e => { if (e.key === 'Enter') this.handleSearch(); }}
-        />
+      <form className="flex w-full max-w-xl" onSubmit={e => { e.preventDefault(); this.handleSearch(); }}>
+        <div className="relative flex-1">
+          <span className="absolute inset-y-0 left-0 flex items-center pl-2 pointer-events-none text-pokemon-orange text-lg">
+            🔍
+          </span>
+          <input
+            id="search"
+            type="text"
+            value={this.state.searchTerm}
+            onChange={this.handleChange}
+            className="block w-full pl-8 pr-4 py-2 rounded-l-lg bg-dark-card border border-border-gray text-text-light placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-pokemon-orange text-base transition-all duration-150 disabled:opacity-60 h-12"
+            placeholder="Wpisz nazwę Pokémona..."
+            disabled={loading}
+            onKeyDown={e => { if (e.key === 'Enter') this.handleSearch(); }}
+            autoComplete="off"
+            aria-label="Wpisz nazwę Pokémona"
+          />
+        </div>
         <button
-          onClick={this.handleSearch}
-          className="px-4 py-2 rounded-r-lg bg-blue-600 hover:bg-blue-700 text-white font-semibold flex items-center gap-2 transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed"
+          type="submit"
+          className="px-6 h-12 rounded-r-lg bg-pokemon-orange hover:bg-pokemon-red text-white font-semibold text-base shadow transition-all duration-150 disabled:opacity-60 disabled:cursor-not-allowed"
           disabled={loading}
+          aria-label="Szukaj"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor" className="w-5 h-5">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m0 0A7.5 7.5 0 104.5 4.5a7.5 7.5 0 0012.15 12.15z" />
-          </svg>
           Szukaj
         </button>
-      </div>
+      </form>
     );
   }
 }
