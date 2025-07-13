@@ -10,16 +10,21 @@ class CardList extends Component<CardListProps> {
     const { items } = this.props;
     return (
       <div className="w-full overflow-x-auto">
-        <table className="min-w-full text-left border-collapse">
+        <table className="min-w-full text-left border-separate border-spacing-0 rounded-xl shadow-lg bg-gray-900">
           <thead>
-            <tr className="bg-gray-700">
-              <th className="px-4 py-2 border-b border-gray-600">Item Name</th>
-              <th className="px-4 py-2 border-b border-gray-600">Item Description</th>
+            <tr className="bg-gradient-to-r from-blue-700 to-blue-500 text-white">
+              <th className="px-6 py-3 border-b-2 border-blue-400 font-bold text-lg rounded-tl-xl">Item Name</th>
+              <th className="px-6 py-3 border-b-2 border-blue-400 font-bold text-lg rounded-tr-xl">Item Description</th>
             </tr>
           </thead>
           <tbody>
-            {items.map(item => (
-              <Card key={item.name} item={item} />
+            {items.length === 0 && (
+              <tr>
+                <td colSpan={2} className="text-center text-gray-400 py-8">Brak wyników.</td>
+              </tr>
+            )}
+            {items.map((item, idx) => (
+              <Card key={item.name} item={item} zebra={idx % 2 === 1} />
             ))}
           </tbody>
         </table>
