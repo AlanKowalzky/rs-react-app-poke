@@ -28,14 +28,18 @@ class Search extends Component<SearchProps, SearchState> {
 
   render() {
     return (
-      <div className="search-container">
+      <div className="flex gap-2 w-full max-w-md">
         <input
           type="text"
           value={this.state.searchTerm}
           onChange={this.handleChange}
-          className="search-input"
+          className="flex-1 px-3 py-2 rounded-l border border-gray-500 bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Wpisz nazwę pokemona..."
         />
-        <button onClick={this.handleSearch} className="search-button">
+        <button
+          onClick={this.handleSearch}
+          className="px-4 py-2 rounded-r bg-blue-600 hover:bg-blue-700 text-white font-semibold"
+        >
           Search
         </button>
       </div>

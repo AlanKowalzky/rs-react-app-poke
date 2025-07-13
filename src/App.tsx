@@ -50,18 +50,32 @@ class App extends Component<{}, AppState> { // Fix class signature
 
     return (
       <ErrorBoundary>
-        <div>
-          <Search onSearch={this.fetchData} />
-
-          {loading && <Loader />}
-
-          {error && <div className="error">Błąd: {error}</div>}  {/* Komunikat błędu z klasą */}
-
-          {!loading && !error && <CardList items={items} />}
-
-          <button onClick={() => { throw new Error('Testowy błąd!'); }}>
-            Rzuć błędem
-          </button>
+        <div className="min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-4">
+          <div className="w-full max-w-2xl border border-gray-700 rounded-lg shadow-lg bg-gray-800 p-4">
+            {/* Top controls */}
+            <div className="mb-6 border-b border-gray-600 pb-4">
+              <div className="flex flex-col items-center">
+                <div className="flex w-full justify-center gap-4">
+                  <Search onSearch={this.fetchData} />
+                </div>
+              </div>
+            </div>
+            {/* Results */}
+            <div className="mb-6 border-b border-gray-600 pb-4">
+              {loading && <Loader />}
+              {error && <div className="text-red-400 text-center font-semibold py-4">Błąd: {error}</div>}
+              {!loading && !error && <CardList items={items} />}
+            </div>
+            {/* Error Button */}
+            <div className="flex justify-end">
+              <button
+                className="error-button bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-4 rounded mt-2"
+                onClick={() => { throw new Error('Testowy błąd!'); }}
+              >
+                Rzuć błędem
+              </button>
+            </div>
+          </div>
         </div>
       </ErrorBoundary>
     );

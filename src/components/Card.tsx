@@ -13,15 +13,13 @@ class Card extends Component<CardProps> {
 
   render() {
     const { item } = this.props;
-    const itemId = this.extractIdFromUrl(item.url); // Wyciągamy ID (można użyć np. do linkowania)
+    const itemId = this.extractIdFromUrl(item.url);
 
     return (
-      <div>
-        <h3>{item.name}</h3>
-        {/* Używamy URL lub ID jako prostego "opisu" lub linku */}
-        <p>URL: {item.url}</p>  
-        {/*  Można dodać link np. <a href={`/pokemon/${itemId}`}>Szczegóły</a> */}
-      </div>
+      <tr className="hover:bg-gray-800">
+        <td className="px-4 py-2 border-b border-gray-700 font-semibold">{item.name}</td>
+        <td className="px-4 py-2 border-b border-gray-700 text-sm">URL: {item.url}</td>
+      </tr>
     );
   }
 }
