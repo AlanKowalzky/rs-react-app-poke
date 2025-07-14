@@ -25,6 +25,12 @@ interface Pokemon {
 }
 
 export const searchItems = (): Promise<Pokemon[]> =>
-  fetchData<Pokemon>(`pokemon`);
+  new Promise((resolve, reject) => {
+    fetchData<Pokemon>(`pokemon`)
+      .then((data) => {
+        setTimeout(() => resolve(data), 1500); // sztuczne opóźnienie 1,5s
+      })
+      .catch(reject);
+  });
 
 export const getItems = () => fetchData<Pokemon>('pokemon');
