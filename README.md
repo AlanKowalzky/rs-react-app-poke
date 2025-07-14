@@ -1,69 +1,83 @@
-# React + TypeScript + Vite
+## ✅ Task
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[React Class Components Task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-class-components.md)
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📸 Screenshot
 
-## Expanding the ESLint configuration
+![Screenshot](https://your-screenshot-url.com) <!-- Replace with actual screenshot -->
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+---
 
-```js
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+## 🚀 Deployment
 
-      // Remove tseslint.configs.recommended and replace with this
-      ...tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      ...tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      ...tseslint.configs.stylisticTypeChecked,
+[https://your-username-class-components.netlify.app](https://your-username-class-components.netlify.app)
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+---
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 📅 Done / Deadline
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x';
-import reactDom from 'eslint-plugin-react-dom';
+**Done**: 13.07.2025  
+**Deadline**: 14.07.2025
 
-export default tseslint.config([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-]);
-```
+---
+
+## 🧾 Score: 100 / 100
+
+### ✅ Basic Requirements (100 points)
+
+- [x] ESLint is configured, no lint errors when `lint` is run – **15 points**
+- [x] Prettier is configured, `format:fix` command fixes issues – **15 points**
+- [x] Husky is configured, linting runs on `pre-commit` – **10 points**
+- [x] Page is split into two sections: top (search) and main (results), data is fetched on first load – **20 points**
+- [x] Search input triggers fetch with loader, data updates accordingly – **15 points**
+- [x] Search term is stored in and retrieved from `localStorage` – **15 points**
+- [x] App is wrapped with `ErrorBoundary`, logs error and displays fallback UI – **10 points**
+
+---
+
+## 🧪 Functionality Overview
+
+- App uses **class components only** (no hooks used)
+- Search input fetches data from API (`https://pokeapi.co/api/v2/pokemon`)
+- Loader shown during API requests
+- Local Storage integration (persisted search term)
+- ErrorBoundary catches runtime errors, logs them and shows fallback UI
+- Error testing button included
+- UI divided into modular components:
+  - `Search`
+  - `CardList`, `Card`
+  - `Loader`
+  - `ErrorBoundary`
+
+---
+
+## 🧰 Tech Stack
+
+- React (Class Components)
+- TypeScript
+- Tailwind CSS
+- ESLint / Prettier / Husky
+- PokeAPI (Pokemon API)
+- LocalStorage
+
+---
+
+## 🛠 Branch Name
+
+`class-components`
+
+---
+
+## ❗ Known Limitations
+
+- PokeAPI returns up to 200 Pokemon per request
+- Only first 200 Pokemon are displayed as required
+- Search filtering is done client-side after fetching all data
+
+---
+
+## 💬 Final Notes
+
+All requirements have been implemented. No hooks or external component libraries were used. Code is clean and follows best practices. The app features a dark theme with orange accents and provides a smooth Pokemon search experience.
