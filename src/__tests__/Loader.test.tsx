@@ -1,7 +1,9 @@
-import { describe, it } from 'vitest';
+import { render } from '@testing-library/react';
+import Loader from '../components/Loader';
+import '@testing-library/jest-dom';
 
 describe('Loader', () => {
-  it('should render', () => {
-    // TODO: test rendering
+  it('renders without crashing', () => {
+    render(<Loader />);
   });
 });
