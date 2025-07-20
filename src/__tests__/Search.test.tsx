@@ -72,4 +72,19 @@ describe('Search', () => {
     expect(screen.getByPlaceholderText(/Enter Pokémon name/i)).toBeDisabled();
     expect(screen.getByRole('button', { name: /search/i })).toBeDisabled();
   });
+
+  it('nie wywołuje onSearch dla pustego inputa', () => {
+    render(<Search onSearch={jest.fn()} />);
+    fireEvent.click(screen.getByRole('button', { name: /search/i }));
+    expect(globalThis.localStorage.setItem).toHaveBeenCalledWith(
+      'searchTerm',
+      ''
+    );
+  });
+
+  it('input i button są zablokowane gdy loading', () => {
+    render(<Search onSearch={jest.fn()} loading />);
+    expect(screen.getByPlaceholderText(/Enter Pokémon name/i)).toBeDisabled();
+    expect(screen.getByRole('button', { name: /search/i })).toBeDisabled();
+  });
 });
