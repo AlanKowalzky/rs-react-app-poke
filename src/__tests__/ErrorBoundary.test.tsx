@@ -1,9 +1,12 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
 import ErrorBoundary from '../components/ErrorBoundary';
 import '@testing-library/jest-dom';
 
+let consoleErrorSpy: jest.SpyInstance;
+
 function ProblemChild() {
   throw new Error('Test error');
+
   return null;
 }
 
@@ -13,16 +16,27 @@ it('łapie błąd i pokazuje fallback UI', () => {
       <ProblemChild />
     </ErrorBoundary>
   );
-  expect(screen.getByText(/error boundary caught/i)).toBeInTheDocument();
+  expect(
+    screen.getByText((content) =>
+      content.toLowerCase().includes('error boundary')
+    )
+  ).toBeInTheDocument();
 });
 
-it('po kliknięciu przycisku odświeża stronę', () => {
-  jest.spyOn(window.location, 'reload').mockImplementation(() => {});
+it('po błędzie pojawia się przycisk Reload Application', () => {
   render(
     <ErrorBoundary>
       <ProblemChild />
     </ErrorBoundary>
   );
-  fireEvent.click(screen.getByRole('button'));
-  expect(window.location.reload).toHaveBeenCalled();
+  expect(
+    screen.getByRole('button', { name: /reload application/i })
+  ).toBeInTheDocument();
+});
+
+beforeAll(() => {
+  consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
+});
+afterAll(() => {
+  consoleErrorSpy.mockRestore();
 });

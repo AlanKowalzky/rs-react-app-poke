@@ -1,35 +1,38 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import App from '../App';
 import '@testing-library/jest-dom';
+import { searchItems } from '../services/api';
 
-beforeAll(() => {
-  global.fetch = jest.fn();
-});
-afterAll(() => {
-  jest.resetAllMocks();
+jest.mock('../services/api');
+
+const mockedSearchItems = searchItems as jest.Mock;
+
+beforeEach(() => {
+  mockedSearchItems.mockClear();
+  localStorage.clear();
 });
 
 it('pokazuje loader podczas ładowania', async () => {
-  (global.fetch as jest.Mock).mockImplementation(() => new Promise(() => {}));
+  mockedSearchItems.mockImplementation(() => new Promise(() => {})); // Never resolves
   render(<App />);
   expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
 });
 
 it('pokazuje błąd przy nieudanym API', async () => {
-  (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('API error'));
+  mockedSearchItems.mockRejectedValueOnce(new Error('API error'));
   render(<App />);
-  await waitFor(() =>
-    expect(screen.getByText(/api error/i)).toBeInTheDocument()
-  );
+  expect(await screen.findByText(/Error: API error/i)).toBeInTheDocument();
 });
 
 it('pokazuje wyniki po sukcesie API', async () => {
-  (global.fetch as jest.Mock).mockResolvedValueOnce({
-    ok: true,
-    json: async () => ({ results: [{ name: 'pikachu', url: 'url1' }] }),
-  });
+  mockedSearchItems.mockResolvedValueOnce([
+    { name: 'pikachu', url: 'url1' },
+    { name: 'bulbasaur', url: 'url2' },
+  ]);
   render(<App />);
-  await waitFor(() => expect(screen.getByText(/pikachu/i)).toBeInTheDocument());
+
+  expect(await screen.findByText(/pikachu/i)).toBeInTheDocument();
+  expect(screen.getByText(/bulbasaur/i)).toBeInTheDocument();
 });
 
 it('pobiera searchTerm z localStorage przy starcie', async () => {
@@ -40,10 +43,8 @@ it('pobiera searchTerm z localStorage przy starcie', async () => {
     },
     writable: true,
   });
-  (global.fetch as jest.Mock).mockResolvedValueOnce({
-    ok: true,
-    json: async () => ({ results: [] }),
-  });
+  mockedSearchItems.mockResolvedValueOnce([{ name: 'bulbasaur', url: 'url2' }]);
+
   render(<App />);
   await waitFor(() =>
     expect(screen.getByPlaceholderText(/Enter Pokémon name/i)).toHaveValue(

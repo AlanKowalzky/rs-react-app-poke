@@ -26,26 +26,23 @@ class App extends Component<Record<string, never>, AppState> {
     this.fetchData();
   }
 
-  fetchData = (searchTerm?: string) => {
+  fetchData = async (searchTerm?: string) => {
     const term = searchTerm || localStorage.getItem('searchTerm') || '';
     this.setState({ loading: true, error: null });
 
-    const apiCall = searchItems();
-
-    apiCall
-      .then((items) => {
-        let filteredItems = items;
-        if (term) {
-          const lower = term.toLowerCase();
-          filteredItems = items.filter((item) =>
-            item.name.toLowerCase().includes(lower)
-          );
-        }
-        this.setState({ items: filteredItems, loading: false });
-      })
-      .catch((error) => {
-        this.setState({ error: error.message, loading: false });
-      });
+    try {
+      const items = await searchItems();
+      let filteredItems = items;
+      if (term) {
+        const lower = term.toLowerCase();
+        filteredItems = items.filter((item) =>
+          item.name.toLowerCase().includes(lower)
+        );
+      }
+      this.setState({ items: filteredItems, loading: false });
+    } catch (error) {
+      this.setState({ error: (error as Error).message, loading: false });
+    }
   };
 
   render() {
@@ -126,18 +123,7 @@ class App extends Component<Record<string, never>, AppState> {
           </div>
           <section style={{ padding: '24px' }}>
             {loading && <Loader />}
-            {error && (
-              <div
-                style={{
-                  color: '#E53935',
-                  textAlign: 'center',
-                  fontWeight: '600',
-                  padding: '16px 0',
-                }}
-              >
-                Error: {error}
-              </div>
-            )}
+            {error && <div>error: {error}</div>}
             {!loading && !error && <CardList items={items} />}
           </section>
         </main>
