@@ -12,19 +12,19 @@ beforeEach(() => {
   localStorage.clear();
 });
 
-it('pokazuje loader podczas ładowania', async () => {
+it('shows loader while loading', async () => {
   mockedSearchItems.mockImplementation(() => new Promise(() => {})); // Never resolves
   render(<App />);
   expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
 });
 
-it('pokazuje błąd przy nieudanym API', async () => {
+it('shows error on failed API', async () => {
   mockedSearchItems.mockRejectedValueOnce(new Error('API error'));
   render(<App />);
   expect(await screen.findByText(/Error: API error/i)).toBeInTheDocument();
 });
 
-it('pokazuje wyniki po sukcesie API', async () => {
+it('shows results on successful API', async () => {
   mockedSearchItems.mockResolvedValueOnce([
     { name: 'pikachu', url: 'url1' },
     { name: 'bulbasaur', url: 'url2' },
@@ -35,7 +35,7 @@ it('pokazuje wyniki po sukcesie API', async () => {
   expect(screen.getByText(/bulbasaur/i)).toBeInTheDocument();
 });
 
-it('pobiera searchTerm z localStorage przy starcie', async () => {
+it('loads searchTerm from localStorage on start', async () => {
   Object.defineProperty(globalThis, 'localStorage', {
     value: {
       getItem: jest.fn().mockReturnValue('bulbasaur'),

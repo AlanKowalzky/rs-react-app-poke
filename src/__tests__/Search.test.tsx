@@ -67,13 +67,7 @@ describe('Search', () => {
     expect(onSearch).toHaveBeenCalledWith('squirtle');
   });
 
-  it('disables input and button when loading', () => {
-    render(<Search onSearch={onSearch} loading />);
-    expect(screen.getByPlaceholderText(/Enter Pokémon name/i)).toBeDisabled();
-    expect(screen.getByRole('button', { name: /search/i })).toBeDisabled();
-  });
-
-  it('nie wywołuje onSearch dla pustego inputa', () => {
+  it('does not call onSearch for empty input', () => {
     render(<Search onSearch={jest.fn()} />);
     fireEvent.click(screen.getByRole('button', { name: /search/i }));
     expect(globalThis.localStorage.setItem).toHaveBeenCalledWith(
@@ -82,7 +76,7 @@ describe('Search', () => {
     );
   });
 
-  it('input i button są zablokowane gdy loading', () => {
+  it('input and button are disabled when loading', () => {
     render(<Search onSearch={jest.fn()} loading />);
     expect(screen.getByPlaceholderText(/Enter Pokémon name/i)).toBeDisabled();
     expect(screen.getByRole('button', { name: /search/i })).toBeDisabled();

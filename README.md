@@ -1,6 +1,34 @@
+# React Class Components App
+
+## Table of Contents
+
+- [Task](#-task)
+- [Screenshot](#-screenshot)
+- [Deployment](#-deployment)
+- [Done / Deadline](#-done--deadline)
+- [Score](#-score-100--100)
+- [Testing Requirements](#testing-requirements)
+- [Functionality Overview](#-functionality-overview)
+- [Tech Stack](#-tech-stack)
+- [Branch Name](#-branch-name)
+- [Known Limitations](#-known-limitations)
+- [Final Notes](#-final-notes)
+
 ## ✅ Task
 
-[React Class Components Task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-class-components.md)
+[React Unit Testing Task](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-unit-testing.md)
+
+---
+
+## 🧪 Testing Requirements
+
+- Jest (or Vitest) is configured with React Testing Library (RTL)
+- Test coverage reporting is enabled (min. 80% statements, min. 50% for branches, functions, lines)
+- All main components have dedicated test files (`*.test.tsx`)
+- Tests cover rendering, user interactions, API mocking, error handling, and integration
+- Husky runs tests on pre-push
+- No implementation changes in components for testing
+- All tests must pass and coverage thresholds must be met
 
 ---
 

@@ -10,7 +10,7 @@ function ProblemChild() {
   return null;
 }
 
-it('łapie błąd i pokazuje fallback UI', () => {
+it('catches error and shows fallback UI', () => {
   render(
     <ErrorBoundary>
       <ProblemChild />
@@ -23,7 +23,7 @@ it('łapie błąd i pokazuje fallback UI', () => {
   ).toBeInTheDocument();
 });
 
-it('po błędzie pojawia się przycisk Reload Application', () => {
+it('shows Reload Application button after error', () => {
   render(
     <ErrorBoundary>
       <ProblemChild />

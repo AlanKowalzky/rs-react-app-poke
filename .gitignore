@@ -30,4 +30,5 @@ req_*
 *diagramy*
 GEMINI.md
 coverage
-
+.cursorignore
+*.pol.*

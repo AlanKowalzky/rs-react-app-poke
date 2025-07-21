@@ -26,16 +26,20 @@ class CardList extends Component<CardListProps> {
               </tr>
             </thead>
             <tbody>
-              {items.length === 0 && (
+              {items.length === 0 ? (
                 <tr>
-                  <td colSpan={3} className="text-center text-text-muted py-8">
-                    Brak wyników.
+                  <td
+                    colSpan={2}
+                    style={{ textAlign: 'center', padding: '16px' }}
+                  >
+                    No results.
                   </td>
                 </tr>
+              ) : (
+                items.map((item, idx) => (
+                  <Card key={item.name} item={item} zebra={idx % 2 === 1} />
+                ))
               )}
-              {items.map((item, idx) => (
-                <Card key={item.name} item={item} zebra={idx % 2 === 1} />
-              ))}
             </tbody>
           </table>
         </div>

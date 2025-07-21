@@ -28,7 +28,7 @@ export const searchItems = (): Promise<Pokemon[]> =>
   new Promise((resolve, reject) => {
     fetchData<Pokemon>(`pokemon`)
       .then((data) => {
-        setTimeout(() => resolve(data), 1500); // sztuczne opóźnienie 1,5s
+        setTimeout(() => resolve(data), 1500); // artificial 1.5s delay
       })
       .catch(reject);
   });

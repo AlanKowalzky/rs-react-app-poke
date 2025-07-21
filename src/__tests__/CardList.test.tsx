@@ -7,9 +7,9 @@ describe('CardList', () => {
     render(<CardList items={[]} />);
   });
 
-  it('shows "Brak wyników." when items is empty', () => {
+  it('shows "No results." when items is empty', () => {
     render(<CardList items={[]} />);
-    expect(screen.getByText(/Brak wyników/i)).toBeInTheDocument();
+    expect(screen.getByText(/No results/i)).toBeInTheDocument();
   });
 
   it('renders correct number of Card rows', () => {

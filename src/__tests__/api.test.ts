@@ -2,7 +2,7 @@ import { searchItems } from '../services/api';
 
 global.fetch = jest.fn();
 
-it('zwraca dane przy sukcesie', async () => {
+it('returns data on success', async () => {
   (global.fetch as jest.Mock).mockResolvedValueOnce({
     ok: true,
     json: async () => ({ results: [{ name: 'pikachu', url: 'url1' }] }),
@@ -11,12 +11,12 @@ it('zwraca dane przy sukcesie', async () => {
   expect(data).toEqual([{ name: 'pikachu', url: 'url1' }]);
 });
 
-it('rzuca błąd przy nieudanym fetchu', async () => {
+it('throws error on failed fetch', async () => {
   (global.fetch as jest.Mock).mockRejectedValueOnce(new Error('API error'));
   await expect(searchItems()).rejects.toThrow('API error');
 });
 
-it('rzuca błąd przy odpowiedzi ok: false', async () => {
+it('throws error on response ok: false', async () => {
   (global.fetch as jest.Mock).mockResolvedValueOnce({
     ok: false,
     status: 404,
