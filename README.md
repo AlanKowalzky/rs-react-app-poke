@@ -109,3 +109,18 @@
 ## 💬 Final Notes
 
 All requirements have been implemented. No hooks or external component libraries were used. Code is clean and follows best practices. The app features a dark theme with orange accents and provides a smooth Pokemon search experience.
+
+## 🛠️ Technologies
+
+[![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![Tailwind CSS](https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+[![Jest](https://img.shields.io/badge/Jest-C21325?style=for-the-badge&logo=jest&logoColor=white)](https://jestjs.io/)
+[![Testing Library](https://img.shields.io/badge/Testing_Library-E33337?style=for-the-badge&logo=testing-library&logoColor=white)](https://testing-library.com/)
+[![ESLint](https://img.shields.io/badge/ESLint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white)](https://eslint.org/)
+[![Prettier](https://img.shields.io/badge/Prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black)](https://prettier.io/)
+[![Husky](https://img.shields.io/badge/Husky-DD0700?style=for-the-badge&logo=git&logoColor=white)](https://typicode.github.io/husky/)
+[![PostCSS](https://img.shields.io/badge/PostCSS-DD3A0A?style=for-the-badge&logo=postcss&logoColor=white)](https://postcss.org/)
+[![jsdom](https://img.shields.io/badge/jsdom-5C8DBC?style=for-the-badge&logo=javascript&logoColor=white)](https://github.com/jsdom/jsdom)
+
