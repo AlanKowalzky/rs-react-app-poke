@@ -6,6 +6,7 @@ import {
   useNavigate,
   Outlet,
   Link,
+  useSearchParams,
 } from 'react-router-dom';
 import Search from './components/Search';
 import CardList from './components/CardList';
@@ -14,29 +15,38 @@ import { searchItems } from './services/api';
 import Details from './components/Details';
 import About from './components/About';
 import NotFound from './components/NotFound';
+import Pagination from './components/Pagination';
+import { appStyles } from './styles/App.styles';
+
+const ITEMS_PER_PAGE = 10;
 
 const AppLayout: React.FC = () => {
-  const [items, setItems] = useState<{ name: string; url: string }[]>([]);
+  const [allItems, setAllItems] = useState<{ name: string; url: string }[]>([]);
+  const [filteredItems, setFilteredItems] = useState<
+    { name: string; url: string }[]
+  >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [shouldThrowError, setShouldThrowError] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const fetchData = useCallback(async (searchTerm?: string) => {
-    const term = searchTerm || localStorage.getItem('searchTerm') || '';
+  const currentPage = parseInt(searchParams.get('page') || '1', 10);
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const paginatedItems = filteredItems.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE
+  );
+
+  const fetchInitialData = useCallback(async () => {
     setLoading(true);
     setError(null);
-
     try {
-      const fetchedItems = await searchItems();
-      let filteredItems = fetchedItems;
-      if (term) {
-        const lower = term.toLowerCase();
-        filteredItems = fetchedItems.filter((item) =>
-          item.name.toLowerCase().includes(lower)
-        );
-      }
-      setItems(filteredItems);
+      const response = await searchItems();
+      const fetchedItems = response.results;
+      setAllItems(fetchedItems);
+      setFilteredItems(fetchedItems);
     } catch (err) {
       setError((err as Error).message);
     } finally {
@@ -44,12 +54,46 @@ const AppLayout: React.FC = () => {
     }
   }, []);
 
+  const handleSearch = useCallback(
+    (searchTerm: string) => {
+      let filtered = allItems;
+      if (searchTerm.trim()) {
+        const lower = searchTerm.toLowerCase();
+        filtered = allItems.filter((item: { name: string; url: string }) =>
+          item.name.toLowerCase().includes(lower)
+        );
+      }
+      setFilteredItems(filtered);
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.set('page', '1');
+        return newParams;
+      });
+    },
+    [allItems, setSearchParams]
+  );
+
   useEffect(() => {
-    fetchData();
-  }, [fetchData]);
+    fetchInitialData();
+  }, [fetchInitialData]);
 
   const handleDetailsClick = (id: string) => {
-    navigate(`/${id}`);
+    navigate(`/${id}?${searchParams.toString()}`);
+  };
+
+  const handleMainClick = (e: React.MouseEvent) => {
+    const target = e.target as HTMLElement;
+    if (target.tagName === 'DIV' && target === e.currentTarget) {
+      navigate('/');
+    }
+  };
+
+  const handlePageChange = (page: number) => {
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('page', page.toString());
+      return newParams;
+    });
   };
 
   if (shouldThrowError) {
@@ -57,97 +101,71 @@ const AppLayout: React.FC = () => {
   }
 
   return (
-    <div
-      style={{
-        minHeight: '100vh',
-        display: 'flex',
-        flexDirection: 'column',
-        backgroundColor: '#1A1A1A',
-        color: '#E0E0E0',
-        fontFamily: 'Inter, system-ui, Avenir, Helvetica, Arial, sans-serif',
-      }}
-    >
-      <header
-        style={{
-          width: '100%',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          padding: '40px 24px 16px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
-          border: '1px solid #424242',
-          borderRadius: '12px 12px 0 0',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          backgroundColor: '#212121',
-        }}
-      >
-        <h1
-          style={{
-            fontSize: '2rem',
-            fontWeight: '800',
-            letterSpacing: '-0.025em',
-            color: '#FF7043',
-            textShadow: '0 2px 4px rgba(0,0,0,0.3)',
-          }}
-        >
-          Pokemon Search
-        </h1>
+    <div style={appStyles.container}>
+      <header style={appStyles.header}>
+        <h1 style={appStyles.title}>Pokemon Search</h1>
         <nav>
           <Link to="/about" className="text-lg text-gray-300 hover:text-white">
             About
           </Link>
         </nav>
       </header>
-      <main
-        style={{
-          flex: 1,
-          width: '100%',
-          maxWidth: '1200px',
-          margin: '0 auto',
-          display: 'grid',
-          gridTemplateColumns: '1fr 1fr',
-          gap: '24px',
-          padding: '24px',
-          border: '1px solid #424242',
-          borderTop: 'none',
-          borderRadius: '0 0 12px 12px',
-          boxShadow: '0 4px 6px rgba(0,0,0,0.1)',
-          backgroundColor: '#212121',
-        }}
-      >
-        <div>
-          <Search onSearch={fetchData} loading={loading} />
-          <section className="mt-6">
+      <main style={appStyles.main}>
+        <div
+          onClick={handleMainClick}
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '600px',
+            position: 'relative',
+          }}
+        >
+          <Search onSearch={handleSearch} loading={loading} />
+          <section
+            style={{
+              flex: 1,
+              overflow: 'auto',
+              marginTop: '16px',
+              paddingBottom: '60px',
+            }}
+          >
             {loading && <Loader />}
             {error && <div className="text-red-500">Error: {error}</div>}
             {!loading && !error && (
-              <CardList items={items} onDetailsClick={handleDetailsClick} />
+              <CardList
+                items={paginatedItems}
+                onDetailsClick={handleDetailsClick}
+              />
             )}
           </section>
+          {totalPages > 1 && (
+            <div
+              style={{
+                position: 'absolute',
+                bottom: '16px',
+                left: '0',
+                right: '0',
+                display: 'flex',
+                justifyContent: 'center',
+                backgroundColor: '#212121',
+                paddingTop: '8px',
+              }}
+            >
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={handlePageChange}
+              />
+            </div>
+          )}
         </div>
-        <aside>
+        <aside style={appStyles.aside}>
           <Outlet />
         </aside>
       </main>
-      <div
-        style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 50 }}
-      >
+      <div style={appStyles.errorButtonContainer}>
         <button
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '8px',
-            backgroundColor: '#E53935',
-            color: 'white',
-            fontWeight: 'bold',
-            padding: '12px 24px',
-            borderRadius: '9999px',
-            boxShadow: '0 10px 15px rgba(0,0,0,0.3)',
-            fontSize: '1.125rem',
-            transition: 'transform 0.15s',
-            border: '4px solid #212121',
-          }}
+          style={appStyles.errorButton}
           onClick={() => setShouldThrowError(true)}
         >
           <svg
@@ -156,7 +174,7 @@ const AppLayout: React.FC = () => {
             viewBox="0 0 24 24"
             strokeWidth={2}
             stroke="currentColor"
-            style={{ width: '28px', height: '28px' }}
+            style={appStyles.errorIcon}
           >
             <path
               strokeLinecap="round"

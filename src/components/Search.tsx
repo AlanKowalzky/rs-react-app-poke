@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import type { ChangeEvent } from 'react';
+import React, { useState } from 'react';
+import type { ChangeEvent, FormEvent } from 'react';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
 interface SearchProps {
@@ -9,20 +9,21 @@ interface SearchProps {
 
 const Search: React.FC<SearchProps> = ({ onSearch, loading }) => {
   const [searchTerm, setSearchTerm] = useLocalStorage<string>('searchTerm', '');
+  const [inputValue, setInputValue] = useState(searchTerm);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSearchTerm(event.target.value);
+    setInputValue(event.target.value);
   };
 
-  useEffect(() => {
-    onSearch(searchTerm);
-  }, [searchTerm, onSearch]);
+  const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setSearchTerm(inputValue);
+    onSearch(inputValue);
+  };
 
   return (
     <form
-      onSubmit={(e) => {
-        e.preventDefault();
-      }}
+      onSubmit={handleSubmit}
       style={{ display: 'flex', width: '100%', maxWidth: '512px' }}
     >
       <div style={{ position: 'relative', flex: '1' }}>
@@ -44,7 +45,7 @@ const Search: React.FC<SearchProps> = ({ onSearch, loading }) => {
         <input
           id="search"
           type="search"
-          value={searchTerm}
+          value={inputValue}
           onChange={handleChange}
           style={{
             display: 'block',
@@ -60,17 +61,10 @@ const Search: React.FC<SearchProps> = ({ onSearch, loading }) => {
             fontSize: '1rem',
             height: '48px',
             outline: 'none',
-
             zIndex: 2,
           }}
           placeholder="Enter Pokémon name..."
           disabled={loading}
-          onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {
-            if (e.key === 'Enter') {
-              e.preventDefault();
-              onSearch(searchTerm);
-            }
-          }}
           autoComplete="off"
         />
       </div>
@@ -79,7 +73,7 @@ const Search: React.FC<SearchProps> = ({ onSearch, loading }) => {
         style={{
           padding: '0 24px',
           height: '48px',
-          borderRadius: '0 8px 8px 0', // Style jako obiekt
+          borderRadius: '0 8px 8px 0',
           backgroundColor: '#FF7043',
           color: 'white',
           fontWeight: '600',

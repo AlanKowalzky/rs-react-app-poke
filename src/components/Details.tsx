@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, useLocation } from 'react-router-dom';
 import Loader from './Loader';
 
 interface PokemonDetails {
@@ -7,6 +7,11 @@ interface PokemonDetails {
   name: string;
   sprites: {
     front_default: string;
+    other: {
+      'official-artwork': {
+        front_default: string;
+      };
+    };
   };
   height: number;
   weight: number;
@@ -16,6 +21,7 @@ interface PokemonDetails {
 const Details: React.FC = () => {
   const { detailsId } = useParams<{ detailsId: string }>();
   const navigate = useNavigate();
+  const location = useLocation();
   const [details, setDetails] = useState<PokemonDetails | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,7 +56,7 @@ const Details: React.FC = () => {
   }, [detailsId]);
 
   const handleClose = (): void => {
-    navigate('/');
+    navigate(`/${location.search}`);
   };
 
   if (loading) {
@@ -69,6 +75,10 @@ const Details: React.FC = () => {
     );
   }
 
+  const imageUrl =
+    details.sprites.other?.['official-artwork']?.front_default ||
+    details.sprites.front_default;
+
   return (
     <div className="p-4 bg-gray-800 rounded-lg shadow-lg relative text-white">
       <button
@@ -82,9 +92,10 @@ const Details: React.FC = () => {
         {details.name}
       </h2>
       <img
-        src={details.sprites.front_default}
+        src={imageUrl}
         alt={details.name}
-        className="mx-auto w-32 h-32"
+        className="mx-auto mb-4"
+        style={{ width: '200px', height: '200px', objectFit: 'contain' }}
       />
       <div className="mt-4 text-left">
         <p>
