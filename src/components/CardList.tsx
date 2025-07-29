@@ -1,51 +1,19 @@
-import { Component } from 'react';
+import React from 'react';
 import Card from './Card';
 
 interface CardListProps {
   items: { name: string; url: string }[];
+  onDetailsClick: (url: string) => void;
 }
 
-class CardList extends Component<CardListProps> {
-  render() {
-    const { items } = this.props;
-    return (
-      <div className="w-full flex justify-center">
-        <div className="w-full max-w-3xl overflow-x-auto rounded-xl shadow-lg bg-dark-card border border-border-gray">
-          <table className="min-w-full text-left border-separate border-spacing-0 rounded-xl">
-            <thead>
-              <tr className="bg-dark-header text-pokemon-orange">
-                <th className="px-4 py-3 border-b border-border-gray font-semibold text-base rounded-tl-xl w-20 text-left">
-                  Image
-                </th>
-                <th className="px-6 py-3 border-b border-border-gray font-semibold text-base w-48">
-                  Pokémon Name
-                </th>
-                <th className="px-6 py-3 border-b border-border-gray font-semibold text-base rounded-tr-xl">
-                  Endpoint URL
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.length === 0 ? (
-                <tr>
-                  <td
-                    colSpan={2}
-                    style={{ textAlign: 'center', padding: '16px' }}
-                  >
-                    No results.
-                  </td>
-                </tr>
-              ) : (
-                items.map((item, idx) => (
-                  <Card key={item.name} item={item} zebra={idx % 2 === 1} />
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
-      </div>
-    );
-  }
-}
+const CardList: React.FC<CardListProps> = ({ items, onDetailsClick }) => {
+  return (
+    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      {items.map((item) => (
+        <Card key={item.name} item={item} onDetailsClick={onDetailsClick} />
+      ))}
+    </div>
+  );
+};
 
 export default CardList;
