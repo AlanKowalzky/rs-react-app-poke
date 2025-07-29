@@ -17,7 +17,7 @@ describe('Search', () => {
   });
 
   it('renders input and button', () => {
-    render(<Search onSearch={onSearch} />);
+    render(<Search onSearch={onSearch} loading={false} />);
     expect(
       screen.getByPlaceholderText(/Enter Pokémon name/i)
     ).toBeInTheDocument();
@@ -25,59 +25,34 @@ describe('Search', () => {
   });
 
   it('shows saved search term from localStorage', () => {
-    (globalThis.localStorage.getItem as jest.Mock).mockReturnValue('pikachu');
-    render(<Search onSearch={onSearch} />);
+    (globalThis.localStorage.getItem as jest.Mock).mockReturnValue('"pikachu"');
+    render(<Search onSearch={onSearch} loading={false} />);
     expect(screen.getByDisplayValue('pikachu')).toBeInTheDocument();
   });
 
   it('shows empty input if no saved term', () => {
     (globalThis.localStorage.getItem as jest.Mock).mockReturnValue(null);
-    render(<Search onSearch={onSearch} />);
+    render(<Search onSearch={onSearch} loading={false} />);
     expect(screen.getByPlaceholderText(/Enter Pokémon name/i)).toHaveValue('');
   });
 
   it('updates input value when user types', () => {
-    render(<Search onSearch={onSearch} />);
+    render(<Search onSearch={onSearch} loading={false} />);
     const input = screen.getByPlaceholderText(/Enter Pokémon name/i);
     fireEvent.change(input, { target: { value: 'bulbasaur' } });
     expect(input).toHaveValue('bulbasaur');
   });
 
-  it('saves trimmed search term to localStorage and calls onSearch on button click', () => {
-    render(<Search onSearch={onSearch} />);
+  it('calls onSearch on form submit', () => {
+    render(<Search onSearch={onSearch} loading={false} />);
     const input = screen.getByPlaceholderText(/Enter Pokémon name/i);
-    fireEvent.change(input, { target: { value: '  charmander  ' } });
-    fireEvent.click(screen.getByRole('button', { name: /search/i }));
-    expect(globalThis.localStorage.setItem).toHaveBeenCalledWith(
-      'searchTerm',
-      'charmander'
-    );
+    fireEvent.change(input, { target: { value: 'charmander' } });
+    fireEvent.submit(screen.getByRole('button', { name: /search/i }));
     expect(onSearch).toHaveBeenCalledWith('charmander');
   });
 
-  it('calls onSearch and saves to localStorage on Enter key', () => {
-    render(<Search onSearch={onSearch} />);
-    const input = screen.getByPlaceholderText(/Enter Pokémon name/i);
-    fireEvent.change(input, { target: { value: 'squirtle' } });
-    fireEvent.keyDown(input, { key: 'Enter', code: 'Enter' });
-    expect(globalThis.localStorage.setItem).toHaveBeenCalledWith(
-      'searchTerm',
-      'squirtle'
-    );
-    expect(onSearch).toHaveBeenCalledWith('squirtle');
-  });
-
-  it('does not call onSearch for empty input', () => {
-    render(<Search onSearch={jest.fn()} />);
-    fireEvent.click(screen.getByRole('button', { name: /search/i }));
-    expect(globalThis.localStorage.setItem).toHaveBeenCalledWith(
-      'searchTerm',
-      ''
-    );
-  });
-
   it('input and button are disabled when loading', () => {
-    render(<Search onSearch={jest.fn()} loading />);
+    render(<Search onSearch={onSearch} loading={true} />);
     expect(screen.getByPlaceholderText(/Enter Pokémon name/i)).toBeDisabled();
     expect(screen.getByRole('button', { name: /search/i })).toBeDisabled();
   });

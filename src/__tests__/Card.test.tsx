@@ -1,15 +1,36 @@
-import { render } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import Card from '../components/Card';
 import '@testing-library/jest-dom';
 
 describe('Card', () => {
-  it('renders without crashing', () => {
-    render(
-      <table>
-        <tbody>
-          <Card item={{ name: 'pikachu', url: 'url' }} />
-        </tbody>
-      </table>
+  const mockOnDetailsClick = jest.fn();
+  const mockItem = {
+    name: 'pikachu',
+    url: 'https://pokeapi.co/api/v2/pokemon/25/',
+  };
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('renders pokemon name and image', () => {
+    render(<Card item={mockItem} onDetailsClick={mockOnDetailsClick} />);
+    expect(screen.getByText('pikachu')).toBeInTheDocument();
+    expect(screen.getByAltText('pikachu')).toBeInTheDocument();
+  });
+
+  it('calls onDetailsClick when clicked', () => {
+    render(<Card item={mockItem} onDetailsClick={mockOnDetailsClick} />);
+    fireEvent.click(screen.getByText('pikachu'));
+    expect(mockOnDetailsClick).toHaveBeenCalledWith('25');
+  });
+
+  it('extracts correct ID from URL', () => {
+    render(<Card item={mockItem} onDetailsClick={mockOnDetailsClick} />);
+    const img = screen.getByAltText('pikachu');
+    expect(img).toHaveAttribute(
+      'src',
+      'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png'
     );
   });
 });
