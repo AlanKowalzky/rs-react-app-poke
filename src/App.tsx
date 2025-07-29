@@ -1,14 +1,26 @@
 import React, { useState, useEffect, useCallback } from 'react';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useNavigate,
+  Outlet,
+  Link,
+} from 'react-router-dom';
 import Search from './components/Search';
 import CardList from './components/CardList';
 import Loader from './components/Loader';
 import { searchItems } from './services/api';
+import Details from './components/Details';
+import About from './components/About';
+import NotFound from './components/NotFound';
 
-const App: React.FC = () => {
+const AppLayout: React.FC = () => {
   const [items, setItems] = useState<{ name: string; url: string }[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [shouldThrowError, setShouldThrowError] = useState(false);
+  const navigate = useNavigate();
 
   const fetchData = useCallback(async (searchTerm?: string) => {
     const term = searchTerm || localStorage.getItem('searchTerm') || '';
@@ -36,9 +48,8 @@ const App: React.FC = () => {
     fetchData();
   }, [fetchData]);
 
-  const handleDetailsClick = (url: string) => {
-    // TODO: Implement routing and details view logic here
-    console.log('Details clicked for:', url);
+  const handleDetailsClick = (id: string) => {
+    navigate(`/${id}`);
   };
 
   if (shouldThrowError) {
@@ -82,14 +93,20 @@ const App: React.FC = () => {
         >
           Pokemon Search
         </h1>
+        <nav>
+          <Link to="/about" className="text-lg text-gray-300 hover:text-white">
+            About
+          </Link>
+        </nav>
       </header>
       <main
         style={{
+          flex: 1,
           width: '100%',
-          maxWidth: '768px',
+          maxWidth: '1200px',
           margin: '0 auto',
-          display: 'flex',
-          flexDirection: 'column',
+          display: 'grid',
+          gridTemplateColumns: '1fr 1fr',
           gap: '24px',
           padding: '24px',
           border: '1px solid #424242',
@@ -99,14 +116,19 @@ const App: React.FC = () => {
           backgroundColor: '#212121',
         }}
       >
-        <Search onSearch={fetchData} loading={loading} />
-        <section>
-          {loading && <Loader />}
-          {error && <div>Error: {error}</div>}
-          {!loading && !error && (
-            <CardList items={items} onDetailsClick={handleDetailsClick} />
-          )}
-        </section>
+        <div>
+          <Search onSearch={fetchData} loading={loading} />
+          <section className="mt-6">
+            {loading && <Loader />}
+            {error && <div className="text-red-500">Error: {error}</div>}
+            {!loading && !error && (
+              <CardList items={items} onDetailsClick={handleDetailsClick} />
+            )}
+          </section>
+        </div>
+        <aside>
+          <Outlet />
+        </aside>
       </main>
       <div
         style={{ position: 'fixed', bottom: '32px', right: '32px', zIndex: 50 }}
@@ -146,6 +168,20 @@ const App: React.FC = () => {
         </button>
       </div>
     </div>
+  );
+};
+
+const App: React.FC = () => {
+  return (
+    <Router>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route path=":detailsId" element={<Details />} />
+        </Route>
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 };
 

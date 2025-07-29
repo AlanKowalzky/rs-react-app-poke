@@ -3,7 +3,7 @@ import Card from './Card';
 
 interface CardListProps {
   items: { name: string; url: string }[];
-  onDetailsClick: (url: string) => void;
+  onDetailsClick: (id: string) => void;
 }
 
 const CardList: React.FC<CardListProps> = ({ items, onDetailsClick }) => {

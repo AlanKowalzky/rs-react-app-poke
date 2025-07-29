@@ -2,7 +2,7 @@ import React from 'react';
 
 interface CardProps {
   item: { name: string; url: string };
-  onDetailsClick: (url: string) => void;
+  onDetailsClick: (id: string) => void;
 }
 
 const Card: React.FC<CardProps> = ({ item, onDetailsClick }) => {
@@ -21,7 +21,7 @@ const Card: React.FC<CardProps> = ({ item, onDetailsClick }) => {
         {item.name}
       </h2>
       <button
-        onClick={() => onDetailsClick(item.url)}
+        onClick={() => onDetailsClick(itemId)}
         className="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
       >
         Szczegóły
