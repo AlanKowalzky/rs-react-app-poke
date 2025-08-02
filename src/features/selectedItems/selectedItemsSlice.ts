@@ -1,14 +1,14 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 const initialState = {
-  selectedIds: [],
+  selectedIds: [] as number[],
 };
 
 export const selectedItemsSlice = createSlice({
   name: 'selectedItems',
   initialState,
   reducers: {
-    toggleItem: (state, action) => {
+    toggleItem: (state, action: PayloadAction<number>) => {
       const id = action.payload;
       const index = state.selectedIds.indexOf(id);
       if (index >= 0) {

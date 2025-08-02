@@ -1,0 +1,54 @@
+.container {
+    text-align: center;
+  }
+  
+  .header {
+    background-color: #282c34;
+    padding: 1rem;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .title {
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+  
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+    padding: 1rem;
+  }
+  
+  .aside {
+    border-left: 1px solid #444;
+    padding-left: 1rem;
+  }
+  
+  .errorButtonContainer {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+  }
+  
+  .errorButton {
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+  
+  .errorIcon {
+    width: 1.5rem;
+    height: 1.5rem;
+  }
+  

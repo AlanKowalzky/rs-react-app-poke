@@ -1,9 +1,16 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
 import { unselectAll } from './selectedItemsSlice';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
+
+interface ItemForCsv {
+  id: number;
+  name: string;
+  description: string;
+  details_url: string;
+}
 
 // Fikcyjne dane - w realnej aplikacji mogłyby być pobierane z innego miejsca w stanie
-const MOCK_ITEMS = [
+const MOCK_ITEMS: ItemForCsv[] = [
   {
     id: 1,
     name: 'Element 1',
@@ -36,8 +43,14 @@ const MOCK_ITEMS = [
   },
 ];
 
-const downloadCSV = (selectedItems) => {
-  const headers = ['name', 'description', 'details_url'];
+const downloadCSV = (selectedItems: ItemForCsv[]) => {
+  // Użycie `keyof Omit` gwarantuje, że nagłówki zawsze będą pasować do interfejsu
+  // i zapobiega błędom przy dostępie do `item[header]`.
+  const headers: (keyof Omit<ItemForCsv, 'id'>)[] = [
+    'name',
+    'description',
+    'details_url',
+  ];
   const csvRows = [
     headers.join(','), // Nagłówek
     ...selectedItems.map((item) =>
@@ -59,8 +72,8 @@ const downloadCSV = (selectedItems) => {
 };
 
 export function Flyout() {
-  const dispatch = useDispatch();
-  const { selectedIds } = useSelector((state) => state.selectedItems);
+  const dispatch = useAppDispatch();
+  const { selectedIds } = useAppSelector((state) => state.selectedItems);
 
   if (selectedIds.length === 0) {
     return null;

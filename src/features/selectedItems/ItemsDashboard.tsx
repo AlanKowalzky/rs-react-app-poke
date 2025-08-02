@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { toggleItem } from './selectedItemsSlice';
 
 // Fikcyjne dane - w realnej aplikacji mogłyby być pobierane z innego miejsca w stanie
@@ -12,8 +12,8 @@ const MOCK_ITEMS = [
 ];
 
 export function ItemsDashboard() {
-  const dispatch = useDispatch();
-  const { selectedIds } = useSelector((state) => state.selectedItems);
+  const dispatch = useAppDispatch();
+  const { selectedIds } = useAppSelector((state) => state.selectedItems);
 
   return (
     <div>

@@ -16,7 +16,6 @@ import Details from './components/Details';
 import About from './components/About';
 import NotFound from './components/NotFound';
 import Pagination from './components/Pagination';
-import { appStyles } from './styles/App.styles';
 
 const ITEMS_PER_PAGE = 10;
 
@@ -27,7 +26,6 @@ const AppLayout: React.FC = () => {
   >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [shouldThrowError, setShouldThrowError] = useState(false);
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
@@ -96,23 +94,19 @@ const AppLayout: React.FC = () => {
     });
   };
 
-  if (shouldThrowError) {
-    throw new Error('Test error thrown from render!');
-  }
-
   return (
-    <div style={appStyles.container}>
-      <header style={appStyles.header}>
-        <h1 style={appStyles.title}>Pokemon Search</h1>
+    <div className="container">
+      <header className="header">
+        <h1 className="title">Pokemon Search</h1>
         <nav>
           <Link to="/about" className="text-lg text-gray-300 hover:text-white">
             About
           </Link>
         </nav>
       </header>
-      <main style={appStyles.main}>
+      <main className="main">
         <div
-          onClick={handleMainClick}
+          onClick={handleMainClick} // This logic remains, but inline styles are removed
           style={{
             display: 'flex',
             flexDirection: 'column',
@@ -159,32 +153,10 @@ const AppLayout: React.FC = () => {
             </div>
           )}
         </div>
-        <aside style={appStyles.aside}>
+        <aside className="aside">
           <Outlet />
         </aside>
       </main>
-      <div style={appStyles.errorButtonContainer}>
-        <button
-          style={appStyles.errorButton}
-          onClick={() => setShouldThrowError(true)}
-        >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            strokeWidth={2}
-            stroke="currentColor"
-            style={appStyles.errorIcon}
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-          Throw Error
-        </button>
-      </div>
     </div>
   );
 };
