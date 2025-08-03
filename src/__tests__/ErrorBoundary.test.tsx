@@ -2,16 +2,13 @@ import { render, screen } from '@testing-library/react';
 import ErrorBoundary from '../components/ErrorBoundary';
 import '@testing-library/jest-dom';
 
-// Komponent-mock, który rzuca błędem
 const ProblemChild = () => {
   throw new Error('Test error');
 };
 
-// Komponent-mock, który renderuje się poprawnie
 const HealthyChild = () => <div>Everything is fine</div>;
 
 describe('ErrorBoundary', () => {
-  // Ukrywamy błąd w konsoli, który jest oczekiwany i łapany przez ErrorBoundary
   let consoleErrorSpy: jest.SpyInstance;
   beforeAll(() => {
     consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});

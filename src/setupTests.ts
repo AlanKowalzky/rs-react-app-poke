@@ -1,15 +1,33 @@
 import '@testing-library/jest-dom';
 
-// Mock TextEncoder/TextDecoder for React Router
-Object.assign(global, {
-  TextEncoder: class TextEncoder {
-    encode(input: string) {
-      return new Uint8Array([...input].map((char) => char.charCodeAt(0)));
+const originalConsoleError = console.error;
+const originalConsoleWarn = console.warn;
+
+beforeAll(() => {
+  console.error = (...args: unknown[]) => {
+    if (
+      typeof args[0] === 'string' &&
+      (args[0].includes('Warning: An update to') ||
+        args[0].includes('act(...)'))
+    ) {
+      return;
     }
-  },
-  TextDecoder: class TextDecoder {
-    decode(input: Uint8Array) {
-      return String.fromCharCode(...input);
+    originalConsoleError(...args);
+  };
+
+  console.warn = (...args: unknown[]) => {
+    if (
+      typeof args[0] === 'string' &&
+      (args[0].includes('SerializableStateInvariantMiddleware') ||
+        args[0].includes('ImmutableStateInvariantMiddleware'))
+    ) {
+      return;
     }
-  },
+    originalConsoleWarn(...args);
+  };
+});
+
+afterAll(() => {
+  console.error = originalConsoleError;
+  console.warn = originalConsoleWarn;
 });

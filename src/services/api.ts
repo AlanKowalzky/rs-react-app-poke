@@ -6,7 +6,7 @@ interface PokemonListResponse {
 }
 
 async function fetchData<T>(endpoint: string): Promise<T> {
-  const url = `${BASE_URL}/${endpoint}?limit=100000`; // Pobieramy wszystkie rekordy
+  const url = `${BASE_URL}/${endpoint}?limit=100000`;
 
   const response = await fetch(url);
 
@@ -26,14 +26,14 @@ async function fetchData<T>(endpoint: string): Promise<T> {
 
 interface Pokemon {
   name: string;
-  url: string; // Dodatkowe pole, może być użyte jako "description" lub do pobrania szczegółów
+  url: string;
 }
 
 export const searchItems = (): Promise<PokemonListResponse> =>
   new Promise((resolve, reject) => {
     fetchData<PokemonListResponse>('pokemon')
       .then((data) => {
-        setTimeout(() => resolve(data), 1500); // artificial 1.5s delay
+        setTimeout(() => resolve(data), 1500);
       })
       .catch(reject);
   });

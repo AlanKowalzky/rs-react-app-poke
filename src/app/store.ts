@@ -7,6 +7,15 @@ export const store = configureStore({
     selectedItems: selectedItemsReducer,
     items: itemsReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        warnAfter: 128,
+      },
+      immutableCheck: {
+        warnAfter: 128,
+      },
+    }),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

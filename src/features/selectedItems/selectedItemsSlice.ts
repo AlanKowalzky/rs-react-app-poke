@@ -12,9 +12,9 @@ export const selectedItemsSlice = createSlice({
       const id = action.payload;
       const index = state.selectedIds.indexOf(id);
       if (index >= 0) {
-        state.selectedIds.splice(index, 1); // Usuń, jeśli już istnieje
+        state.selectedIds.splice(index, 1);
       } else {
-        state.selectedIds.push(id); // Dodaj, jeśli nie istnieje
+        state.selectedIds.push(id);
       }
     },
     unselectAll: (state) => {
