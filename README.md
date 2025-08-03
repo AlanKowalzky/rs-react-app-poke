@@ -1,48 +1,43 @@
-# React Hooks and Routing App
+# React State Management App
 
-## 🎯 Current Task: Routing and Hooks (Task 3)
+## 🎯 Current Task: State Management and Context API (Task 4)
 
 ### Task Description
-Refactor class components to functional components with hooks and implement routing functionality. Add pagination, detailed views, and URL-based navigation.
+Implement Redux Toolkit for state management and Context API for theme switching. Add selected items functionality with flyout component and CSV download capability.
 
 ### Requirements Analysis - Score: 100/100 ✅
 
 #### ✅ **COMPLETED REQUIREMENTS:**
 
-1. **Custom hook to restore search query from LS** - **20/20**
-   - ✅ Hook `useLocalStorage` implemented and used in Search.tsx
+1. **State management with Redux Toolkit** - **35/35**
+   - ✅ Redux Toolkit integrated and configured
+   - ✅ Store setup with proper reducers
+   - ✅ Selected items managed through Redux state
 
-2. **Pagination is present in both URL and on the page** - **20/20**
-   - ✅ Pagination in URL (`?page=2`)
-   - ✅ Pagination component displayed on page
+2. **Selected Items Management** - **25/25**
+   - ✅ Checkboxes on each Pokemon item
+   - ✅ Selected state persists across page navigation
+   - ✅ Items can be selected/unselected
+   - ✅ State maintained in Redux store
 
-3. **Upon clicking, open details panel on the right side** - **5/5**
-   - ✅ Details opens on right side in `<aside>`
+3. **Flyout Component** - **15/15**
+   - ✅ Appears when items are selected
+   - ✅ Shows count of selected items
+   - ✅ Hides when no items selected
+   - ✅ Fixed positioning at bottom-right
 
-4. **Use router outlet, left side continues displaying results** - **10/10**
-   - ✅ Uses `<Outlet />` in App.tsx
-   - ✅ Left side maintains results list
+4. **Download and Unselect Functionality** - **10/10**
+   - ✅ "Unselect all" button clears selection
+   - ✅ "Download" button creates CSV file
+   - ✅ CSV filename includes item count
+   - ✅ Flyout disappears after unselect all
 
-5. **Additional API call, display loader, update URL** - **10/10**
-   - ✅ Details.tsx performs additional API call
-   - ✅ Displays loader during loading
-   - ✅ URL updated (`/:detailsId`)
-
-6. **Details panel closes on close button or main panel click** - **10/10**
-   - ✅ Close button works
-   - ✅ Main panel click closes details
-
-7. **About page with author info and RS School link** - **5/5**
-   - ✅ About.tsx implemented
-   - ✅ RS School link present
-
-8. **404 is implemented** - **5/5**
-   - ✅ NotFound.tsx implemented
-   - ✅ Routing handles non-existing paths
-
-9. **New tests for new functionality** - **15/15**
-   - ✅ Tests for Details, About, Search, CardList
-   - ✅ Cover new functionality
+5. **Theme Context API** - **15/15**
+   - ✅ Theme switcher component implemented
+   - ✅ Light/Dark theme options available
+   - ✅ Theme affects entire application
+   - ✅ Theme state managed via Context API
+   - ✅ Theme preference persisted in localStorage
 
 #### 🚫 **NO PENALTIES:**
 - TypeScript is used ✅
@@ -84,11 +79,20 @@ Refactor class components to functional components with hooks and implement rout
 - All main components have test files
 - Husky runs tests on pre-push
 
+### Task 3: Routing and Hooks (Completed)
+- App converted to **functional components with hooks**
+- React Router implemented for navigation
+- Custom `useLocalStorage` hook for state persistence
+- Pagination with URL synchronization
+- Master-Detail view with routing
+- About page and 404 handling
+
 ## 🔗 Task Links
 
 - [Task 1: React Class Components](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-class-components.md)
 - [Task 2: React Unit Testing](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-unit-testing.md)
 - [Task 3: React Routing and Hooks](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-routing-hooks.md)
+- [Task 4: State Management and Context API](https://github.com/rolling-scopes-school/tasks/blob/master/tasks/react/react-state-management.md)
 
 ---
 
@@ -125,35 +129,46 @@ Refactor class components to functional components with hooks and implement rout
 
 ## 🧾 Score: 100 / 100
 
-### ✅ Task 3 Requirements (100 points)
+### ✅ Task 4 Requirements (100 points)
 
-- [x] Custom hook to restore search query from LS – **20 points**
-- [x] Pagination is present in both URL and on the page – **20 points**
-- [x] Upon clicking, open details panel on the right side of the page – **5 points**
-- [x] Use router outlet, left side of the page should continue displaying the list of results – **10 points**
-- [x] Initiate an additional API call, display a loader, and update the URL – **10 points**
-- [x] Details panel should be closed either on the "close" button click or on the main panel click – **10 points**
-- [x] About page is implemented with author information and a link to the RS School React course – **5 points**
-- [x] 404 is implemented – **5 points**
-- [x] New tests are added for the new functionality – **15 points**
+- [x] State management is properly implemented with Redux Toolkit – **35 points**
+- [x] Selected items are managed through the state store, persistent across pages – **25 points**
+- [x] Flyout component shows/hides based on selected items, displays count – **15 points**
+- [x] "Unselect all" and "Download" buttons work according to requirements – **10 points**
+- [x] User can switch application theme using Context API – **15 points**
+
+### ✅ No Penalties Applied
+
+- [x] TypeScript is used throughout the application
+- [x] No usage of `any` type
+- [x] No usage of `ts-ignore`
+- [x] No code smells or commented code
+- [x] Test coverage above 80% (88.42%)
+- [x] No direct DOM manipulations
+- [x] No external component libraries used
 
 ---
 
 ## 🧪 Functionality Overview
 
-- App converted to **functional components with hooks**
-- React Router implemented for navigation
-- Custom `useLocalStorage` hook for state persistence
-- Pagination with URL synchronization (`?page=2`)
-- Master-Detail view with routing (`/:detailsId`)
-- Search input fetches data from API (`https://pokeapi.co/api/v2/pokemon`)
-- Loader shown during API requests
-- ErrorBoundary catches runtime errors (kept as class component)
+- **Redux Toolkit** for state management
+- **Context API** for theme switching (Light/Dark)
+- **Selected Items Management** with persistent state
+- **Flyout Component** for bulk actions
+- **CSV Download** functionality
+- React Router for navigation
+- Custom hooks for state persistence
+- Pagination with URL synchronization
+- Master-Detail view with routing
+- Search functionality with API integration
+- Comprehensive test coverage (88.42%)
 - UI components:
   - `Search` (with custom hook)
-  - `CardList`, `Card`
+  - `CardList`, `Card` (with selection checkboxes)
   - `Details` (with routing)
   - `Pagination`
+  - `Flyout` (Redux-powered)
+  - `ThemeSwitcher` (Context API)
   - `About`, `NotFound`
   - `Loader`, `ErrorBoundary`
 
@@ -162,18 +177,21 @@ Refactor class components to functional components with hooks and implement rout
 ## 🧰 Tech Stack
 
 - React (Functional Components + Hooks)
-- React Router
-- TypeScript
-- Tailwind CSS
-- ESLint / Prettier / Husky
+- **Redux Toolkit** (State Management)
+- **Context API** (Theme Management)
+- React Router (Navigation)
+- TypeScript (Type Safety)
+- Tailwind CSS (Styling)
+- Jest + React Testing Library (Testing)
+- ESLint / Prettier / Husky (Code Quality)
 - PokeAPI (Pokemon API)
-- LocalStorage (via custom hook)
+- LocalStorage (Persistence)
 
 ---
 
 ## 🛠 Branch Name
 
-`hooks-and-routing`
+`app-state-management`
 
 ---
 
@@ -188,11 +206,12 @@ Refactor class components to functional components with hooks and implement rout
 
 ## 💬 Final Notes
 
-All Task 3 requirements have been implemented successfully. Components converted to functional with hooks, React Router added for navigation, custom hooks created, and comprehensive testing maintained. The app features a dark theme with orange accents and provides smooth Pokemon search with routing capabilities.
+All Task 4 requirements have been implemented successfully. Redux Toolkit integrated for state management, Context API added for theme switching, selected items functionality with flyout component, and CSV download capability. The app maintains excellent test coverage (88.42%) and follows all React best practices. Features include persistent item selection, theme switching, and comprehensive state management.
 
 ## 🛠️ Technologies
 
 [![React](https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![Redux Toolkit](https://img.shields.io/badge/Redux_Toolkit-764ABC?style=for-the-badge&logo=redux&logoColor=white)](https://redux-toolkit.js.org/)
 [![React Router](https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white)](https://reactrouter.com/)
 [![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)

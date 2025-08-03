@@ -21,9 +21,9 @@ export function renderWithProviders(
     preloadedState = {},
     store = configureStore({
       reducer: {
-        items: itemsReducer,
-        selectedItems: selectedItemsReducer,
-      } as const,
+        items: itemsReducer as any,
+        selectedItems: selectedItemsReducer as any,
+      },
       preloadedState,
     }),
     ...renderOptions

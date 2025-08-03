@@ -1,34 +1,34 @@
-Proces sprawdzania zadań przez mentora
-Uczeń kończy zadanie znajdujące się w prywatnym repozytorium szkoły (chyba że w opisie zadania określono inaczej).
-Student tworzy i przesyła żądanie ściągnięcia przed upływem terminu.
-Poniżej określono zasady PR
-Poniżej wymieniono kary za przekroczenie terminów
-Do czasu wystawienia oceny końcowej przez mentora uczeń może kontynuować wdrażanie pozostałych funkcji
-Mentor sprawdza PR, pozostawia swoje komentarze i rekomendacje dotyczące jakości kodu (kopiuj-wklej, magiczne liczby, struktura projektu itp.) oraz zaimplementowanej funkcjonalności. Zostawia komentarz ze wstępną oceną.
-Punktację ustala mentor na podstawie kryteriów oceny określonych dla każdego zadania
-Przy przyznawaniu punktów należy wziąć pod uwagę wszystkie wdrożone funkcjonalności. Np. student nie spełnił w 100% minimalnych (podstawowych) wymagań, ale spełnił niektóre z dodatkowych – wszystkie wymagania muszą zostać uwzględnione.
-Mentor może z góry ustalić wstępną ocenę, biorąc pod uwagę, że uczeń poprawi wszystkie komentarze później
-Uczeń ustosunkowuje się do uwag w ciągu 5 dni.
-Jeżeli komentarz mentora do PR oczekuje na odpowiedź studenta, student zapisuje odpowiedź jako odpowiedź na komentarz
-Jeżeli uczeń wprowadził jakieś zmiany, musi zostawić komentarz, w którym dokładnie opisze, co się zmieniło
-Na podstawie wyników przeglądu kodu i wprowadzonych zmian mentor ustala ocenę końcową w skali Score ( RS APP > Submit-review).
-Decyzja o odjęciu punktów za funkcjonalności wdrożone przez studenta po terminie należy do mentora.
-Jeśli uczeń nie odniósł się do uwag mentora, mentor może dodatkowo obniżyć ocenę. Wysokość kary zależy od decyzji mentora, maksymalnie -50 punktów.
-Wymagania dotyczące żądania ściągnięcia (PR)
-Pull Request to miejsce, w którym można omówić kod autora. Nie powinien to być monolog, lecz owocna współpraca między autorem a recenzentem. Zachowajcie profesjonalizm, szanujcie swój czas i wysiłek.
+Task Checking Process by Mentor
+A student completes an assignment in a school's private repository (unless otherwise specified in a task description).
+The student creates and submits a Pull Request before the deadline.
+The PR rules are specified below
+Penalties for deadline violations are listed below
+Until the final grade is given by the mentor, the student can continue to implement remaining features
+The mentor checks the PR, leaves his comments and recommendations on the quality of the code (copy-paste, magic numbers, project structure, etc.) and the implemented functionality. Leaves a comment with a preliminary score.
+The score is set by the mentor based on the assessment criteria specified for each task
+When giving a score, all implemented functionality must be taken into account. E.g. a student did not 100% fulfill the minimum (basic) requirements, but fulfilled some of the additional ones - all requirements must be taken into account
+The mentor can set a preliminary score in advance, taking into account that the student will correct all the comments afterwards
+The student addresses the comments within 5 days.
+If the mentor's comment to the PR is pending the student's answer - the student writes the answer as a comment's reply
+If the student has committed some changes, the student must leave a comment about what exactly has changed
+Based on the results of the code review and corresponding changes, the mentor sets the final grade in Score (RS APP > Submit-review).
+It is up to the mentor to decide whether to deduct points or not for the functionality implemented by the student after the deadline.
+If the student has not addressed the mentor's comments, the mentor may further reduce the mark. The size of the penalty is at the discretion of the mentor, maximum -50 points.
+Pull Request Requirements (PR)
+Pull Request is a place to discuss contributor's code. It should not be a monologue but rather a fruitful collaboration between a contributor and a reviewer. Stay professional, respect each other's time and efforts.
 
-Opis żądania ściągnięcia musi zawierać następujące informacje:
-Adres URL zadania.
-Zrzut ekranu pokazujący wynik ukończenia zadania. Zrzut ekranu jest dodawany do żądania ściągnięcia jako załącznik graficzny. Aby to zrobić, wystarczy przeciągnąć i upuścić zrzut ekranu w polu tekstu opisu.
-Adres URL wdrożenia Twojej aplikacji. Dla frontendu – adres URL witryny, dla backendu – adres URL punktu końcowego API. Aby utworzyć wdrożenie, możesz użyć następujących opcji:
-gh-pages (jeśli masz dostęp do prywatnego repozytorium RS School)
-hosting internetowy, np. netlify.com (jeśli nie masz dostępu do prywatnego repozytorium RS School lub nie możesz go wdrożyć gh-pagesze względu na uprawnienia)
-inne statyczne zasoby do przechowywania z możliwością obsługi sieci Web, np. S3
-rozwiązania bezserwerowe lub hostowane samodzielnie dla Twojego API (upewnij się, że adres URL jest publiczny i dostępny dla innych osób)
-schemat nazewnictwa: nazwa konta GitHub — nazwa zadania.
-Data złożenia/termin ostateczny.
-Twoja samoocena wyniku wykonania zadania i opinia na temat uzyskanego wyniku.
-Opis Przykład
+Pull Request description must contain the following:
+Task URL.
+Screenshot showing the result of Task's completion. The screenshot is added to a Pull Request as an image attachment. To achieve that you can just drag-and-drop the screenshot to the Description text area.
+Deployment URL of your application. For frontend - Website URL, for backend - API Endpoint URL. To create deployment you can use the following:
+gh-pages (if you have access to a private RS School repo)
+web hosting, like netlify.com (if you don't have access to a private RS School repo or can't deploy to gh-pages because of permissions)
+other static assets storage with web serving capabilities, like S3
+serverless or self-hosted solutions for your API (make sure URL is public and accessible by other people)
+naming scheme: GitHub account name - Task name.
+Submittion Date / Deadline Date.
+Your self-check of Task's completion result and opinion on the achieved Score.
+Description Example
 1. Task: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/fancy-weather.md
 2. Screenshot:
    ![](https://docs.rs.school/images/fancy-weather.png)
@@ -43,52 +43,52 @@ Opis Przykład
   - [x] use weather data and location (10)
   - [±] clock, refreshed each second (5/10)
  ...
-Żądanie ściągnięcia nie może zawierać następujących elementów:
-Zakomentowany kod
-Pozostałości i/lub nieistotne pliki, automatycznie generowany kod, node_modules itp.
-Zalecenia dotyczące procesu przeglądu kodu
-Aby usprawnić proces przeglądu kodu zgłoszeń studenckich, zaleca się przeprowadzenie go w dwóch etapach:
+Pull Request must not contain the following:
+Commented code
+Leftover and/or irrelevant files, auto-generated code, node_modules, etc.
+Code Review Process Recommendations
+For a more efficient process of code review of student PRs, it is recommended to conduct it in 2 stages:
 
-Przegląd wersji roboczej zadania. Po ukończeniu wersji roboczej student tworzy PR, który przedstawia główną koncepcję zadania i implementuje główne części aplikacji. Wersja ta może nie uwzględniać dodatkowych wymagań.
-Przegląd wersji „Release” zadania. Jest to ukończona i przebudowana wersja zadania, zawierająca wszystkie zmiany uwzględniające komentarze i sugestie zgłoszone podczas przeglądu wersji „Draft”.
-Podejście to rozwiązuje kilka problemów, które zwykle pojawiają się podczas przeglądania i wdrażania dużych zadań:
+Review of the "Draft" version of the task. The student creates a PR when the "Draft" version is ready, which shows the main concept of the task and implements the main parts of the application. This version may not cover additional requirements.
+Review of the "Release" version of the task. This is a completed and refactored version of the task, which contains all the changes addressing the comments and suggestions mentioned during the review of the "Draft" version.
+This approach solves several problems that are usually encountered when reviewing and implementing large tasks:
 
-Zmniejszenie jednorazowego obciążenia mentora obowiązkiem przeglądu.
-Często trudno jest dokładnie przeanalizować cały kod zadania na raz i wyjaśnić wszystkie koncepcje, których student nie zrozumiał w obszernej bazie kodu.
-Często łatwiej jest znaleźć czas na 2 krótsze przeglądy, choć generalnie łączny czas może się wydłużyć.
-Wykrywanie błędów architektonicznych już na samym początku, co prowadzi do „kosztownych” problemów z refaktoryzacją
-Dowiedz się, jak pracować z Gitem i Githubem
-Motywacja do dotrzymania terminu
-Przykład procesu przeglądu kodu
-Proces przeglądu kodu można rozpocząć od sprawdzenia formatu żądania zmian, nazewnictwa zatwierdzeń i ich wystarczającej liczby.
-Wymagania dotyczące zatwierdzenia
-Wymagania dotyczące żądania ściągnięcia
-Następnie sklonuj repozytorium, zainstaluj zależności i sprawdź, czy projekt jest możliwy do zbudowania/uruchomienia.
+Reducing the one-time review load on the mentor.
+It is often quite difficult to carefully look into the entire code of the task in one go and clarify all the concepts that the student missed within the large code base.
+It is often much easier to find time for 2 smaller reviews, although in general, the total time may be increased.
+Catching architectural mishaps at the very beginning, which lead to "expensive", in terms of refactoring, problems
+Learn how to work with Git and Github
+Motivation to meet the deadline
+Code Review Process Example
+Code Review process can be started with a check of the PR format, the naming of the commits, and a sufficient number of them.
+Commit Requirements
+Pull Request Requirements
+Next, clone the repository, install dependencies, and check if the project is buildable / runnable.
 
-Jeżeli wymagania obejmują użycie lintera lub testów, sprawdź, czy są dostępne przygotowane skrypty do uruchomienia, lintera i/lub przetestowania aplikacji oraz czy po ich uruchomieniu występują błędy.
+If the requirements included the use of a linter or tests, check for the presence of a prepared scripts to start, lint and/or test the app and whether errors occur after running them.
 
-Warto sprawdzić ogólną funkcjonalność aplikacji, czy w konsoli nie pojawiają się żadne błędy, czy żądania są przetwarzane poprawnie itp.
+It is worth checking the overall functionality of the application, whether there are no errors in the console, whether requests are processed correctly, etc.
 
-Na tym etapie możesz zwrócić uwagę na możliwe problemy UI/UX:
+At this stage, you can pay attention to possible UI / UX problems:
 
-czy elementy klikalne są podświetlone
-czy występuje nakładanie się elementów/tekstu
-możliwe zalecenia dotyczące poprawy wyglądu wizualnego aplikacji, jeśli w zadaniu nie było jasno zdefiniowanego projektu
-Czas na przegląd samego kodu. Oto kilka potencjalnych punktów poprawy jakości kodu:
-Ogólny
-DRY – jeśli występują powtarzające się fragmenty kodu, lepiej umieścić je w osobnej klasie/funkcji
-KISS – staraj się zachować prostą i przejrzystą strukturę
-komentarze powinny wyjaśniać cel kodu, a nie go opisywać
+whether clickable elements are highlighted
+whether there is an overlap of elements / text
+possible recommendations for improving visual appearance of the app if there was no clearly defined design in the task
+Now's the time to review the code itself. Here are some potential code quality improvement points:
+General
+DRY - if there are repeating pieces of code, it's better to put them in a separate class/function
+KISS - try to keep the structure simple and clear
+comments should explain the purpose of the code instead of describe it
 Bad
 
 # method to find min value
 function findMinValue() {...}
-nie użyto formatera kodu, co pomaga zachować ten sam styl kodu w całym zespole (np. ładniejszy)
-lepiej nie używać skrótów do nazewnictwa zmiennych/klas/funkcji, poprawi to ogólne zrozumienie i czytelność kodu
+no code formatter used, which helps maintain the same code style across the team (e.g. prettier)
+it is better not to use abbreviations for naming variables / classes / functions, this will improve overall understanding and readability of the code
 HTML
-brak atrybutu alt dla imgtagu, zaleca się również ustawienie wysokości i szerokości, co jest przydatne, gdy z jakiegoś powodu obraz nie ładuje się
-brak lub niewystarczająca semantyka
-zbędne bloki
+no alt attribute for the img tag, it is also recommended to set the height and width, which is useful when the image does not load for some reason
+lack or insufficient semantics
+redundant blocks
 <div class="container">
   <div class="wrapper">
     <ul>
@@ -96,22 +96,22 @@ zbędne bloki
     </ul>
   </div>
 </div>
-użyj nazw klas w formacie kebab-case dla HTML
+use class names in kebab-case for HTML
 <!-- BAD -->
 <div class="containerWrapper"></div>
 <!-- GOOD -->
 <div class="container-wrapper"></div>
-jeśli potrzebujesz utworzyć jakiś nagłówek wielkimi literami w swoim kodzie HTML, lepiej zrobić to za pomocą CSS
-używanie stylów inline lub kodu JS w HTML, czyli w formie onclickfunkcji, jest również błędem
+if you need to make some kind of heading in the upper case in your HTML, it's better to do it with CSS
+using inline styles or JS code in HTML, i.e. in the form of an onclick function, is also a mistake
 CSS
-spróbuj zastosować dynamiczne style za pomocą klas CSS, a nie za pomocą JS
-staraj się pisać style z niewielkim stopniem zagnieżdżenia (nie większym niż 2x) – ułatwia to konserwację i refaktoryzację stylu, jeśli jest to konieczne
-lepiej jest używać tych samych jednostek miary ( px, remlub em), co ułatwia wprowadzanie zmian (podczas korzystania z preprocesorów można napisać funkcję, która będzie konwertować pxdo rem)
+try to apply dynamic styles with CSS classes, not with the use of JS
+try to write styles with a small degree of nesting (no more than 2x) - this simplifies maintenance and eases refactoring of the style if necessary
+it is preferable to use the same units of measurement (px,rem or em) which makes it easier to introduce changes (when using preprocessors, you can write a function that will convert px to rem)
 JS
-użyj delegowania zdarzeń, jeśli ma to zastosowanie
-użyj nawiasów dla if else / forbloków
-magiczne liczby i magiczne ciągi znaków – spróbuj umieścić je w oddzielnych stałych
-użyj obiektów wyliczeniowych
+use event delegation if applicable
+use parentheses for if else / for blocks
+magic numbers and magic strings - try to put them into separate constants
+use enums objects
 const KEY_CODES = {
 	Space: 32,
 	Enter: 13,
@@ -121,20 +121,23 @@ const KEY_CODES = {
 if (key === KEY_CODES.Enter) {
   ...
 }
-rozmiar pliku (duże pliki są trudne do odczytania i utrzymania, jeśli plik ma więcej niż 200–400 wierszy, należy rozważyć jego podzielenie)
-monitoruj stopień zagnieżdżenia bloków warunkowych, bloki z poziomem zagnieżdżenia 3 lub wyższym są trudne do odczytania i postrzegania, być może można je przenieść do osobnej funkcji
-spróbuj użyć czystych funkcji (są lepiej przetestowane)
-użyj nazwanych argumentów, jeśli liczba argumentów wynosi 3 lub więcej, dzięki temu nie będziesz musiał przestrzegać kolejności, a podczas czytania kodu będzie bardziej jasne, co jest przekazywane do funkcji
+file size (large files are difficult to read and maintain, if the file is more than 200 - 400 lines, then you should think about splitting)
+monitor the degree of nesting of conditional blocks, blocks with a nesting level of 3 or more are difficult to read and perceive, perhaps they can be moved into a separate function
+try to use pure functions (they are better tested)
+use named arguments if the number of arguments is 3 or more, this allows you not to follow the order and when reading the code it is more clear what is passed to the function
 function insertElement({ parent, tag, class, value }){...}
 
 insertElement({ parent: parentElement, tag: 'p', class: 'class', value: 'Some value' })
-Terminy dla studentów
-Terminy realizacji wszystkich zadań podane są w planie kursu.
-Jeżeli student nie zdążył oddać pracy na czas, mentor może według własnego uznania zastosować następujące kary:
--10 punktów za spóźnienie do 3 dni włącznie
--30% procentowy spadek wyniku, jeśli spóźnisz się do 7 dni włącznie
--70% procent wyniku, jeśli opóźnienie wynosi ponad tydzień
-kary mogą zostać pominięte, jeśli istnieje ku temu ważny powód (szpital, szkolenie wojskowe itp.)
-zaokrąglanie następuje na korzyść ucznia przy stosowaniu współczynników karnych
-Terminy dla mentorów
-Mentor powinien dokonać przeglądu pracy studenta w ciągu jednego lub dwóch tygodni od jej złożenia. Im szybciej, tym lepiej. Terminy składania prac przez studentów podano w harmonogramie.
+Deadlines for Students
+Deadlines for all tasks are indicated in the course schedule.
+If student did not have time to turn in the assignment on time, mentor, at his own discretion, can apply the following penalties:
+-10 score points if you are late up to 3 days, inclusive
+-30% score percentage if you are late up to 7 days, inclusive
+-70% score percentage if more than a week late
+penalties can be omitted if there is a good reason (hospital, army training, etc.)
+rounding occurs in favor of the student, when applying penalty coefficients
+Deadlines for Mentors
+Mentor is expected to review student's work within one or two weeks of the student's submission. But the sooner the better. Deadline dates for students are indicated in the schedule.
+
+Recommended Links
+How to write the perfect Pull Request
