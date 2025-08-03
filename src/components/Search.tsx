@@ -22,67 +22,20 @@ const Search: React.FC<SearchProps> = ({ onSearch, loading }) => {
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      style={{ display: 'flex', width: '100%', maxWidth: '512px' }}
-    >
-      <div style={{ position: 'relative', flex: '1' }}>
-        <span
-          style={{
-            position: 'absolute',
-            inset: '0',
-            display: 'flex',
-            alignItems: 'center',
-            paddingLeft: '8px',
-            pointerEvents: 'none',
-            color: '#FF7043',
-            fontSize: '1.125rem',
-            zIndex: 1,
-          }}
-        >
-          🔍
-        </span>
-        <input
-          id="search"
-          type="search"
-          value={inputValue}
-          onChange={handleChange}
-          style={{
-            display: 'block',
-            width: '100%',
-            paddingLeft: '32px',
-            paddingRight: '16px',
-            paddingTop: '8px',
-            paddingBottom: '8px',
-            borderRadius: '8px 0 0 8px',
-            backgroundColor: '#212121',
-            border: '1px solid #424242',
-            color: '#F5F5F5',
-            fontSize: '1rem',
-            height: '48px',
-            outline: 'none',
-            zIndex: 2,
-          }}
-          placeholder="Enter Pokémon name..."
-          disabled={loading}
-          autoComplete="off"
-        />
-      </div>
+    <form onSubmit={handleSubmit} className="flex w-full max-w-lg mb-4">
+      <input
+        id="search"
+        type="search"
+        value={inputValue}
+        onChange={handleChange}
+        className="flex-1 px-4 py-3 rounded-l-lg bg-background-secondary border border-border text-text-primary outline-none focus:ring-2 focus:ring-pokemon-orange"
+        placeholder="🔍 Enter Pokémon name..."
+        disabled={loading}
+        autoComplete="off"
+      />
       <button
         type="submit"
-        style={{
-          padding: '0 24px',
-          height: '48px',
-          borderRadius: '0 8px 8px 0',
-          backgroundColor: '#FF7043',
-          color: 'white',
-          fontWeight: '600',
-          fontSize: '1rem',
-          boxShadow: '0 1px 3px rgba(0,0,0,0.1)',
-          border: 'none',
-          cursor: 'pointer',
-          zIndex: 1,
-        }}
+        className="px-6 py-3 rounded-r-lg bg-pokemon-orange text-white font-semibold hover:bg-orange-600 disabled:opacity-50"
         disabled={loading}
         aria-label="Search"
       >

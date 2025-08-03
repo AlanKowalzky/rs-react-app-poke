@@ -9,7 +9,12 @@ interface CardListProps {
   onToggleItem: (id: number) => void;
 }
 
-const CardList: React.FC<CardListProps> = ({ items, selectedIds, onDetailsClick, onToggleItem }) => {
+const CardList: React.FC<CardListProps> = ({
+  items,
+  selectedIds,
+  onDetailsClick,
+  onToggleItem,
+}) => {
   if (items.length === 0) {
     return (
       <div className="py-10 px-5 text-center text-lg text-text-secondary">
@@ -19,8 +24,8 @@ const CardList: React.FC<CardListProps> = ({ items, selectedIds, onDetailsClick,
   }
 
   return (
-    <div className="flex flex-col gap-2">
-      {items.map(item => (
+    <div>
+      {items.map((item) => (
         <Card
           key={item.id}
           item={item}

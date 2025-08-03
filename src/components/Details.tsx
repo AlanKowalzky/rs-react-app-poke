@@ -69,7 +69,7 @@ const Details: React.FC = () => {
 
   if (!details) {
     return (
-      <div className="p-4 text-center text-gray-400">
+      <div className="p-4 text-center text-text-secondary">
         Select a Pokémon to see the details.
       </div>
     );
@@ -80,37 +80,38 @@ const Details: React.FC = () => {
     details.sprites.front_default;
 
   return (
-    <div className="p-4 bg-background-secondary rounded-lg shadow-lg relative text-text-primary">
+    <div className="bg-background-secondary rounded-lg shadow-lg relative text-text-primary p-4 border border-border">
       <button
         onClick={handleClose}
-        className="absolute top-2 right-2 text-white bg-red-600 hover:bg-red-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xl"
+        className="absolute top-2 right-2 text-white bg-red-500 hover:bg-red-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xl transition-colors z-10"
         aria-label="Close details"
       >
         &times;
       </button>
-      <h2 className="text-2xl font-bold capitalize mb-4 text-center text-pokemon-orange">
-        {details.name}
-      </h2>
-      <img
-        src={imageUrl}
-        alt={details.name}
-        className="mx-auto mb-4"
-        style={{ width: '200px', height: '200px', objectFit: 'contain' }}
-      />
-      <div className="mt-4 text-left">
-        <p>
-          <strong>ID:</strong> {details.id}
-        </p>
-        <p>
-          <strong>Height:</strong> {details.height / 10} m
-        </p>
-        <p>
-          <strong>Weight:</strong> {details.weight / 10} kg
-        </p>
-        <p>
-          <strong>Types:</strong>{' '}
-          {details.types.map((t) => t.type.name).join(', ')}
-        </p>
+      <div className="pt-8">
+        <h2 className="text-xl font-bold capitalize mb-4 text-center text-pokemon-orange">
+          {details.name}
+        </h2>
+        <img
+          src={imageUrl}
+          alt={details.name}
+          className="mx-auto mb-4 w-48 h-48 object-contain"
+        />
+        <div className="space-y-2">
+          <p>
+            <strong>ID:</strong> {details.id}
+          </p>
+          <p>
+            <strong>Height:</strong> {details.height / 10} m
+          </p>
+          <p>
+            <strong>Weight:</strong> {details.weight / 10} kg
+          </p>
+          <p>
+            <strong>Types:</strong>{' '}
+            {details.types.map((t) => t.type.name).join(', ')}
+          </p>
+        </div>
       </div>
     </div>
   );

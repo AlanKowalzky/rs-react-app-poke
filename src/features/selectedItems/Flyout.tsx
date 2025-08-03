@@ -49,26 +49,29 @@ export function Flyout() {
   };
 
   return (
-    <div className="flyout">
-      <span>
+    <div className="fixed top-4 right-4 bg-background-secondary p-3 rounded-lg shadow-lg border border-border text-text-primary z-50">
+      <div className="text-sm mb-2">
         {selectedIds.length}{' '}
-        {selectedIds.length === 1
-          ? 'element jest zaznaczony'
-          : 'elementy są zaznaczone'}
-      </span>
-      <div>
-        <button onClick={() => dispatch(unselectAll())} className="flyout-button">
-          Odznacz wszystko
+        {selectedIds.length === 1 ? 'zaznaczony' : 'zaznaczone'}
+      </div>
+      <div className="flex gap-2">
+        <button
+          onClick={() => dispatch(unselectAll())}
+          className="px-3 py-1 text-xs rounded bg-gray-600 text-white hover:bg-gray-500 transition-colors"
+        >
+          Odznacz
         </button>
-        <button onClick={handleDownload} className="flyout-button-primary">
+        <button
+          onClick={handleDownload}
+          className="px-3 py-1 text-xs rounded bg-pokemon-orange text-white hover:bg-orange-500 transition-colors"
+        >
           Pobierz
         </button>
-        {/* Ukryty link zarządzany przez React */}
         <a
           ref={downloadLinkRef}
           href={downloadUrl || ''}
           download={`${itemsToDownload.length}_items.csv`}
-          style={{ display: 'none' }}
+          className="hidden"
           aria-hidden="true"
         />
       </div>

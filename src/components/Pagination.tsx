@@ -38,7 +38,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-4 py-2 rounded-md bg-background-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-4 py-2 rounded-md bg-background-secondary border border-border disabled:opacity-50 disabled:cursor-not-allowed hover:bg-border transition-colors"
       >
         Prev
       </button>
@@ -47,16 +47,19 @@ const Pagination: React.FC<PaginationProps> = ({
           <button
             key={`${page}-${index}`}
             onClick={() => onPageChange(page)}
-            className={`px-3 py-2 rounded-md ${
+            className={`px-3 py-2 rounded-md border transition-colors ${
               currentPage === page
-                ? 'bg-pokemon-orange text-white font-bold'
-                : 'bg-background-secondary'
+                ? 'bg-pokemon-orange text-white border-pokemon-orange font-bold'
+                : 'bg-background-secondary border-border hover:bg-border'
             }`}
           >
             {page}
           </button>
         ) : (
-          <span key={`ellipsis-${index}`} className="px-3 py-2 text-text-secondary">
+          <span
+            key={`ellipsis-${index}`}
+            className="px-3 py-2 text-text-secondary"
+          >
             ...
           </span>
         )
@@ -64,7 +67,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-4 py-2 rounded-md bg-background-secondary disabled:opacity-50 disabled:cursor-not-allowed"
+        className="px-4 py-2 rounded-md bg-background-secondary border border-border disabled:opacity-50 disabled:cursor-not-allowed hover:bg-border transition-colors"
       >
         Next
       </button>

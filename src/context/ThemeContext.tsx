@@ -20,13 +20,13 @@ export const ThemeProvider: React.FC<{ children: ReactNode }> = ({
 }) => {
   const [theme, setTheme] = useState<Theme>(() => {
     const storedTheme = localStorage.getItem('theme');
-    return (storedTheme as Theme) || 'dark'; // Domyślnie ciemny motyw
+    return (storedTheme as Theme) || 'dark';
   });
 
   useEffect(() => {
-    const root = window.document.documentElement;
-    root.classList.remove(theme === 'dark' ? 'light' : 'dark');
-    root.classList.add(theme);
+    const html = document.documentElement;
+    html.classList.remove('light', 'dark');
+    html.classList.add(theme);
     localStorage.setItem('theme', theme);
   }, [theme]);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -25,7 +25,11 @@ const ITEMS_PER_PAGE = 10;
 
 const AppLayout: React.FC = () => {
   const dispatch = useAppDispatch();
-  const { items: allItems, status, error } = useAppSelector((state) => state.items);
+  const {
+    items: allItems,
+    status,
+    error,
+  } = useAppSelector((state) => state.items);
   const { selectedIds } = useAppSelector((state) => state.selectedItems);
 
   const [searchTerm, setSearchTerm] = useState('');
@@ -89,24 +93,25 @@ const AppLayout: React.FC = () => {
   };
 
   return (
-    <div className="container">
-      <header className="header">
-        <h1 className="title">Pokemon Search</h1>
+    <div className="max-w-6xl mx-auto px-4">
+      <header className="flex justify-between items-center py-4 border-b border-border">
+        <h1 className="text-3xl font-bold text-pokemon-orange">
+          Pokemon Search
+        </h1>
         <nav className="flex items-center gap-4">
-          <Link to="/about" className="text-lg text-text-secondary hover:text-text-primary">
+          <Link
+            to="/about"
+            className="text-lg text-text-secondary hover:text-text-primary"
+          >
             About
           </Link>
           <ThemeSwitcher />
         </nav>
       </header>
-      <main className="main">
-        <div
-          onClick={handleMainClick}
-          className="flex flex-1 flex-col relative"
-          style={{ minHeight: '600px' }}
-        >
+      <main className="mt-6 flex gap-4">
+        <div onClick={handleMainClick} className="flex-1 flex flex-col">
           <Search onSearch={handleSearch} loading={loading} />
-          <section className="flex-1 overflow-auto mt-4 pb-16">
+          <section className="mt-4">
             {loading && <Loader />}
             {error && <div className="text-red-500">Error: {error}</div>}
             {!loading && !error && (
@@ -119,7 +124,7 @@ const AppLayout: React.FC = () => {
             )}
           </section>
           {totalPages > 1 && (
-            <div className="absolute bottom-4 left-0 right-0 flex justify-center bg-background-secondary pt-2">
+            <div className="flex justify-center py-4">
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -128,7 +133,7 @@ const AppLayout: React.FC = () => {
             </div>
           )}
         </div>
-        <aside className="aside">
+        <aside className="w-96 flex-shrink-0">
           <Outlet />
         </aside>
       </main>
