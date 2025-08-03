@@ -1,6 +1,7 @@
 module.exports = {
   preset: 'ts-jest',
   testEnvironment: 'jsdom',
+  setupFiles: ['<rootDir>/src/jest.polyfills.js'],
   setupFilesAfterEnv: ['<rootDir>/src/setupTests.ts'],
   collectCoverage: true,
   coverageDirectory: 'coverage',
