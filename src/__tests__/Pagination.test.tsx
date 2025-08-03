@@ -46,4 +46,53 @@ describe('Pagination', () => {
     fireEvent.click(screen.getByText('3'));
     expect(mockOnPageChange).toHaveBeenCalledWith(3);
   });
+
+  it('disables Prev button on first page', () => {
+    render(
+      <Pagination
+        currentPage={1}
+        totalPages={5}
+        onPageChange={mockOnPageChange}
+      />
+    );
+    expect(screen.getByText('Prev')).toBeDisabled();
+  });
+
+  it('disables Next button on last page', () => {
+    render(
+      <Pagination
+        currentPage={5}
+        totalPages={5}
+        onPageChange={mockOnPageChange}
+      />
+    );
+    expect(screen.getByText('Next')).toBeDisabled();
+  });
+
+  it('shows ellipsis for large page ranges', () => {
+    render(
+      <Pagination
+        currentPage={10}
+        totalPages={20}
+        onPageChange={mockOnPageChange}
+      />
+    );
+    expect(screen.getAllByText('...')).toHaveLength(2);
+  });
+
+  it('calls onPageChange for Prev/Next buttons', () => {
+    render(
+      <Pagination
+        currentPage={3}
+        totalPages={5}
+        onPageChange={mockOnPageChange}
+      />
+    );
+
+    fireEvent.click(screen.getByText('Prev'));
+    expect(mockOnPageChange).toHaveBeenCalledWith(2);
+
+    fireEvent.click(screen.getByText('Next'));
+    expect(mockOnPageChange).toHaveBeenCalledWith(4);
+  });
 });

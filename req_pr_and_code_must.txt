@@ -1,0 +1,140 @@
+Proces sprawdzania zadań przez mentora
+Uczeń kończy zadanie znajdujące się w prywatnym repozytorium szkoły (chyba że w opisie zadania określono inaczej).
+Student tworzy i przesyła żądanie ściągnięcia przed upływem terminu.
+Poniżej określono zasady PR
+Poniżej wymieniono kary za przekroczenie terminów
+Do czasu wystawienia oceny końcowej przez mentora uczeń może kontynuować wdrażanie pozostałych funkcji
+Mentor sprawdza PR, pozostawia swoje komentarze i rekomendacje dotyczące jakości kodu (kopiuj-wklej, magiczne liczby, struktura projektu itp.) oraz zaimplementowanej funkcjonalności. Zostawia komentarz ze wstępną oceną.
+Punktację ustala mentor na podstawie kryteriów oceny określonych dla każdego zadania
+Przy przyznawaniu punktów należy wziąć pod uwagę wszystkie wdrożone funkcjonalności. Np. student nie spełnił w 100% minimalnych (podstawowych) wymagań, ale spełnił niektóre z dodatkowych – wszystkie wymagania muszą zostać uwzględnione.
+Mentor może z góry ustalić wstępną ocenę, biorąc pod uwagę, że uczeń poprawi wszystkie komentarze później
+Uczeń ustosunkowuje się do uwag w ciągu 5 dni.
+Jeżeli komentarz mentora do PR oczekuje na odpowiedź studenta, student zapisuje odpowiedź jako odpowiedź na komentarz
+Jeżeli uczeń wprowadził jakieś zmiany, musi zostawić komentarz, w którym dokładnie opisze, co się zmieniło
+Na podstawie wyników przeglądu kodu i wprowadzonych zmian mentor ustala ocenę końcową w skali Score ( RS APP > Submit-review).
+Decyzja o odjęciu punktów za funkcjonalności wdrożone przez studenta po terminie należy do mentora.
+Jeśli uczeń nie odniósł się do uwag mentora, mentor może dodatkowo obniżyć ocenę. Wysokość kary zależy od decyzji mentora, maksymalnie -50 punktów.
+Wymagania dotyczące żądania ściągnięcia (PR)
+Pull Request to miejsce, w którym można omówić kod autora. Nie powinien to być monolog, lecz owocna współpraca między autorem a recenzentem. Zachowajcie profesjonalizm, szanujcie swój czas i wysiłek.
+
+Opis żądania ściągnięcia musi zawierać następujące informacje:
+Adres URL zadania.
+Zrzut ekranu pokazujący wynik ukończenia zadania. Zrzut ekranu jest dodawany do żądania ściągnięcia jako załącznik graficzny. Aby to zrobić, wystarczy przeciągnąć i upuścić zrzut ekranu w polu tekstu opisu.
+Adres URL wdrożenia Twojej aplikacji. Dla frontendu – adres URL witryny, dla backendu – adres URL punktu końcowego API. Aby utworzyć wdrożenie, możesz użyć następujących opcji:
+gh-pages (jeśli masz dostęp do prywatnego repozytorium RS School)
+hosting internetowy, np. netlify.com (jeśli nie masz dostępu do prywatnego repozytorium RS School lub nie możesz go wdrożyć gh-pagesze względu na uprawnienia)
+inne statyczne zasoby do przechowywania z możliwością obsługi sieci Web, np. S3
+rozwiązania bezserwerowe lub hostowane samodzielnie dla Twojego API (upewnij się, że adres URL jest publiczny i dostępny dla innych osób)
+schemat nazewnictwa: nazwa konta GitHub — nazwa zadania.
+Data złożenia/termin ostateczny.
+Twoja samoocena wyniku wykonania zadania i opinia na temat uzyskanego wyniku.
+Opis Przykład
+1. Task: https://github.com/rolling-scopes-school/tasks/blob/master/tasks/fancy-weather.md
+2. Screenshot:
+   ![](https://docs.rs.school/images/fancy-weather.png)
+3. Deployment: https://chakapega-fancy-weather.netlify.com/
+4. Done 28.05.2020 / deadline 31.05.2020
+5. Score: 220 / 300
+- Markup, design, UI (15/30)
+  - [x] minimum page width at which it is displayed correctly – 320 рх (10)
+  - [±] application's appearancecorresponds to the layout and/or its improved version (5/10)
+  - [ ] aaplication works and looks correctly with any language (0)
+- Section "Today's weather" displays the following data (15/20)
+  - [x] use weather data and location (10)
+  - [±] clock, refreshed each second (5/10)
+ ...
+Żądanie ściągnięcia nie może zawierać następujących elementów:
+Zakomentowany kod
+Pozostałości i/lub nieistotne pliki, automatycznie generowany kod, node_modules itp.
+Zalecenia dotyczące procesu przeglądu kodu
+Aby usprawnić proces przeglądu kodu zgłoszeń studenckich, zaleca się przeprowadzenie go w dwóch etapach:
+
+Przegląd wersji roboczej zadania. Po ukończeniu wersji roboczej student tworzy PR, który przedstawia główną koncepcję zadania i implementuje główne części aplikacji. Wersja ta może nie uwzględniać dodatkowych wymagań.
+Przegląd wersji „Release” zadania. Jest to ukończona i przebudowana wersja zadania, zawierająca wszystkie zmiany uwzględniające komentarze i sugestie zgłoszone podczas przeglądu wersji „Draft”.
+Podejście to rozwiązuje kilka problemów, które zwykle pojawiają się podczas przeglądania i wdrażania dużych zadań:
+
+Zmniejszenie jednorazowego obciążenia mentora obowiązkiem przeglądu.
+Często trudno jest dokładnie przeanalizować cały kod zadania na raz i wyjaśnić wszystkie koncepcje, których student nie zrozumiał w obszernej bazie kodu.
+Często łatwiej jest znaleźć czas na 2 krótsze przeglądy, choć generalnie łączny czas może się wydłużyć.
+Wykrywanie błędów architektonicznych już na samym początku, co prowadzi do „kosztownych” problemów z refaktoryzacją
+Dowiedz się, jak pracować z Gitem i Githubem
+Motywacja do dotrzymania terminu
+Przykład procesu przeglądu kodu
+Proces przeglądu kodu można rozpocząć od sprawdzenia formatu żądania zmian, nazewnictwa zatwierdzeń i ich wystarczającej liczby.
+Wymagania dotyczące zatwierdzenia
+Wymagania dotyczące żądania ściągnięcia
+Następnie sklonuj repozytorium, zainstaluj zależności i sprawdź, czy projekt jest możliwy do zbudowania/uruchomienia.
+
+Jeżeli wymagania obejmują użycie lintera lub testów, sprawdź, czy są dostępne przygotowane skrypty do uruchomienia, lintera i/lub przetestowania aplikacji oraz czy po ich uruchomieniu występują błędy.
+
+Warto sprawdzić ogólną funkcjonalność aplikacji, czy w konsoli nie pojawiają się żadne błędy, czy żądania są przetwarzane poprawnie itp.
+
+Na tym etapie możesz zwrócić uwagę na możliwe problemy UI/UX:
+
+czy elementy klikalne są podświetlone
+czy występuje nakładanie się elementów/tekstu
+możliwe zalecenia dotyczące poprawy wyglądu wizualnego aplikacji, jeśli w zadaniu nie było jasno zdefiniowanego projektu
+Czas na przegląd samego kodu. Oto kilka potencjalnych punktów poprawy jakości kodu:
+Ogólny
+DRY – jeśli występują powtarzające się fragmenty kodu, lepiej umieścić je w osobnej klasie/funkcji
+KISS – staraj się zachować prostą i przejrzystą strukturę
+komentarze powinny wyjaśniać cel kodu, a nie go opisywać
+Bad
+
+# method to find min value
+function findMinValue() {...}
+nie użyto formatera kodu, co pomaga zachować ten sam styl kodu w całym zespole (np. ładniejszy)
+lepiej nie używać skrótów do nazewnictwa zmiennych/klas/funkcji, poprawi to ogólne zrozumienie i czytelność kodu
+HTML
+brak atrybutu alt dla imgtagu, zaleca się również ustawienie wysokości i szerokości, co jest przydatne, gdy z jakiegoś powodu obraz nie ładuje się
+brak lub niewystarczająca semantyka
+zbędne bloki
+<div class="container">
+  <div class="wrapper">
+    <ul>
+      ...
+    </ul>
+  </div>
+</div>
+użyj nazw klas w formacie kebab-case dla HTML
+<!-- BAD -->
+<div class="containerWrapper"></div>
+<!-- GOOD -->
+<div class="container-wrapper"></div>
+jeśli potrzebujesz utworzyć jakiś nagłówek wielkimi literami w swoim kodzie HTML, lepiej zrobić to za pomocą CSS
+używanie stylów inline lub kodu JS w HTML, czyli w formie onclickfunkcji, jest również błędem
+CSS
+spróbuj zastosować dynamiczne style za pomocą klas CSS, a nie za pomocą JS
+staraj się pisać style z niewielkim stopniem zagnieżdżenia (nie większym niż 2x) – ułatwia to konserwację i refaktoryzację stylu, jeśli jest to konieczne
+lepiej jest używać tych samych jednostek miary ( px, remlub em), co ułatwia wprowadzanie zmian (podczas korzystania z preprocesorów można napisać funkcję, która będzie konwertować pxdo rem)
+JS
+użyj delegowania zdarzeń, jeśli ma to zastosowanie
+użyj nawiasów dla if else / forbloków
+magiczne liczby i magiczne ciągi znaków – spróbuj umieścić je w oddzielnych stałych
+użyj obiektów wyliczeniowych
+const KEY_CODES = {
+	Space: 32,
+	Enter: 13,
+	...
+}
+
+if (key === KEY_CODES.Enter) {
+  ...
+}
+rozmiar pliku (duże pliki są trudne do odczytania i utrzymania, jeśli plik ma więcej niż 200–400 wierszy, należy rozważyć jego podzielenie)
+monitoruj stopień zagnieżdżenia bloków warunkowych, bloki z poziomem zagnieżdżenia 3 lub wyższym są trudne do odczytania i postrzegania, być może można je przenieść do osobnej funkcji
+spróbuj użyć czystych funkcji (są lepiej przetestowane)
+użyj nazwanych argumentów, jeśli liczba argumentów wynosi 3 lub więcej, dzięki temu nie będziesz musiał przestrzegać kolejności, a podczas czytania kodu będzie bardziej jasne, co jest przekazywane do funkcji
+function insertElement({ parent, tag, class, value }){...}
+
+insertElement({ parent: parentElement, tag: 'p', class: 'class', value: 'Some value' })
+Terminy dla studentów
+Terminy realizacji wszystkich zadań podane są w planie kursu.
+Jeżeli student nie zdążył oddać pracy na czas, mentor może według własnego uznania zastosować następujące kary:
+-10 punktów za spóźnienie do 3 dni włącznie
+-30% procentowy spadek wyniku, jeśli spóźnisz się do 7 dni włącznie
+-70% procent wyniku, jeśli opóźnienie wynosi ponad tydzień
+kary mogą zostać pominięte, jeśli istnieje ku temu ważny powód (szpital, szkolenie wojskowe itp.)
+zaokrąglanie następuje na korzyść ucznia przy stosowaniu współczynników karnych
+Terminy dla mentorów
+Mentor powinien dokonać przeglądu pracy studenta w ciągu jednego lub dwóch tygodni od jej złożenia. Im szybciej, tym lepiej. Terminy składania prac przez studentów podano w harmonogramie.

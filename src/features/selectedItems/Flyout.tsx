@@ -1,13 +1,12 @@
-import React, { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { unselectAll } from './selectedItemsSlice';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
 import { Pokemon } from '../items/itemsSlice';
 
-// Funkcja pomocnicza do generowania treści CSV - teraz jest to funkcja czysta.
 const generateCSV = (selectedItems: Pokemon[]): string => {
   const headers: (keyof Omit<Pokemon, 'id'>)[] = ['name', 'url'];
   const csvRows = [
-    headers.join(','), // Nagłówek
+    headers.join(','),
     ...selectedItems.map((item) =>
       headers.map((header) => `"${item[header]}"`).join(',')
     ),
@@ -30,7 +29,6 @@ export function Flyout() {
   useEffect(() => {
     if (downloadUrl && downloadLinkRef.current) {
       downloadLinkRef.current.click();
-      // Zwolnienie zasobów po kliknięciu
       URL.revokeObjectURL(downloadUrl);
       setDownloadUrl(null);
     }
@@ -52,20 +50,20 @@ export function Flyout() {
     <div className="fixed top-4 right-4 bg-background-secondary p-3 rounded-lg shadow-lg border border-border text-text-primary z-50">
       <div className="text-sm mb-2">
         {selectedIds.length}{' '}
-        {selectedIds.length === 1 ? 'zaznaczony' : 'zaznaczone'}
+        {selectedIds.length === 1 ? 'selected' : 'selected'}
       </div>
       <div className="flex gap-2">
         <button
           onClick={() => dispatch(unselectAll())}
           className="px-3 py-1 text-xs rounded bg-gray-600 text-white hover:bg-gray-500 transition-colors"
         >
-          Odznacz
+          Unselect
         </button>
         <button
           onClick={handleDownload}
           className="px-3 py-1 text-xs rounded bg-pokemon-orange text-white hover:bg-orange-500 transition-colors"
         >
-          Pobierz
+          Download
         </button>
         <a
           ref={downloadLinkRef}
