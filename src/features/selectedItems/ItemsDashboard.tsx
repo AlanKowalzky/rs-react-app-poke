@@ -16,12 +16,12 @@ export function ItemsDashboard() {
   const { selectedIds } = useAppSelector((state) => state.selectedItems);
 
   return (
-    <div>
-      <h3>Lista elementów</h3>
-      <ul style={{ listStyle: 'none', padding: 0 }}>
+    <div className="rounded-lg bg-background-secondary p-4">
+      <h3 className="mb-4 text-xl font-bold">Lista elementów</h3>
+      <ul className="list-none space-y-2 p-0">
         {MOCK_ITEMS.map((item) => (
           <li key={item.id}>
-            <label>
+            <label className="flex items-center gap-2">
               <input
                 type="checkbox"
                 checked={selectedIds.includes(item.id)}

@@ -1,5 +1,5 @@
-import { render, screen } from '@testing-library/react';
 import App from '../App';
+import { renderWithProviders, screen } from '../test-utils';
 import '@testing-library/jest-dom';
 import { searchItems } from '../services/api';
 
@@ -13,13 +13,13 @@ beforeEach(() => {
 
 it('shows loader while loading', async () => {
   mockedSearchItems.mockImplementation(() => new Promise(() => {}));
-  render(<App />);
+  renderWithProviders(<App />);
   expect(screen.getByLabelText(/loading/i)).toBeInTheDocument();
 });
 
 it('shows error on failed API', async () => {
   mockedSearchItems.mockRejectedValueOnce(new Error('API error'));
-  render(<App />);
+  renderWithProviders(<App />);
   expect(await screen.findByText(/Error: API error/i)).toBeInTheDocument();
 });
 
@@ -30,7 +30,7 @@ it('shows results on successful API', async () => {
       { name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/' },
     ],
   });
-  render(<App />);
+  renderWithProviders(<App />);
 
   expect(await screen.findByText(/pikachu/i)).toBeInTheDocument();
   expect(screen.getByText(/bulbasaur/i)).toBeInTheDocument();

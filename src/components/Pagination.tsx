@@ -34,27 +34,11 @@ const Pagination: React.FC<PaginationProps> = ({
   if (totalPages <= 1) return null;
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        gap: '8px',
-        color: 'white',
-      }}
-    >
+    <div className="flex justify-center items-center gap-2 text-text-primary">
       <button
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
-        style={{
-          padding: '8px 16px',
-          borderRadius: '6px',
-          backgroundColor: '#4B5563',
-          color: 'white',
-          border: 'none',
-          cursor: currentPage === 1 ? 'not-allowed' : 'pointer',
-          opacity: currentPage === 1 ? 0.5 : 1,
-        }}
+        className="px-4 py-2 rounded-md bg-background-secondary disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Prev
       </button>
@@ -63,23 +47,16 @@ const Pagination: React.FC<PaginationProps> = ({
           <button
             key={`${page}-${index}`}
             onClick={() => onPageChange(page)}
-            style={{
-              padding: '8px 12px',
-              borderRadius: '6px',
-              backgroundColor: currentPage === page ? '#FF7043' : '#4B5563',
-              color: 'white',
-              border: 'none',
-              cursor: 'pointer',
-              fontWeight: currentPage === page ? 'bold' : 'normal',
-            }}
+            className={`px-3 py-2 rounded-md ${
+              currentPage === page
+                ? 'bg-pokemon-orange text-white font-bold'
+                : 'bg-background-secondary'
+            }`}
           >
             {page}
           </button>
         ) : (
-          <span
-            key={`ellipsis-${index}`}
-            style={{ padding: '8px 12px', color: '#9CA3AF' }}
-          >
+          <span key={`ellipsis-${index}`} className="px-3 py-2 text-text-secondary">
             ...
           </span>
         )
@@ -87,15 +64,7 @@ const Pagination: React.FC<PaginationProps> = ({
       <button
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage === totalPages}
-        style={{
-          padding: '8px 16px',
-          borderRadius: '6px',
-          backgroundColor: '#4B5563',
-          color: 'white',
-          border: 'none',
-          cursor: currentPage === totalPages ? 'not-allowed' : 'pointer',
-          opacity: currentPage === totalPages ? 0.5 : 1,
-        }}
+        className="px-4 py-2 rounded-md bg-background-secondary disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Next
       </button>

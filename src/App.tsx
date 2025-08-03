@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -8,26 +8,39 @@ import {
   Link,
   useSearchParams,
 } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from './app/hooks';
+import { fetchItems } from './features/items/itemsSlice';
+import { toggleItem } from './features/selectedItems/selectedItemsSlice';
 import Search from './components/Search';
 import CardList from './components/CardList';
 import Loader from './components/Loader';
-import { searchItems } from './services/api';
 import Details from './components/Details';
 import About from './components/About';
 import NotFound from './components/NotFound';
 import Pagination from './components/Pagination';
+import { Flyout } from './features/selectedItems/Flyout';
+import ThemeSwitcher from './components/ThemeSwitcher';
 
 const ITEMS_PER_PAGE = 10;
 
 const AppLayout: React.FC = () => {
-  const [allItems, setAllItems] = useState<{ name: string; url: string }[]>([]);
-  const [filteredItems, setFilteredItems] = useState<
-    { name: string; url: string }[]
-  >([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
+  const dispatch = useAppDispatch();
+  const { items: allItems, status, error } = useAppSelector((state) => state.items);
+  const { selectedIds } = useAppSelector((state) => state.selectedItems);
+
+  const [searchTerm, setSearchTerm] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
+
+  const loading = status === 'loading' || status === 'idle';
+
+  const filteredItems = useMemo(() => {
+    if (!searchTerm.trim()) {
+      return allItems;
+    }
+    const lower = searchTerm.toLowerCase();
+    return allItems.filter((item) => item.name.toLowerCase().includes(lower));
+  }, [allItems, searchTerm]);
 
   const currentPage = parseInt(searchParams.get('page') || '1', 10);
   const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
@@ -37,43 +50,20 @@ const AppLayout: React.FC = () => {
     startIndex + ITEMS_PER_PAGE
   );
 
-  const fetchInitialData = useCallback(async () => {
-    setLoading(true);
-    setError(null);
-    try {
-      const response = await searchItems();
-      const fetchedItems = response.results;
-      setAllItems(fetchedItems);
-      setFilteredItems(fetchedItems);
-    } catch (err) {
-      setError((err as Error).message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  const handleSearch = useCallback(
-    (searchTerm: string) => {
-      let filtered = allItems;
-      if (searchTerm.trim()) {
-        const lower = searchTerm.toLowerCase();
-        filtered = allItems.filter((item: { name: string; url: string }) =>
-          item.name.toLowerCase().includes(lower)
-        );
-      }
-      setFilteredItems(filtered);
-      setSearchParams((prev) => {
-        const newParams = new URLSearchParams(prev);
-        newParams.set('page', '1');
-        return newParams;
-      });
-    },
-    [allItems, setSearchParams]
-  );
+  const handleSearch = (newSearchTerm: string) => {
+    setSearchTerm(newSearchTerm);
+    setSearchParams((prev) => {
+      const newParams = new URLSearchParams(prev);
+      newParams.set('page', '1');
+      return newParams;
+    });
+  };
 
   useEffect(() => {
-    fetchInitialData();
-  }, [fetchInitialData]);
+    if (status === 'idle') {
+      dispatch(fetchItems());
+    }
+  }, [status, dispatch]);
 
   const handleDetailsClick = (id: string) => {
     navigate(`/${id}?${searchParams.toString()}`);
@@ -94,57 +84,42 @@ const AppLayout: React.FC = () => {
     });
   };
 
+  const handleToggleItem = (id: number) => {
+    dispatch(toggleItem(id));
+  };
+
   return (
     <div className="container">
       <header className="header">
         <h1 className="title">Pokemon Search</h1>
-        <nav>
-          <Link to="/about" className="text-lg text-gray-300 hover:text-white">
+        <nav className="flex items-center gap-4">
+          <Link to="/about" className="text-lg text-text-secondary hover:text-text-primary">
             About
           </Link>
+          <ThemeSwitcher />
         </nav>
       </header>
       <main className="main">
         <div
-          onClick={handleMainClick} // This logic remains, but inline styles are removed
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            minHeight: '600px',
-            position: 'relative',
-          }}
+          onClick={handleMainClick}
+          className="flex flex-1 flex-col relative"
+          style={{ minHeight: '600px' }}
         >
           <Search onSearch={handleSearch} loading={loading} />
-          <section
-            style={{
-              flex: 1,
-              overflow: 'auto',
-              marginTop: '16px',
-              paddingBottom: '60px',
-            }}
-          >
+          <section className="flex-1 overflow-auto mt-4 pb-16">
             {loading && <Loader />}
             {error && <div className="text-red-500">Error: {error}</div>}
             {!loading && !error && (
               <CardList
                 items={paginatedItems}
+                selectedIds={selectedIds}
                 onDetailsClick={handleDetailsClick}
+                onToggleItem={handleToggleItem}
               />
             )}
           </section>
           {totalPages > 1 && (
-            <div
-              style={{
-                position: 'absolute',
-                bottom: '16px',
-                left: '0',
-                right: '0',
-                display: 'flex',
-                justifyContent: 'center',
-                backgroundColor: '#212121',
-                paddingTop: '8px',
-              }}
-            >
+            <div className="absolute bottom-4 left-0 right-0 flex justify-center bg-background-secondary pt-2">
               <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
@@ -157,6 +132,7 @@ const AppLayout: React.FC = () => {
           <Outlet />
         </aside>
       </main>
+      <Flyout />
     </div>
   );
 };

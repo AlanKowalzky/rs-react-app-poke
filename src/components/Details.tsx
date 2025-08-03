@@ -80,7 +80,7 @@ const Details: React.FC = () => {
     details.sprites.front_default;
 
   return (
-    <div className="p-4 bg-gray-800 rounded-lg shadow-lg relative text-white">
+    <div className="p-4 bg-background-secondary rounded-lg shadow-lg relative text-text-primary">
       <button
         onClick={handleClose}
         className="absolute top-2 right-2 text-white bg-red-600 hover:bg-red-700 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xl"

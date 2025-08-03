@@ -1,13 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
 import selectedItemsReducer from '../features/selectedItems/selectedItemsSlice';
+import itemsReducer from '../features/items/itemsSlice';
 
 export const store = configureStore({
   reducer: {
     selectedItems: selectedItemsReducer,
+    items: itemsReducer,
   },
 });
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
-// Inferred type: { selectedItems: ... }
-export type AppDispatch = typeof store.dispatch;
+

@@ -1,31 +1,33 @@
 import React from 'react';
 import Card from './Card';
+import type { Pokemon } from '../features/items/itemsSlice';
 
 interface CardListProps {
-  items: { name: string; url: string }[];
+  items: Pokemon[];
+  selectedIds: number[];
   onDetailsClick: (id: string) => void;
+  onToggleItem: (id: number) => void;
 }
 
-const CardList: React.FC<CardListProps> = ({ items, onDetailsClick }) => {
+const CardList: React.FC<CardListProps> = ({ items, selectedIds, onDetailsClick, onToggleItem }) => {
   if (items.length === 0) {
     return (
-      <div
-        style={{
-          textAlign: 'center',
-          padding: '40px 20px',
-          color: '#9CA3AF',
-          fontSize: '1.125rem',
-        }}
-      >
+      <div className="py-10 px-5 text-center text-lg text-text-secondary">
         No results found. Try a different search term.
       </div>
     );
   }
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-      {items.map((item) => (
-        <Card key={item.name} item={item} onDetailsClick={onDetailsClick} />
+    <div className="flex flex-col gap-2">
+      {items.map(item => (
+        <Card
+          key={item.id}
+          item={item}
+          isSelected={selectedIds.includes(item.id)}
+          onDetailsClick={onDetailsClick}
+          onToggleItem={onToggleItem}
+        />
       ))}
     </div>
   );
