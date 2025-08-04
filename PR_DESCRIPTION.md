@@ -30,7 +30,7 @@
 - [x] No usage of `ts-ignore`
 - [x] No code smells or commented code
 - [x] Test coverage above 80% (88.42%)
-- [x] No direct DOM manipulations (except theme switching on html element)
+- [x] No direct DOM manipulations
 - [x] No external component libraries used
 
 ## Implementation Details
