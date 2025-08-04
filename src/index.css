@@ -1,7 +1,8 @@
 @import "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
 
-:root {
+:root,
+.light {
   --color-bg: #f0f0f0;
   --color-bg-secondary: #ffffff;
   --color-text-primary: #1a1a1a;

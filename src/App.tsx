@@ -144,15 +144,17 @@ const AppLayout: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<AppLayout />}>
-          <Route path=":detailsId" element={<Details />} />
-        </Route>
-        <Route path="/about" element={<About />} />
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </Router>
+    <div className="min-h-screen bg-background text-text-primary">
+      <Router>
+        <Routes>
+          <Route path="/" element={<AppLayout />}>
+            <Route path=":detailsId" element={<Details />} />
+          </Route>
+          <Route path="/about" element={<About />} />
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Router>
+    </div>
   );
 };
 
