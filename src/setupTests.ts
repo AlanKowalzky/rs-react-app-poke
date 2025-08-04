@@ -1,4 +1,11 @@
 import '@testing-library/jest-dom';
+import { TextEncoder, TextDecoder } from 'util';
+
+// Polyfill for TextEncoder/TextDecoder
+if (typeof global.TextEncoder === 'undefined') {
+  global.TextEncoder = TextEncoder;
+  global.TextDecoder = TextDecoder;
+}
 
 const originalConsoleError = console.error;
 const originalConsoleWarn = console.warn;
