@@ -61,7 +61,8 @@ export function Flyout() {
         </button>
         <button
           onClick={handleDownload}
-          className="px-3 py-1 text-xs rounded bg-pokemon-orange text-white hover:bg-orange-500 transition-colors"
+          className="px-3 py-1 text-xs rounded text-white transition-colors hover:opacity-80"
+          style={{ backgroundColor: '#ff7043' }}
         >
           Download
         </button>

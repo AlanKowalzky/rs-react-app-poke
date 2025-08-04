@@ -28,14 +28,20 @@ const Search: React.FC<SearchProps> = ({ onSearch, loading }) => {
         type="search"
         value={inputValue}
         onChange={handleChange}
-        className="flex-1 px-4 py-3 rounded-l-lg bg-background-secondary border border-border text-text-primary outline-none focus:ring-2 focus:ring-pokemon-orange"
+        className="flex-1 px-4 py-3 rounded-l-lg bg-background-secondary border border-border text-text-primary outline-none focus:ring-2"
+        style={{
+          borderColor: 'var(--color-border)',
+          backgroundColor: 'var(--color-bg-secondary)',
+          color: 'var(--color-text-primary)',
+        }}
         placeholder="🔍 Enter Pokémon name..."
         disabled={loading}
         autoComplete="off"
       />
       <button
         type="submit"
-        className="px-6 py-3 rounded-r-lg bg-pokemon-orange text-white font-semibold hover:bg-orange-600 disabled:opacity-50"
+        className="px-6 py-3 rounded-r-lg text-white font-semibold hover:opacity-80 disabled:opacity-50"
+        style={{ backgroundColor: '#ff7043' }}
         disabled={loading}
         aria-label="Search"
       >

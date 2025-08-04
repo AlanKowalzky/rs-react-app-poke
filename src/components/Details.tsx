@@ -89,7 +89,10 @@ const Details: React.FC = () => {
         &times;
       </button>
       <div className="pt-8">
-        <h2 className="text-xl font-bold capitalize mb-4 text-center text-pokemon-orange">
+        <h2
+          className="text-xl font-bold capitalize mb-4 text-center"
+          style={{ color: '#ff7043' }}
+        >
           {details.name}
         </h2>
         <img

@@ -95,7 +95,7 @@ const AppLayout: React.FC = () => {
   return (
     <div className="max-w-6xl mx-auto px-4">
       <header className="flex justify-between items-center py-4 border-b border-border">
-        <h1 className="text-3xl font-bold text-pokemon-orange">
+        <h1 className="text-3xl font-bold" style={{ color: '#ff7043' }}>
           Pokemon Search
         </h1>
         <nav className="flex items-center gap-4">
@@ -144,17 +144,15 @@ const AppLayout: React.FC = () => {
 
 const App: React.FC = () => {
   return (
-    <div className="min-h-screen bg-background text-text-primary">
-      <Router>
-        <Routes>
-          <Route path="/" element={<AppLayout />}>
-            <Route path=":detailsId" element={<Details />} />
-          </Route>
-          <Route path="/about" element={<About />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </Router>
-    </div>
+    <Router>
+      <Routes>
+        <Route path="/" element={<AppLayout />}>
+          <Route path=":detailsId" element={<Details />} />
+        </Route>
+        <Route path="/about" element={<About />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </Router>
   );
 };
 
