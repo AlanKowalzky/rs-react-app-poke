@@ -1,7 +1,12 @@
 const BASE_URL = 'https://pokeapi.co/api/v2'; // Nowe API: PokeAPI
 
-async function fetchData<T>(endpoint: string): Promise<T[]> {
-  const url = `${BASE_URL}/${endpoint}?limit=200`; // Pobieramy większą liczbę rekordów
+interface PokemonListResponse {
+  count: number;
+  results: Pokemon[];
+}
+
+async function fetchData<T>(endpoint: string): Promise<T> {
+  const url = `${BASE_URL}/${endpoint}?limit=100000`;
 
   const response = await fetch(url);
 
@@ -12,25 +17,25 @@ async function fetchData<T>(endpoint: string): Promise<T[]> {
   }
 
   if (response.status === 404) {
-    return [];
+    throw new Error('Not found');
   }
 
   const data = await response.json();
-  return data.results || [];
+  return data;
 }
 
 interface Pokemon {
   name: string;
-  url: string; // Dodatkowe pole, może być użyte jako "description" lub do pobrania szczegółów
+  url: string;
 }
 
-export const searchItems = (): Promise<Pokemon[]> =>
+export const searchItems = (): Promise<PokemonListResponse> =>
   new Promise((resolve, reject) => {
-    fetchData<Pokemon>(`pokemon`)
+    fetchData<PokemonListResponse>('pokemon')
       .then((data) => {
-        setTimeout(() => resolve(data), 1500); // sztuczne opóźnienie 1,5s
+        setTimeout(() => resolve(data), 1500);
       })
       .catch(reject);
   });
 
-export const getItems = () => fetchData<Pokemon>('pokemon');
+export const getItems = () => fetchData<PokemonListResponse>('pokemon');

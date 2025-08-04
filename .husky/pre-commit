@@ -1,1 +1,3 @@
-npm run lint
+#!/bin/sh
+
+npx lint-staged

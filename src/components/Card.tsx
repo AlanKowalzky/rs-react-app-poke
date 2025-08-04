@@ -1,47 +1,50 @@
-import { Component } from 'react';
+import React from 'react';
+import type { Pokemon } from '../features/items/itemsSlice';
 
 interface CardProps {
-  item: { name: string; url: string };
-  zebra?: boolean;
+  item: Pokemon;
+  isSelected: boolean;
+  onDetailsClick: (id: string) => void;
+  onToggleItem: (id: number) => void;
 }
 
-class Card extends Component<CardProps> {
-  extractIdFromUrl = (url: string) => {
-    const parts = url.split('/');
-    return parts[parts.length - 2];
+const Card: React.FC<CardProps> = ({
+  item,
+  isSelected,
+  onDetailsClick,
+  onToggleItem,
+}) => {
+  const { id, name } = item;
+  const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
+
+  const handleClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    onDetailsClick(String(id));
   };
 
-  render() {
-    const { item, zebra } = this.props;
-    const itemId = this.extractIdFromUrl(item.url);
-    const imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${itemId}.png`;
-    return (
-      <tr
-        className={`transition-colors duration-150 ${zebra ? 'bg-dark-header' : 'bg-dark-card'} hover:bg-gray-700`}
+  return (
+    <div
+      className={`bg-background-secondary rounded-lg p-3 mb-2 border border-border flex items-center gap-3 hover:shadow-md transition-all ${isSelected ? 'ring-2 ring-pokemon-orange' : ''}`}
+    >
+      <input
+        type="checkbox"
+        checked={isSelected}
+        onChange={() => onToggleItem(id)}
+        onClick={(e) => e.stopPropagation()}
+        className="mr-2"
+        aria-label={`Select ${name}`}
+      />
+      <div
+        className="flex items-center gap-3 w-full cursor-pointer"
+        onClick={handleClick}
       >
-        <td className="px-4 py-3 border-b border-border-gray text-center align-middle">
-          <img
-            src={imgUrl}
-            alt={item.name}
-            className="w-16 h-16 mx-auto rounded-full shadow-lg border-2 border-pokemon-orange bg-dark-bg"
-          />
-        </td>
-        <td className="px-6 py-3 border-b border-border-gray font-bold text-lg text-text-light align-middle capitalize">
-          {item.name}
-        </td>
-        <td className="px-6 py-3 border-b border-border-gray text-sm text-text-muted align-middle break-all">
-          <a
-            href={item.url}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="underline hover:text-pokemon-orange transition-colors duration-150"
-          >
-            {item.url}
-          </a>
-        </td>
-      </tr>
-    );
-  }
-}
+        <img src={imageUrl} alt={name} className="w-8 h-8 flex-shrink-0" />
+        <h2 className="text-sm font-medium capitalize text-text-primary">
+          {name}
+        </h2>
+      </div>
+    </div>
+  );
+};
 
 export default Card;

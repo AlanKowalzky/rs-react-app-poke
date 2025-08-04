@@ -1,47 +1,41 @@
-import { Component } from 'react';
+import React from 'react';
 import Card from './Card';
+import type { Pokemon } from '../features/items/itemsSlice';
 
 interface CardListProps {
-  items: { name: string; url: string }[];
+  items: Pokemon[];
+  selectedIds: number[];
+  onDetailsClick: (id: string) => void;
+  onToggleItem: (id: number) => void;
 }
 
-class CardList extends Component<CardListProps> {
-  render() {
-    const { items } = this.props;
+const CardList: React.FC<CardListProps> = ({
+  items,
+  selectedIds,
+  onDetailsClick,
+  onToggleItem,
+}) => {
+  if (items.length === 0) {
     return (
-      <div className="w-full flex justify-center">
-        <div className="w-full max-w-3xl overflow-x-auto rounded-xl shadow-lg bg-dark-card border border-border-gray">
-          <table className="min-w-full text-left border-separate border-spacing-0 rounded-xl">
-            <thead>
-              <tr className="bg-dark-header text-pokemon-orange">
-                <th className="px-4 py-3 border-b border-border-gray font-semibold text-base rounded-tl-xl w-20 text-left">
-                  Image
-                </th>
-                <th className="px-6 py-3 border-b border-border-gray font-semibold text-base w-48">
-                  Pokémon Name
-                </th>
-                <th className="px-6 py-3 border-b border-border-gray font-semibold text-base rounded-tr-xl">
-                  Endpoint URL
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              {items.length === 0 && (
-                <tr>
-                  <td colSpan={3} className="text-center text-text-muted py-8">
-                    Brak wyników.
-                  </td>
-                </tr>
-              )}
-              {items.map((item, idx) => (
-                <Card key={item.name} item={item} zebra={idx % 2 === 1} />
-              ))}
-            </tbody>
-          </table>
-        </div>
+      <div className="py-10 px-5 text-center text-lg text-text-secondary">
+        No results found. Try a different search term.
       </div>
     );
   }
-}
+
+  return (
+    <div>
+      {items.map((item) => (
+        <Card
+          key={item.id}
+          item={item}
+          isSelected={selectedIds.includes(item.id)}
+          onDetailsClick={onDetailsClick}
+          onToggleItem={onToggleItem}
+        />
+      ))}
+    </div>
+  );
+};
 
 export default CardList;
