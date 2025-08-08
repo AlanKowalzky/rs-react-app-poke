@@ -1,11 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
 import selectedItemsReducer from '../features/selectedItems/selectedItemsSlice';
-import itemsReducer from '../features/items/itemsSlice';
+import { pokemonApi } from '../services/pokemonApi';
 
 export const store = configureStore({
   reducer: {
     selectedItems: selectedItemsReducer,
-    items: itemsReducer,
+    [pokemonApi.reducerPath]: pokemonApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
@@ -15,7 +15,7 @@ export const store = configureStore({
       immutableCheck: {
         warnAfter: 128,
       },
-    }),
+    }).concat(pokemonApi.middleware),
 });
 
 export type RootState = ReturnType<typeof store.getState>;

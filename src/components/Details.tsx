@@ -1,70 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';
+import { useGetPokemonDetailsQuery } from '../services/pokemonApi';
 import Loader from './Loader';
-
-interface PokemonDetails {
-  id: number;
-  name: string;
-  sprites: {
-    front_default: string;
-    other: {
-      'official-artwork': {
-        front_default: string;
-      };
-    };
-  };
-  height: number;
-  weight: number;
-  types: { type: { name: string } }[];
-}
 
 const Details: React.FC = () => {
   const { detailsId } = useParams<{ detailsId: string }>();
   const navigate = useNavigate();
   const location = useLocation();
-  const [details, setDetails] = useState<PokemonDetails | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-    if (!detailsId) {
-      setDetails(null);
-      setLoading(false);
-      return;
-    }
-
-    const fetchDetails = async (): Promise<void> => {
-      setLoading(true);
-      setError(null);
-      try {
-        const response = await fetch(
-          `https://pokeapi.co/api/v2/pokemon/${detailsId}`
-        );
-        if (!response.ok) {
-          throw new Error('Pokémon not found');
-        }
-        const data = await response.json();
-        setDetails(data);
-      } catch (e: unknown) {
-        setError((e as Error).message);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchDetails();
-  }, [detailsId]);
+  const {
+    data: details,
+    error,
+    isLoading,
+  } = useGetPokemonDetailsQuery(detailsId || '', {
+    skip: !detailsId,
+  });
 
   const handleClose = (): void => {
     navigate(`/${location.search}`);
   };
 
-  if (loading) {
+  if (isLoading) {
     return <Loader />;
   }
 
   if (error) {
-    return <div className="text-red-500 p-4">Error: {error}</div>;
+    return <div className="text-red-500 p-4">Error: Pokémon not found</div>;
   }
 
   if (!details) {

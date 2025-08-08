@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import {
   BrowserRouter as Router,
   Routes,
@@ -9,8 +9,8 @@ import {
   useSearchParams,
 } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from './app/hooks';
-import { fetchItems } from './features/items/itemsSlice';
 import { toggleItem } from './features/selectedItems/selectedItemsSlice';
+import { useGetPokemonListQuery } from './services/pokemonApi';
 import Search from './components/Search';
 import CardList from './components/CardList';
 import Loader from './components/Loader';
@@ -25,18 +25,19 @@ const ITEMS_PER_PAGE = 10;
 
 const AppLayout: React.FC = () => {
   const dispatch = useAppDispatch();
-  const {
-    items: allItems,
-    status,
-    error,
-  } = useAppSelector((state) => state.items);
   const { selectedIds } = useAppSelector((state) => state.selectedItems);
+  const {
+    data: allItems = [],
+    error,
+    isLoading,
+    refetch,
+  } = useGetPokemonListQuery();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();
   const navigate = useNavigate();
 
-  const loading = status === 'loading' || status === 'idle';
+  const loading = isLoading;
 
   const filteredItems = useMemo(() => {
     if (!searchTerm.trim()) {
@@ -63,11 +64,9 @@ const AppLayout: React.FC = () => {
     });
   };
 
-  useEffect(() => {
-    if (status === 'idle') {
-      dispatch(fetchItems());
-    }
-  }, [status, dispatch]);
+  const handleRefresh = () => {
+    refetch();
+  };
 
   const handleDetailsClick = (id: string) => {
     navigate(`/${id}?${searchParams.toString()}`);
@@ -110,8 +109,18 @@ const AppLayout: React.FC = () => {
       </header>
       <main className="mt-6 flex gap-4">
         <div onClick={handleMainClick} className="flex-1 flex flex-col">
-          <Search onSearch={handleSearch} loading={loading} />
-          <section className="mt-4">
+          <div className="flex gap-2 mb-4">
+            <Search onSearch={handleSearch} loading={loading} />
+            <button
+              onClick={handleRefresh}
+              disabled={loading}
+              className="px-4 py-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 disabled:opacity-50"
+              title="Refresh data"
+            >
+              🔄
+            </button>
+          </div>
+          <section>
             {loading && <Loader />}
             {error && <div className="text-red-500">Error: {error}</div>}
             {!loading && !error && (
