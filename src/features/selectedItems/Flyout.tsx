@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from 'react';
 import { unselectAll } from './selectedItemsSlice';
 import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { Pokemon } from '../items/itemsSlice';
+import { useGetPokemonListQuery, Pokemon } from '../../services/pokemonApi';
 
 const generateCSV = (selectedItems: Pokemon[]): string => {
   const headers: (keyof Omit<Pokemon, 'id'>)[] = ['name', 'url'];
@@ -16,7 +16,7 @@ const generateCSV = (selectedItems: Pokemon[]): string => {
 
 export function Flyout() {
   const dispatch = useAppDispatch();
-  const allItems = useAppSelector((state) => state.items.items);
+  const { data: allItems = [] } = useGetPokemonListQuery();
   const { selectedIds } = useAppSelector((state) => state.selectedItems);
 
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
