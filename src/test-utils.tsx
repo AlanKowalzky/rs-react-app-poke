@@ -5,8 +5,8 @@ import { configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
 import type { RootState } from './app/store';
-import itemsReducer from './features/items/itemsSlice';
 import selectedItemsReducer from './features/selectedItems/selectedItemsSlice';
+import { pokemonApi } from './services/pokemonApi';
 
 export { screen };
 
@@ -21,9 +21,11 @@ export function renderWithProviders(
     preloadedState = {},
     store = configureStore({
       reducer: {
-        items: itemsReducer as any,
-        selectedItems: selectedItemsReducer as any,
+        selectedItems: selectedItemsReducer,
+        [pokemonApi.reducerPath]: pokemonApi.reducer,
       },
+      middleware: (getDefaultMiddleware) =>
+        getDefaultMiddleware().concat(pokemonApi.middleware),
       preloadedState,
     }),
     ...renderOptions

@@ -122,7 +122,7 @@ const AppLayout: React.FC = () => {
           </div>
           <section>
             {loading && <Loader />}
-            {error && <div className="text-red-500">Error: {error}</div>}
+            {error && <div className="text-red-500">Error loading data</div>}
             {!loading && !error && (
               <CardList
                 items={paginatedItems}

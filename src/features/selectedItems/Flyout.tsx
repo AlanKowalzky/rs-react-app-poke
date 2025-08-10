@@ -16,7 +16,7 @@ const generateCSV = (selectedItems: Pokemon[]): string => {
 
 export function Flyout() {
   const dispatch = useAppDispatch();
-  const { data: allItems = [] } = useGetPokemonListQuery();
+  const { data: allItems = [] } = useGetPokemonListQuery(undefined);
   const { selectedIds } = useAppSelector((state) => state.selectedItems);
 
   const [downloadUrl, setDownloadUrl] = useState<string | null>(null);
