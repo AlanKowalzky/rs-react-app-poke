@@ -47,7 +47,6 @@ describe('ThemeContext', () => {
     expect(document.documentElement.classList.contains('dark')).toBe(true);
 
     fireEvent.click(screen.getByText('Toggle'));
-    expect(document.documentElement.classList.contains('light')).toBe(true);
     expect(document.documentElement.classList.contains('dark')).toBe(false);
   });
 

@@ -1,11 +1,9 @@
 import '@testing-library/jest-dom';
 import { TextEncoder, TextDecoder } from 'util';
 
-// Polyfills for Node.js environment
 global.TextEncoder = TextEncoder as unknown as typeof global.TextEncoder;
 global.TextDecoder = TextDecoder as unknown as typeof global.TextDecoder;
 
-// Mock fetch for RTK Query
 global.fetch = jest.fn(() =>
   Promise.resolve({
     ok: true,
@@ -13,7 +11,6 @@ global.fetch = jest.fn(() =>
   })
 ) as jest.Mock;
 
-// Mock Request for RTK Query
 global.Request = jest.fn().mockImplementation((url: string) => ({
   url,
   method: 'GET',
