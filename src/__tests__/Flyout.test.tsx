@@ -1,59 +1,39 @@
-import { screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent, render } from '../test-utils';
 import { Flyout } from '../features/selectedItems/Flyout';
-import { renderWithProviders } from '../test-utils';
 import '@testing-library/jest-dom';
 
 describe('Flyout', () => {
   it('does not render when no items selected', () => {
-    const { container } = renderWithProviders(<Flyout />, {
+    const { container } = render(<Flyout />, {
       preloadedState: {
         selectedItems: { selectedIds: [] },
-        items: { items: [], status: 'idle', error: null },
       },
     });
     expect(container.firstChild).toBeNull();
   });
 
   it('renders when items are selected', () => {
-    renderWithProviders(<Flyout />, {
+    render(<Flyout />, {
       preloadedState: {
         selectedItems: { selectedIds: [1, 2] },
-        items: {
-          items: [
-            { id: 1, name: 'pikachu', url: 'url1' },
-            { id: 2, name: 'bulbasaur', url: 'url2' },
-          ],
-          status: 'succeeded',
-          error: null,
-        },
       },
     });
     expect(screen.getByText(/2.*selected/)).toBeInTheDocument();
   });
 
   it('shows correct text for single item', () => {
-    renderWithProviders(<Flyout />, {
+    render(<Flyout />, {
       preloadedState: {
         selectedItems: { selectedIds: [1] },
-        items: {
-          items: [{ id: 1, name: 'pikachu', url: 'url1' }],
-          status: 'succeeded',
-          error: null,
-        },
       },
     });
     expect(screen.getByText(/1.*selected/)).toBeInTheDocument();
   });
 
   it('has unselect all and download buttons', () => {
-    renderWithProviders(<Flyout />, {
+    render(<Flyout />, {
       preloadedState: {
         selectedItems: { selectedIds: [1] },
-        items: {
-          items: [{ id: 1, name: 'pikachu', url: 'url1' }],
-          status: 'succeeded',
-          error: null,
-        },
       },
     });
     expect(screen.getByText('Unselect')).toBeInTheDocument();
@@ -66,14 +46,9 @@ describe('Flyout', () => {
     global.URL.createObjectURL = mockCreateObjectURL;
     global.URL.revokeObjectURL = mockRevokeObjectURL;
 
-    renderWithProviders(<Flyout />, {
+    render(<Flyout />, {
       preloadedState: {
         selectedItems: { selectedIds: [1] },
-        items: {
-          items: [{ id: 1, name: 'pikachu', url: 'url1' }],
-          status: 'succeeded',
-          error: null,
-        },
       },
     });
 
@@ -82,17 +57,9 @@ describe('Flyout', () => {
   });
 
   it('handles unselect all button click', () => {
-    const { store } = renderWithProviders(<Flyout />, {
+    const { store } = render(<Flyout />, {
       preloadedState: {
         selectedItems: { selectedIds: [1, 2] },
-        items: {
-          items: [
-            { id: 1, name: 'pikachu', url: 'url1' },
-            { id: 2, name: 'bulbasaur', url: 'url2' },
-          ],
-          status: 'succeeded',
-          error: null,
-        },
       },
     });
 

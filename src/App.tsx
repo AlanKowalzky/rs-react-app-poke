@@ -31,7 +31,7 @@ const AppLayout: React.FC = () => {
     error,
     isLoading,
     refetch,
-  } = useGetPokemonListQuery();
+  } = useGetPokemonListQuery(undefined);
 
   const [searchTerm, setSearchTerm] = useState('');
   const [searchParams, setSearchParams] = useSearchParams();

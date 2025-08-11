@@ -52,7 +52,7 @@ export const pokemonApi = createApi({
     }),
     getPokemonDetails: builder.query<PokemonDetails, string>({
       query: (id) => `pokemon/${id}`,
-      providesTags: (result, error, id) => [{ type: 'Pokemon', id }],
+      providesTags: (_result, _error, id) => [{ type: 'Pokemon', id }],
     }),
   }),
 });

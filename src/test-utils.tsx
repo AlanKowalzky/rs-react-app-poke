@@ -1,33 +1,41 @@
 import React, { PropsWithChildren } from 'react';
-import { render, screen } from '@testing-library/react';
+import { render } from '@testing-library/react';
 import type { RenderOptions } from '@testing-library/react';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import { Provider } from 'react-redux';
 
-import type { RootState } from './app/store';
 import selectedItemsReducer from './features/selectedItems/selectedItemsSlice';
 import { pokemonApi } from './services/pokemonApi';
 
-export { screen };
+// Create the root reducer separately so we can extract the RootState type
+const rootReducer = combineReducers({
+  selectedItems: selectedItemsReducer,
+  [pokemonApi.reducerPath]: pokemonApi.reducer,
+});
+
+export type RootState = ReturnType<typeof rootReducer>;
+// This type is reusable for our test store
+export type AppStore = ReturnType<typeof setupStore>;
+
+export const setupStore = (preloadedState?: Partial<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(pokemonApi.middleware),
+    preloadedState,
+  });
+};
 
 interface ExtendedRenderOptions extends Omit<RenderOptions, 'queries'> {
   preloadedState?: Partial<RootState>;
-  store?: ReturnType<typeof configureStore>;
+  store?: AppStore;
 }
 
 export function renderWithProviders(
   ui: React.ReactElement,
   {
-    preloadedState = {},
-    store = configureStore({
-      reducer: {
-        selectedItems: selectedItemsReducer,
-        [pokemonApi.reducerPath]: pokemonApi.reducer,
-      },
-      middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware().concat(pokemonApi.middleware),
-      preloadedState,
-    }),
+    preloadedState,
+    store = setupStore(preloadedState), // Use the setupStore helper
     ...renderOptions
   }: ExtendedRenderOptions = {}
 ) {
@@ -36,3 +44,8 @@ export function renderWithProviders(
   }
   return { store, ...render(ui, { wrapper: Wrapper, ...renderOptions }) };
 }
+
+// Re-export everything from React Testing Library
+export * from '@testing-library/react';
+// Override the render method with our own
+export { renderWithProviders as render };

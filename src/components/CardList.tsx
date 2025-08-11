@@ -1,6 +1,6 @@
 import React from 'react';
 import Card from './Card';
-import type { Pokemon } from '../features/items/itemsSlice';
+import type { Pokemon } from '../services/pokemonApi';
 
 interface CardListProps {
   items: Pokemon[];

@@ -1,5 +1,5 @@
 import React from 'react';
-import type { Pokemon } from '../features/items/itemsSlice';
+import type { Pokemon } from '../services/pokemonApi';
 
 interface CardProps {
   item: Pokemon;
