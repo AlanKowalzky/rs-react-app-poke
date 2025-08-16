@@ -24,8 +24,8 @@ dist-ssr
 *.sw?
 diagrams
 *.mmd
-req_*
-*.txt
+
+# *.txt
 *stackdump
 *diagramy*
 GEMINI.md
