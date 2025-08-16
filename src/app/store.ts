@@ -2,11 +2,13 @@ import { configureStore } from '@reduxjs/toolkit';
 import selectedItemsReducer from '../features/selectedItems/selectedItemsSlice';
 import { pokemonApi } from '../services/pokemonApi';
 
+export const rootReducer = {
+  selectedItems: selectedItemsReducer,
+  [pokemonApi.reducerPath]: pokemonApi.reducer,
+};
+
 export const store = configureStore({
-  reducer: {
-    selectedItems: selectedItemsReducer,
-    [pokemonApi.reducerPath]: pokemonApi.reducer,
-  },
+  reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: {
