@@ -2,9 +2,8 @@
 'use client'; // Upewnij się, że ta linia jest na początku
 
 import React from 'react';
-import { useTheme } from '@/app/context/ThemeContext'; // Dostosuj ścieżkę, jeśli potrzebne
-import { useTranslations } from 'next-intl';
-import { useLocale, useRouter } from 'next-intl/client';
+import { useTheme } from '@/app/hooks/useTheme'; // Dostosuj ścieżkę, jeśli potrzebne
+import { useTranslations, useLocale, useRouter } from 'next-intl';
 import { SunIcon, MoonIcon } from '@/app/components/Icons'; // Dostosuj ścieżkę, jeśli potrzebne
 
 const ThemeSwitcher: React.FC = () => {

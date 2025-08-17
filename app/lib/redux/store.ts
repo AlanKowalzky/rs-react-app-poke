@@ -1,24 +1,23 @@
 import { configureStore } from '@reduxjs/toolkit';
-import selectedItemsReducer from '../features/selectedItems/selectedItemsSlice';
 import { pokemonApi } from '../services/pokemonApi';
+import selectedItemsReducer from '@/app/features/selectedItems/selectedItemsSlice';
 
 export const rootReducer = {
   selectedItems: selectedItemsReducer,
   [pokemonApi.reducerPath]: pokemonApi.reducer,
 };
 
-export const store = configureStore({
-  reducer: rootReducer,
-  middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        warnAfter: 128,
-      },
-      immutableCheck: {
-        warnAfter: 128,
-      },
-    }).concat(pokemonApi.middleware),
-});
+// Zmień store na funkcję makeStore
+export const makeStore = () => {
+ return configureStore({
+    reducer: rootReducer,
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware({
+        // opcjonalna konfiguracja getDefaultMiddleware
+      }).concat(pokemonApi.middleware),
+  });
+};
 
-export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
+export type AppStore = ReturnType<typeof makeStore>; // Zaktualizuj typ
+export type RootState = ReturnType<AppStore['getState']>; // Zaktualizuj typ
+export type AppDispatch = AppStore['dispatch']; // Zaktualizuj typ
