@@ -1,24 +1,24 @@
-// app/components/ThemeSwitcher.tsx
-'use client'; // Upewnij się, że ta linia jest na początku
+// app/components/ThemeSwitcher.tsx (fragment)
+'use client';
 
 import React from 'react';
-import { useTheme } from '@/app/hooks/useTheme'; // Dostosuj ścieżkę, jeśli potrzebne
-import { useTranslations, useLocale, useRouter } from 'next-intl';
-import { SunIcon, MoonIcon } from '@/app/components/Icons'; // Dostosuj ścieżkę, jeśli potrzebne
+import { useTheme } from '@/app/hooks/useTheme'; 
+import { useTranslations, useLocale } from 'next-intl'; // Nadal importujemy tylko useTranslations i useLocale
+import { useRouter } from 'next/navigation'; // Importujemy router z next/navigation
+import { SunIcon, MoonIcon } from '@/app/components/Icons'; 
 
 const ThemeSwitcher: React.FC = () => {
   const { theme, toggleTheme } = useTheme();
-  // Pobierz funkcję tłumaczącą dla namespace 'ThemeSwitcher'
   const t = useTranslations('ThemeSwitcher');
-  // Pobierz obecny locale
   const locale = useLocale();
-  // Pobierz router next-intl
-  const router = useRouter();
+  const router = useRouter(); // Używamy routera z next/navigation
 
-  // Funkcja do przełączania języków
+  // Funkcja do przełączania języków - manualnie konstruujemy ścieżkę
   const switchLocale = (nextLocale: string) => {
-    // Przełącz na główną stronę z nowym locale
-    router.push('/', { locale: nextLocale });
+    const path = router.pathname; // Pobierz obecną ścieżkę (bez locale)
+    // Konstruujemy nową ścieżkę z nowym locale
+    const newPath = `/${nextLocale}${path === '/' ? '' : path}`; 
+    router.push(newPath); // Przełączamy na nową ścieżkę
   };
 
   return (
@@ -27,7 +27,6 @@ const ThemeSwitcher: React.FC = () => {
       <button
         onClick={toggleTheme}
         className="flex items-center gap-2 px-4 py-2 rounded-lg bg-background-secondary hover:bg-border text-pokemon-orange border border-border transition-colors"
-        // Użyj tłumaczeń dla tytułu
         title={theme === 'light' ? t('switchToDark') : t('switchToLight')}
       >
         {theme === 'light' ? (
