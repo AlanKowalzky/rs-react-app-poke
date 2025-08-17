@@ -1,0 +1,88 @@
+Query library (RTK Query or TanStack Query) is properly implemented
+Quality of execution:
+(Max 25 points for criteria)
+0
+All API calls are converted to use the query library
+Quality of execution:
+(Max 20 points for criteria)
+0
+Loading states are properly handled and displayed
+Quality of execution:
+(Max 15 points for criteria)
+0
+Error states are properly handled and displayed
+Quality of execution:
+(Max 10 points for criteria)
+0
+Cache invalidation and refetching work correctly
+Quality of execution:
+(Max 20 points for criteria)
+0
+Manual cache invalidation control works as expected
+Quality of execution:
+(Max 10 points for criteria)
+0
+TypeScript & Code Quality
+Test Coverage
+React Best Practices
+External Dependencies
+Project Management
+Penalty
+TypeScript isn't used (-95 points)
+
+Yes
+
+No
+Usage of any (-20 points)
+
+Yes
+
+No
+Usage of ts-ignore (-20 points)
+
+Yes
+
+No
+Presence of code-smells (God-object, chunks of duplicate code), commented code sections (-10 points)
+
+Yes
+
+No
+Statement coverage below 80% (≥70%) (-10 points)
+
+Yes
+
+No
+Statement coverage below 70% (≥50%) (-30 points)
+
+Yes
+
+No
+All coverage metrics below 50% (-50 points)
+
+Yes
+
+No
+Direct DOM manipulations inside the React components (-50 points)
+
+Yes
+
+No
+Usage of component libraries, e.g. Material UI, Ant Design (-100 points)
+
+Yes
+
+No
+Commits after the deadline (-40 points)
+
+Yes
+
+No
+Pull Request doesn't follow guideline (including checkboxes in Score) (-10 points)
+
+Yes
+
+No
+(Max 100 points)
+0
+Comment (markdown syntax is supported)

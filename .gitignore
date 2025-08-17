@@ -24,7 +24,7 @@ dist-ssr
 *.sw?
 diagrams
 *.mmd
-# req_*
+
 # *.txt
 *stackdump
 *diagramy*
@@ -32,3 +32,6 @@ GEMINI.md
 coverage
 .cursorignore
 *.pol.*
+.next/cache/
+.next/
+coverage/
