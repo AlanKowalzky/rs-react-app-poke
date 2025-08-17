@@ -10,5 +10,5 @@
       // Spróbujmy explicitnie await na imporcie
   const messages = (await import(`@/messages/${locale}.json`)).default;
 
-      return { locale, messages };
+      return { locale: locale as string, messages };
     });

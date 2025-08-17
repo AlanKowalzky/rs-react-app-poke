@@ -4,7 +4,7 @@
 import React from 'react';
 import { useTheme } from '@/app/hooks/useTheme'; 
 import { useTranslations, useLocale } from 'next-intl'; // Nadal importujemy tylko useTranslations i useLocale
-import { useRouter } from 'next/navigation'; // Importujemy router z next/navigation
+import { useRouter, usePathname } from 'next/navigation'; // Importujemy router i usePathname z next/navigation
 import { SunIcon, MoonIcon } from '@/app/components/Icons'; 
 
 const ThemeSwitcher: React.FC = () => {
@@ -12,10 +12,11 @@ const ThemeSwitcher: React.FC = () => {
   const t = useTranslations('ThemeSwitcher');
   const locale = useLocale();
   const router = useRouter(); // Używamy routera z next/navigation
+  const pathname = usePathname(); // Używamy usePathname do pobrania obecnej ścieżki
 
   // Funkcja do przełączania języków - manualnie konstruujemy ścieżkę
   const switchLocale = (nextLocale: string) => {
-    const path = router.pathname; // Pobierz obecną ścieżkę (bez locale)
+    const path = pathname; // Pobierz obecną ścieżkę (bez locale)
     // Konstruujemy nową ścieżkę z nowym locale
     const newPath = `/${nextLocale}${path === '/' ? '' : path}`; 
     router.push(newPath); // Przełączamy na nową ścieżkę

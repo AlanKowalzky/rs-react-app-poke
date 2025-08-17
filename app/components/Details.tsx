@@ -1,84 +1,46 @@
-import React from 'react';
-import { useParams, useNavigate, useLocation } from 'react-router-dom';
-import { useGetPokemonDetailsQuery } from '../services/pokemonApi';
-import Loader from './Loader';
+// app/[locale]/pokemon/[name]/page.tsx
+// To jest Server Component domyślnie, nie potrzebujemy 'use client';
 
-const Details: React.FC = () => {
-  const { detailsId } = useParams<{ detailsId: string }>();
-  const navigate = useNavigate();
-  const location = useLocation();
+import { notFound } from 'next/navigation';
+// Importujemy komponent Details (Client Component)
+import Details from '@/app/components/Details'; 
 
-  const {
-    data: details,
-    error,
-    isLoading,
-  } = useGetPokemonDetailsQuery(detailsId || '', {
-    skip: !detailsId,
-  });
 
-  const handleClose = (): void => {
-    navigate(`/${location.search}`);
-  };
+interface PokemonDetailsPageProps {
+  // Zmień typowanie na Promise
+  params: Promise<{ name: string }>; 
+  // searchParams: { [key: string]: string | string[] | undefined }; // Opcjonalne
+}
 
-  if (isLoading) {
-    return <Loader />;
+// Komponent strony szczegółów pokemona (Server Component)
+export default async function PokemonDetailsPage({ 
+  // Użyj await na params przed destrukturyzacją
+  params 
+}: PokemonDetailsPageProps) {
+  const { name: pokemonName } = await params; // Pobieramy nazwę pokemona z awaited params
+
+  // Opcjonalna walidacja nazwy pokemona
+  if (!pokemonName) {
+    notFound(); // Przekierowanie do strony 404
   }
 
-  if (error) {
-    return <div className="text-red-500 p-4">Error: Pokémon not found</div>;
-  }
-
-  if (!details) {
-    return (
-      <div className="p-4 text-center text-text-secondary">
-        Select a Pokémon to see the details.
-      </div>
-    );
-  }
-
-  const imageUrl =
-    details.sprites.other?.['official-artwork']?.front_default ||
-    details.sprites.front_default;
-
+  // Renderujemy komponent Details (Client Component) i przekazujemy nazwę pokemona
   return (
-    <div className="bg-background-secondary rounded-lg shadow-lg relative text-text-primary p-4 border border-border">
-      <button
-        onClick={handleClose}
-        className="absolute top-2 right-2 text-white bg-red-500 hover:bg-red-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xl transition-colors z-10"
-        aria-label="Close details"
-      >
-        &times;
-      </button>
-      <div className="pt-8">
-        <h2
-          className="text-xl font-bold capitalize mb-4 text-center"
-          style={{ color: '#ff7043' }}
-        >
-          {details.name}
-        </h2>
-        <img
-          src={imageUrl}
-          alt={details.name}
-          className="mx-auto mb-4 w-48 h-48 object-contain"
-        />
-        <div className="space-y-2">
-          <p>
-            <strong>ID:</strong> {details.id}
-          </p>
-          <p>
-            <strong>Height:</strong> {details.height / 10} m
-          </p>
-          <p>
-            <strong>Weight:</strong> {details.weight / 10} kg
-          </p>
-          <p>
-            <strong>Types:</strong>{' '}
-            {details.types.map((t) => t.type.name).join(', ')}
-          </p>
-        </div>
-      </div>
+    <div>
+      {/* Nagłówek strony */}
+      <h1>Strona Szczegółów Pokemona</h1> 
+      {/* Renderujemy komponent Details i przekazujemy mu nazwę pokemona */}
+      <Details pokemonName={pokemonName} /> 
     </div>
   );
-};
+}
 
-export default Details;
+// Opcionalnie: Implementacja generateStaticParams
+// export async function generateStaticParams() {
+//   // Tutaj można pobrać listę wszystkich nazw pokemonów
+//   // i zwrócić tablicę obiektów z paramsem 'name'
+//   // Aby Next.js wygenerował strony szczegółów statycznie
+//   // const pokemons = await fetch('...');
+//   // return pokemons.map(pokemon => ({ name: pokemon.name }));
+//   return []; // Domyślnie - renderowanie dynamiczne na żądanie
+// }
