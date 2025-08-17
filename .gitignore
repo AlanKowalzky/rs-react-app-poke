@@ -32,3 +32,6 @@ GEMINI.md
 coverage
 .cursorignore
 *.pol.*
+.next/cache/
+.next/
+

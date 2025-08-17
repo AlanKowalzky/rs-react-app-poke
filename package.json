@@ -58,5 +58,10 @@
     "ts-jest": "^29.4.0",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.36.0"
-  }
+  },
+  "description": "## 🎯 Current Task: State Management and Context API (Task 4)",
+  "main": "eslint.config.js",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
