@@ -13,17 +13,20 @@ export const metadata: Metadata = {
   description: 'A Next.js app to browse Pokemon (Migration in progress)',
 };
 
+// Pomaga Next.js w generowaniu statycznych ścieżek dla języków
+export function generateStaticParams() {
+  return [{ locale: 'en' }, { locale: 'pl' }];
+}
+
 export default async function RootLayout({
   children,
-  // Zmień typowanie na Promise
   params,
 }: {
   children: ReactNode;
-  params: Promise<{ locale: string }>; 
+  params: Promise<{ locale: string }>;
 }) {
-  // Użyj await na params przed destrukturyzacją
-  const { locale } = await params; 
-  const messages = await getMessages({ locale }); 
+  const { locale } = await params;
+  const messages = await getMessages({ locale });
 
   return (
     <html lang={locale}>

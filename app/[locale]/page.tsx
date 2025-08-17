@@ -1,47 +1,80 @@
 // app/[locale]/page.tsx
-// To jest Server Component domyślnie, nie potrzebujemy 'use client';
-
-// Importujemy fetchBaseQuery z RTK Query
-import { fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { getTranslations } from 'next-intl/server';
 // Importujemy komponent CardList
-import CardList from '@/app/components/CardList'; 
-// Importujemy typ Pokemon (upewnij się, że ścieżka jest poprawna)
-import type { Pokemon } from '@/app/lib/services/pokemonApi'; 
+import CardList from '@/app/components/CardList';
 
+// Zaktualizowany typ Pokemon, aby zawierał ID i obrazki.
+// Sugeruję zaktualizować ten typ również w pliku @/app/lib/services/pokemonApi.ts
+export interface Pokemon {
+  name: string;
+  url: string;
+  id: number;
+  image: string;
+}
 
-// Definiujemy baseQuery do bezpośredniego użycia Fetch API
-const baseQuery = fetchBaseQuery({ baseUrl: 'https://pokeapi.co/api/v2/' });
+// Typ dla podstawowej odpowiedzi z listy Pokemonów
+interface PokeApiListResponse {
+  results: { name: string; url: string }[];
+}
 
+// Typ dla szczegółów pojedynczego Pokemona
+interface PokemonDetails {
+  id: number;
+  sprites: {
+    front_default: string;
+  };
+}
 
-// Komponent strony głównej - async, traktuje params jako Promise (wymagane w tym środowisku)
-export default async function HomePage({ 
-  params 
-}: { 
-  params: Promise<{ locale: string }> 
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
 }) {
-  const { locale } = await params; 
+  const { locale } = await params;
+  // Używamy `getTranslations` w Komponencie Serwerowym
+  const t = await getTranslations('HomePage');
+  let pokemons: Pokemon[] = [];
 
+  try {
+    // Używamy natywnego fetch, który jest rozszerzony przez Next.js
+    const listRes = await fetch('https://pokeapi.co/api/v2/pokemon?limit=20');
 
-  // Bezpośrednio wywołujemy zapytanie do API za pomocą baseQuery
-  const response = await baseQuery(
-    { url: 'pokemon?limit=20' }, 
-    { signal: new AbortController().signal, abort: () => {}, dispatch: () => {}, getState: () => ({}) } as any, 
-    {} as any 
-  );
+    if (!listRes.ok) {
+      // W przypadku błędu API, można tu obsłużyć go w bardziej elegancki sposób
+      throw new Error('Failed to fetch data from PokeAPI');
+    }
+    const listData: PokeApiListResponse = await listRes.json();
 
-  const pokemons = (response.data as { results: Pokemon[] }).results;
+    // Pobieramy szczegóły dla każdego Pokemona równolegle
+    const pokemonDetailsPromises = listData.results.map(async (p) => {
+      const detailsRes = await fetch(p.url);
+      if (!detailsRes.ok) {
+        // Można dodać lepszą obsługę błędów dla pojedynczego fetch'a
+        console.error(`Failed to fetch details for ${p.name}`);
+        return null;
+      }
+      const details: PokemonDetails = await detailsRes.json();
+      return {
+        ...p,
+        id: details.id,
+        image: details.sprites.front_default,
+      };
+    });
 
-
-  // Sprawdź, czy dane zostały pobrane pomyślnie
-  if (!pokemons) {
-    return <div>Ładowanie danych pokemonów...</div>; 
+    // Czekamy na wszystkie zapytania i filtrujemy te, które się nie powiodły
+    pokemons = (await Promise.all(pokemonDetailsPromises)).filter(
+      (p): p is Pokemon => p !== null
+    );
+  } catch (error) {
+    console.error(error);
+    // Zwracamy komunikat o błędzie, jeśli pobieranie się nie powiodło
+    return <div>Nie udało się załadować danych. Spróbuj ponownie później.</div>;
   }
 
   return (
     <div>
-      <h1>Lista Pokemonów</h1>
-      {/* Usunięto komponent ThemeSwitcher */}
-      <CardList items={pokemons} currentLocale={locale} /> 
+      <h1>{t('welcome')}</h1>
+      <CardList items={pokemons} />
     </div>
   );
 }

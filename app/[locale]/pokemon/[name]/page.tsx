@@ -7,18 +7,16 @@ import Details from '@/app/components/Details';
 
 
 interface PokemonDetailsPageProps {
-  // Zmień typowanie na Promise
   params: Promise<{ name: string; locale: string; }>; // params to Promise, dodajemy locale
   // searchParams: { [key: string]: string | string[] | undefined }; // Opcjonalne
 }
 
 // Komponent strony szczegółów pokemona (Server Component)
 export default async function PokemonDetailsPage({ 
-  // Użyj await na params przed destrukturyzacją
-  params 
+  params,
 }: PokemonDetailsPageProps) {
-  const { name: pokemonName, locale } = await params; // Pobieramy nazwę i locale z awaited params
 
+  const { name: pokemonName, locale } = await params;
   // Opcjonalna walidacja nazwy pokemona
   if (!pokemonName) {
     notFound(); // Przekierowanie do strony 404

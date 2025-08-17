@@ -1,46 +1,36 @@
-// app/[locale]/pokemon/[name]/page.tsx
-// To jest Server Component domyślnie, nie potrzebujemy 'use client';
+'use client';
 
-import { notFound } from 'next/navigation';
-// Importujemy komponent Details (Client Component)
-import Details from '@/app/components/Details'; 
+import { useGetPokemonDetailsQuery } from '@/app/lib/services/pokemonApi'; // Załóżmy, że ścieżka jest poprawna
 
+// Przykładowe komponenty do ładowania i błędów
+const LoadingSpinner = () => <div>Loading...</div>;
+const ErrorDisplay = ({ error }: { error: any }) => <div>Error: {error.message || 'Failed to load details'}</div>;
 
-interface PokemonDetailsPageProps {
-  // Zmień typowanie na Promise
-  params: Promise<{ name: string }>; 
-  // searchParams: { [key: string]: string | string[] | undefined }; // Opcjonalne
-}
+export default function Details({ pokemonName }: { pokemonName: string }) {
+  const { data: pokemon, error, isLoading } = useGetPokemonDetailsQuery(pokemonName);
 
-// Komponent strony szczegółów pokemona (Server Component)
-export default async function PokemonDetailsPage({ 
-  // Użyj await na params przed destrukturyzacją
-  params 
-}: PokemonDetailsPageProps) {
-  const { name: pokemonName } = await params; // Pobieramy nazwę pokemona z awaited params
-
-  // Opcjonalna walidacja nazwy pokemona
-  if (!pokemonName) {
-    notFound(); // Przekierowanie do strony 404
+  if (isLoading) {
+    return <LoadingSpinner />;
   }
 
-  // Renderujemy komponent Details (Client Component) i przekazujemy nazwę pokemona
+  if (error) {
+    return <ErrorDisplay error={error} />;
+  }
+
+  if (!pokemon) {
+    return <div>Pokemon not found.</div>;
+  }
+
+  const imageUrl = pokemon.sprites.other?.['official-artwork']?.front_default || pokemon.sprites.front_default;
+
   return (
-    <div>
-      {/* Nagłówek strony */}
-      <h1>Strona Szczegółów Pokemona</h1> 
-      {/* Renderujemy komponent Details i przekazujemy mu nazwę pokemona */}
-      <Details pokemonName={pokemonName} /> 
+    <div style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px' }}>
+      <h2>{pokemon.name}</h2>
+      <img src={imageUrl} alt={pokemon.name} style={{ width: '150px', height: '150px' }} />
+      <p><strong>ID:</strong> {pokemon.id}</p>
+      <p><strong>Height:</strong> {pokemon.height / 10} m</p>
+      <p><strong>Weight:</strong> {pokemon.weight / 10} kg</p>
+      <p><strong>Types:</strong> {pokemon.types.map((t) => t.type.name).join(', ')}</p>
     </div>
   );
 }
-
-// Opcionalnie: Implementacja generateStaticParams
-// export async function generateStaticParams() {
-//   // Tutaj można pobrać listę wszystkich nazw pokemonów
-//   // i zwrócić tablicę obiektów z paramsem 'name'
-//   // Aby Next.js wygenerował strony szczegółów statycznie
-//   // const pokemons = await fetch('...');
-//   // return pokemons.map(pokemon => ({ name: pokemon.name }));
-//   return []; // Domyślnie - renderowanie dynamiczne na żądanie
-// }

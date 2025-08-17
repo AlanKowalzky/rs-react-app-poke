@@ -1,13 +1,14 @@
-// middleware.ts
 import createMiddleware from 'next-intl/middleware';
 
-const middleware = createMiddleware({
+export default createMiddleware({
+  // Lista wszystkich wspieranych języków
   locales: ['en', 'pl'],
+
+  // Domyślny język, jeśli żaden nie pasuje
   defaultLocale: 'en',
 });
 
-export default middleware;
-
 export const config = {
+  // Dopasuj tylko do ścieżek z internacjonalizacją
   matcher: ['/', '/(pl|en)/:path*'],
 };

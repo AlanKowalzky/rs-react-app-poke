@@ -8,20 +8,14 @@ import type { Pokemon } from '../lib/services/pokemonApi'; // Dostosuj ścieżk�
 import { useAppDispatch, useAppSelector } from '@/app/lib/redux/hooks'; 
 import { toggleItem } from '@/app/features/selectedItems/selectedItemsSlice'; 
 
-import { useLocale } from 'next-intl'; // Importuj useLocale
-
 interface CardListProps {
   items: Pokemon[]; // Lista pokemonów
-  currentLocale: string; // Dodaj prop currentLocale
-
 }
 
 const CardList: React.FC<CardListProps> = ({ items }) => {
   // Używamy hooków Reduxa do pobrania zaznaczonych elementów i funkcji dispatch
   const dispatch = useAppDispatch(); // Importuj useAppDispatch
   const selectedItems = useAppSelector((state) => state.selectedItems.selectedIds); // Użyj useAppSelector
-
-  const locale = useLocale(); // Pobierz obecny locale
 
   // Logika obsługująca zaznaczanie/odznaczanie
 
@@ -35,7 +29,6 @@ const CardList: React.FC<CardListProps> = ({ items }) => {
             item={item}
             isSelected={isSelected}
             onToggleItem={() => dispatch(toggleItem(item.id))} // Używamy poprawną nazwę akcji
-            currentLocale={locale} // Przekaż obecny locale do Card
           />
         );
       })}
