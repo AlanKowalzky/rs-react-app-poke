@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { ReactNode } from 'react';
+import { NextIntlClientProvider, useMessages } from 'next-intl';
 
 export const metadata: Metadata = {
   title: 'Pokemon App (Migracja)',
@@ -16,9 +17,15 @@ export default async function RootLayout({
 }) { 
   // Jawne odczytanie locale
   const locale = params.locale;
+
+  // Pobierz wiadomości do przekazania do ClientProvider
+  const messages = useMessages(); // Użyj useMessages w Server Component
+
   return (
     <html lang={locale}>
       <body>
+        {/* Opakowujemy zawartość body w NextIntlClientProvider */}
+        <NextIntlClientProvider locale={locale} messages={messages}>
         <header style={{ backgroundColor: 'lightgray', padding: '10px' }}>
           <h1>Nagłówek (Placeholder)</h1>
           <p>Obecny język: {locale}</p>
@@ -29,6 +36,7 @@ export default async function RootLayout({
         <footer style={{ backgroundColor: 'lightgray', padding: '10px', marginTop: '20px' }}>
           <p>Stopka (Placeholder)</p>
         </footer>
+        </NextIntlClientProvider>
       </body>
     </html>
   );

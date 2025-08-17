@@ -1,0 +1,25 @@
+{
+  "LocaleLayout": {
+    "title": "Aplikacja Pokemon",
+    "description": "Aplikacja Next.js do przeglądania Pokemonów"
+  },
+  "Navigation": {
+    "home": "Strona główna",
+    "about": "O aplikacji"
+  },
+  "HomePage": {
+    "welcome": "Witaj w aplikacji Pokemon!"
+  },
+  "AboutPage": {
+    "title": "O tej aplikacji"
+  },
+  "NotFound": {
+    "title": "Strona nie znaleziona",
+    "description": "Przepraszamy, strona, której szukasz, nie istnieje.",
+    "backToHome": "Wróć do strony głównej"
+  },
+  "ThemeSwitcher": {
+    "switchToDark": "Przełącz na tryb ciemny",
+    "switchToLight": "Przełącz na tryb jasny"
+  }
+}
