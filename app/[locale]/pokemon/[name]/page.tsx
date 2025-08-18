@@ -1,7 +1,28 @@
 // app/[locale]/pokemon/[name]/page.tsx
+// To jest Server Component domyślnie
+
+import React from 'react';
+import { notFound } from 'next/navigation';
+
+export default function PokemonDetailsPage({ params }: { params: { locale: string, name: string } }) {
+  const locale = params.locale;
+  const pokemonName = params.name;
+
+  if (!pokemonName) {
+    notFound();
+  }
+
+  return (
+    <div>
+      <h1>Szczegóły Pokemona (Placeholder dla locale: {locale})</h1>
+      <p>Wyświetlam szczegóły dla: {pokemonName}</p>
+    </div>
+  );
+}
+// app/[locale]/pokemon/[name]/page.tsx
 // To jest Server Component domyślnie, nie potrzebujemy 'use client';
 
-import { notFound } from 'next/navigation';
+
 // Importujemy komponent Details (Client Component)
 import Details from '@/app/components/Details'; 
 
@@ -18,7 +39,7 @@ export default async function PokemonDetailsPage({
   params 
 }: PokemonDetailsPageProps) {
   const { name: pokemonName, locale } = await params; // Pobieramy nazwę i locale z awaited params
-
+const { locale } = params as { locale: string };
   // Opcjonalna walidacja nazwy pokemona
   if (!pokemonName) {
     notFound(); // Przekierowanie do strony 404
