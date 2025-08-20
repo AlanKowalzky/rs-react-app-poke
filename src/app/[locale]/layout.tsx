@@ -1,8 +1,14 @@
 import { ReactNode } from 'react';
-import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
+import {
+  getMessages,
+  getTranslations,
+  unstable_setRequestLocale,
+} from 'next-intl/server';
 import { Inter } from 'next/font/google';
 import { Metadata } from 'next';
 import Header from '@/components/Header';
+import { NextIntlClientProvider } from 'next-intl';
+import StoreProvider from '@/components/StoreProvider';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -27,7 +33,7 @@ export async function generateMetadata({
   };
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
   params: { locale },
 }: {
@@ -35,12 +41,17 @@ export default function RootLayout({
   params: { locale: string };
 }) {
   unstable_setRequestLocale(locale); // <-- WAŻNA ZMIANA
+  const messages = await getMessages();
 
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <Header />
-        <main className="container mx-auto p-4">{children}</main>
+        <StoreProvider>
+          <NextIntlClientProvider messages={messages}>
+            <Header />
+            <main className="container mx-auto p-4">{children}</main>
+          </NextIntlClientProvider>
+        </StoreProvider>
       </body>
     </html>
   );
