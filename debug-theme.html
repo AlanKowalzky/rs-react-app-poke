@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        .theme-light {
+            --color-bg: #f0f0f0;
+            --color-bg-secondary: #ffffff;
+            --color-text-primary: #1a1a1a;
+        }
+        
+        .theme-dark {
+            --color-bg: #1a1a1a;
+            --color-bg-secondary: #212121;
+            --color-text-primary: #e0e0e0;
+        }
+        
+        .test-bg {
+            background-color: var(--color-bg);
+            color: var(--color-text-primary);
+            padding: 20px;
+        }
+        
+        .test-secondary {
+            background-color: var(--color-bg-secondary);
+            padding: 10px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="theme-dark">
+        <div class="test-bg">
+            Theme Dark Test
+            <div class="test-secondary">Secondary BG</div>
+        </div>
+    </div>
+    
+    <div class="theme-light">
+        <div class="test-bg">
+            Theme Light Test
+            <div class="test-secondary">Secondary BG</div>
+        </div>
+    </div>
+</body>
+</html>
