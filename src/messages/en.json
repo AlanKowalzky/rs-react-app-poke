@@ -1,4 +1,7 @@
 {
+  "Header": {
+    "title": "Pokédex"
+  },
   "HomePage": {
     "title": "Pokémon List",
     "refreshButtonTitle": "Refresh data"
@@ -6,5 +9,12 @@
   "LocaleLayout": {
     "title": "My Pokémon App",
     "description": "Browse and discover Pokémon"
+  },
+  "LanguageSwitcher": {
+    "label": "Change language"
+  },
+  "Flyout": {
+    "title": "Selected Pokémon",
+    "closeButton": "Close"
   }
 }
