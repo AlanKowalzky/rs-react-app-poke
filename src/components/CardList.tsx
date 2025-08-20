@@ -5,8 +5,8 @@ import React from 'react';
 import Card from './Card'; // Importujemy zmodyfikowany komponent Card
 import type { Pokemon } from '../lib/services/pokemonApi'; // Dostosuj ścieżkę importu
 // Importujemy hooki Reduxa, jeśli komponent ma dostęp do stanu/dispatch
-import { useAppDispatch, useAppSelector } from '@/app/lib/redux/hooks'; 
-import { toggleItem } from '@/app/features/selectedItems/selectedItemsSlice'; 
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks'; 
+import { toggleItem } from '@/features/selectedItems/selectedItemsSlice'; 
 
 interface CardListProps {
   items: Pokemon[]; // Lista pokemonów

@@ -1,0 +1,10 @@
+{
+  "HomePage": {
+    "title": "Lista Pokémonów",
+    "refreshButtonTitle": "Odśwież dane"
+  },
+  "LocaleLayout": {
+    "title": "Moja Aplikacja Pokémon",
+    "description": "Przeglądaj i odkrywaj Pokémony"
+  }
+}

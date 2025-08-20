@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from 'react';
+import { useTranslations } from 'next-intl';
 import { unselectAll } from './selectedItemsSlice';
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
-import { useGetPokemonListQuery, Pokemon } from '../../services/pokemonApi';
+import { useAppSelector, useAppDispatch } from '@/lib/redux/hooks';
+import { useGetPokemonListQuery, Pokemon } from '@/services/pokemonApi';
 
 const generateCSV = (selectedItems: Pokemon[]): string => {
   const headers: (keyof Omit<Pokemon, 'id'>)[] = ['name', 'url'];
@@ -16,6 +17,7 @@ const generateCSV = (selectedItems: Pokemon[]): string => {
 
 export function Flyout() {
   const dispatch = useAppDispatch();
+  const t = useTranslations('Flyout');
   const { data: allItems = [] } = useGetPokemonListQuery(undefined);
   const { selectedIds } = useAppSelector((state) => state.selectedItems);
 
@@ -49,22 +51,21 @@ export function Flyout() {
   return (
     <div className="fixed top-4 right-4 bg-background-secondary p-3 rounded-lg shadow-lg border border-border text-text-primary z-50">
       <div className="text-sm mb-2">
-        {selectedIds.length}{' '}
-        {selectedIds.length === 1 ? 'selected' : 'selected'}
+        {t('selectedCount', { count: selectedIds.length })}
       </div>
       <div className="flex gap-2">
         <button
           onClick={() => dispatch(unselectAll())}
           className="px-3 py-1 text-xs rounded bg-gray-600 text-white hover:bg-gray-500 transition-colors"
         >
-          Unselect
+          {t('unselect')}
         </button>
         <button
           onClick={handleDownload}
           className="px-3 py-1 text-xs rounded text-white transition-colors hover:opacity-80"
           style={{ backgroundColor: '#ff7043' }}
         >
-          Download
+          {t('download')}
         </button>
         <a
           ref={downloadLinkRef}

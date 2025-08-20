@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
-import { pokemonApi } from '../services/pokemonApi';
-import selectedItemsReducer from '@/app/features/selectedItems/selectedItemsSlice';
+import { pokemonApi } from '@/services/pokemonApi';
+import selectedItemsReducer from '@/features/selectedItems/selectedItemsSlice';
 
 export const rootReducer = {
   selectedItems: selectedItemsReducer,

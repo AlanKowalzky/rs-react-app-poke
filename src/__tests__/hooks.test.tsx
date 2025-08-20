@@ -1,7 +1,7 @@
 import { renderHook } from '@testing-library/react';
 import React from 'react';
 import { Provider } from 'react-redux';
-import { useAppDispatch, useAppSelector } from '../app/hooks';
+import { useAppDispatch, useAppSelector } from '../hooks';
 import { setupStore } from '../test-utils';
 
 const createWrapper = () => {

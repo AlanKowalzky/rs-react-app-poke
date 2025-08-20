@@ -1,0 +1,10 @@
+{
+  "HomePage": {
+    "title": "Pokémon List",
+    "refreshButtonTitle": "Refresh data"
+  },
+  "LocaleLayout": {
+    "title": "My Pokémon App",
+    "description": "Browse and discover Pokémon"
+  }
+}

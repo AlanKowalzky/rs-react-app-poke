@@ -3,7 +3,7 @@
 
 import { notFound } from 'next/navigation';
 // Importujemy komponent Details (Client Component)
-import Details from '@/app/components/Details'; 
+import Details from '@/components/Details'; 
 
 
 interface PokemonDetailsPageProps {

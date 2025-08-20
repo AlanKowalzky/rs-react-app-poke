@@ -1,4 +1,4 @@
-import { useAppSelector, useAppDispatch } from '../../app/hooks';
+import { useAppSelector, useAppDispatch } from '../../hooks';
 import { toggleItem } from './selectedItemsSlice';
 
 const MOCK_ITEMS = [

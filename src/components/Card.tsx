@@ -2,11 +2,10 @@
 'use client';
 
 import React from 'react';
-// Importujemy Link z `next-intl`, aby automatycznie obsługiwał locale
-import { Link } from 'next-intl';
+import { Link } from '@/navigation';
 // Importujemy Image z next/image
 import Image from 'next/image'; 
-import type { Pokemon } from '../lib/services/pokemonApi'; // Dostosuj ścieżkę importu
+import type { Pokemon } from '@/services/pokemonApi';
 
 interface CardProps {
   item: Pokemon;
