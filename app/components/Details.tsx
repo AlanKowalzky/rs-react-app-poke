@@ -1,46 +1,96 @@
-// app/[locale]/pokemon/[name]/page.tsx
-// To jest Server Component domyślnie, nie potrzebujemy 'use client';
+'use client';
 
-import { notFound } from 'next/navigation';
-// Importujemy komponent Details (Client Component)
-import Details from '@/app/components/Details'; 
+import React from 'react';
+import Image from 'next/image';
+import { useRouter } from 'next-intl/client';
 
-
-interface PokemonDetailsPageProps {
-  // Zmień typowanie na Promise
-  params: Promise<{ name: string }>; 
-  // searchParams: { [key: string]: string | string[] | undefined }; // Opcjonalne
+// Zdefiniuj interfejs propsów - przykład typowania
+interface PokemonDetails { // Nazwa interfejsu dopasowana do przykładu w page.tsx
+  id: number;
+  name: string;
+  height: number;
+  weight: number;
+  sprites: {
+    front_default: string;
+    other?: {
+      'official-artwork'?: {
+        front_default: string;
+      };
+    };
+  };
+  types: { type: { name: string } }[];
 }
 
-// Komponent strony szczegółów pokemona (Server Component)
-export default async function PokemonDetailsPage({ 
-  // Użyj await na params przed destrukturyzacją
-  params 
-}: PokemonDetailsPageProps) {
-  const { name: pokemonName } = await params; // Pobieramy nazwę pokemona z awaited params
+interface DetailsProps {
+  pokemonDetails: PokemonDetails | null; // Dane pokemona lub null
+}
 
-  // Opcjonalna walidacja nazwy pokemona
-  if (!pokemonName) {
-    notFound(); // Przekierowanie do strony 404
+const Details: React.FC<DetailsProps> = ({ pokemonDetails }) => {
+  const router = useRouter();
+
+  const handleClose = (): void => {
+    // Użyj router.back() aby wrócić do poprzedniej strony (listy pokemonów)
+    router.back();
+    // Alternatywnie, jeśli wiesz ścieżkę do listy pokemonów, możesz użyć router.push('/pokemon');
+  };
+
+  if (!pokemonDetails) {
+    return (
+      <div className="p-4 text-center text-text-secondary">
+        No Pokémon details available.
+      </div>
+    );
   }
 
-  // Renderujemy komponent Details (Client Component) i przekazujemy nazwę pokemona
+  // Użyj danych przekazanych jako props do uzyskania URL obrazka
+  const imageUrl =
+    pokemonDetails.sprites.other?.['official-artwork']?.front_default ||
+    pokemonDetails.sprites.front_default;
+
   return (
-    <div>
-      {/* Nagłówek strony */}
-      <h1>Strona Szczegółów Pokemona</h1> 
-      {/* Renderujemy komponent Details i przekazujemy mu nazwę pokemona */}
-      <Details pokemonName={pokemonName} /> 
+    <div className="bg-background-secondary rounded-lg shadow-lg relative text-text-primary p-4 border border-border">
+      <button
+        onClick={handleClose}
+        className="absolute top-2 right-2 text-white bg-red-500 hover:bg-red-600 rounded-full w-8 h-8 flex items-center justify-center font-bold text-xl transition-colors z-10"
+        aria-label="Close details"
+      >
+        &times;
+      </button>
+      <div className="pt-8">
+        <h2
+          className="text-xl font-bold capitalize mb-4 text-center"
+          style={{ color: '#ff7043' }}
+        >
+          {pokemonDetails.name} {/* Użyj danych z props */}
+        </h2>
+        {/* Użyj komponentu Image z next/image */}
+        <Image
+          src={imageUrl}
+          alt={pokemonDetails.name} {/* Użyj danych z props */}
+          width={200} // Dostosuj rozmiar według potrzeb
+          height={200} // Dostosuj rozmiar według potrzeb
+          className="mx-auto mb-4 object-contain"
+          unoptimized={imageUrl.startsWith('http')} // Dodaj unoptimized dla zewnętrznych URL
+        />
+        <div className="space-y-2">
+          <p>
+            <strong>ID:</strong> {pokemonDetails.id} {/* Użyj danych z props */}
+          </p>
+          <p>
+            <strong>Height:</strong> {pokemonDetails.height / 10} m {/* Użyj danych z props */}
+          </p>
+          <p>
+            <strong>Weight:</strong> {pokemonDetails.weight / 10} kg {/* Użyj danych z props */}
+          </p>
+          <p>
+            <strong>Types:</strong>{' '}
+            {pokemonDetails.types.map((t) => t.type.name).join(', ')}{" "}
+            {/* Użyj danych z props */}
+          </p>
+        </div>
+      </div>
     </div>
   );
-}
+};
 
-// Opcionalnie: Implementacja generateStaticParams
-// export async function generateStaticParams() {
-//   // Tutaj można pobrać listę wszystkich nazw pokemonów
-//   // i zwrócić tablicę obiektów z paramsem 'name'
-//   // Aby Next.js wygenerował strony szczegółów statycznie
-//   // const pokemons = await fetch('...');
-//   // return pokemons.map(pokemon => ({ name: pokemon.name }));
-//   return []; // Domyślnie - renderowanie dynamiczne na żądanie
-// }
+export default Details;

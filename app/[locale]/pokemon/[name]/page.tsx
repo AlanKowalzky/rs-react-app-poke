@@ -1,62 +1,61 @@
 // app/[locale]/pokemon/[name]/page.tsx
-// To jest Server Component domyślnie
-
-import React from 'react';
 import { notFound } from 'next/navigation';
+import Details from '@/app/components/Details'; // Importujemy Client Component Details
+import type { PokemonDetails } from '@/types/pokemon-details'; // Załóżmy, że masz zdefiniowany typ PokemonDetails
 
-export default function PokemonDetailsPage({ params }: { params: { locale: string, name: string } }) {
-  const locale = params.locale;
-  const pokemonName = params.name;
-
-  if (!pokemonName) {
-    notFound();
+// Funkcja asynchroniczna do pobierania danych pokemona
+async function getPokemonDetails(name: string): Promise<PokemonDetails | null> {
+  try {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${name}`);
+    if (!res.ok) {
+      if (res.status === 404) {
+        return null; // Pokemon not found
+      }
+      // W przypadku innych błędów, rzuć błąd lub zwróć null
+      console.error(`Failed to fetch pokemon: ${res.statusText}`);
+      return null;
+    }
+    const data = await res.json();
+    return data as PokemonDetails; // Rzutowanie na odpowiedni typ
+  } catch (error) {
+    console.error("Error fetching pokemon details:", error);
+    return null; // Obsłuż błędy pobierania
   }
-
-  return (
-    <div>
-      <h1>Szczegóły Pokemona (Placeholder dla locale: {locale})</h1>
-      <p>Wyświetlam szczegóły dla: {pokemonName}</p>
-    </div>
-  );
 }
-// app/[locale]/pokemon/[name]/page.tsx
-// To jest Server Component domyślnie, nie potrzebujemy 'use client';
-
-
-// Importujemy komponent Details (Client Component)
-import Details from '@/app/components/Details'; 
-
 
 interface PokemonDetailsPageProps {
-  // Zmień typowanie na Promise
-  params: Promise<{ name: string; locale: string; }>; // params to Promise, dodajemy locale
-  // searchParams: { [key: string]: string | string[] | undefined }; // Opcjonalne
+  params: Promise<{ name: string; locale: string }>; // params teraz zawiera locale
 }
 
 // Komponent strony szczegółów pokemona (Server Component)
-export default async function PokemonDetailsPage({ 
-  // Użyj await na params przed destrukturyzacją
-  params 
+export default async function PokemonDetailsPage({
+  params
 }: PokemonDetailsPageProps) {
-  const { name: pokemonName, locale } = await params; // Pobieramy nazwę i locale z awaited params
-const { locale } = params as { locale: string };
+  const { name: pokemonName, locale } = await params; // Pobieramy nazwę pokemona i locale
+
   // Opcjonalna walidacja nazwy pokemona
   if (!pokemonName) {
-    notFound(); // Przekierowanie do strony 404
+    notFound(); // Przekierowanie do strony 404, jeśli nazwa jest pusta
   }
 
-  // Renderujemy komponent Details (Client Component) i przekazujemy nazwę pokemona
+  // Pobieranie danych na serwerze
+  const pokemonDetails = await getPokemonDetails(pokemonName);
+
+  if (!pokemonDetails) {
+    notFound(); // Jeśli pokemon nie istnieje po próbie pobrania
+  }
+
+  // Renderujemy komponent Details (Client Component) i przekazujemy pobrane dane
   return (
     <div>
-      {/* Nagłówek strony */}
-      <h1>Strona Szczegółów Pokemona ({locale})</h1> 
-      {/* Renderujemy komponent Details i przekazujemy mu nazwę pokemona */}
-      <Details pokemonName={pokemonName} /> 
+      {/* Nagłówek strony - możesz użyć tłumaczeń z next-intl tutaj */}
+      <h1>Strona Szczegółów Pokemona ({locale})</h1>
+      {/* Przekazujemy całe pobrane dane do Client Component Details */}
+      <Details pokemonDetails={pokemonDetails} />
     </div>
   );
 }
 
 // Opcjonalnie: Implementacja generateStaticParams
-// export async function generateStaticParams() {
-//   return []; // Domyślnie - renderowanie dynamiczne na żądanie
-// }
+// Export async function generateStaticParams() { ... }
+// (kod z poprzedniej odpowiedzi)

@@ -2,8 +2,8 @@
 'use client';
 
 import React from 'react';
-// Importujemy Link z next/link
-import Link from 'next/link';
+// Importujemy useRouter z next-intl/client
+import { useRouter } from 'next-intl/client';
 // Importujemy Image z next/image
 import Image from 'next/image'; 
 import type { Pokemon } from '../lib/services/pokemonApi'; // Dostosuj ścieżkę importu
@@ -23,6 +23,7 @@ const Card: React.FC<CardProps> = ({
   currentLocale,
   onToggleItem,
 }) => {
+  const router = useRouter();
   const { id, name } = item;
   // Używamy URL obrazu z API (lub innego źródła)
   const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${id}.png`;
@@ -42,8 +43,11 @@ const Card: React.FC<CardProps> = ({
         className="mr-2"
         aria-label={`Select ${name}`}
       />
-      {/* Używamy komponentu Link z next/link dla obszaru klikalnego */}
-      <Link href={detailsPath} className="flex items-center gap-3 w-full cursor-pointer">
+      {/* Używamy linku wygenerowanego przez next-intl */}
+      <a 
+        href={router.localePath(`/pokemon/${item.name}`)} 
+        onClick={(e) => { e.preventDefault(); router.push(`/pokemon/${item.name}`); }} 
+        className="flex items-center gap-3 w-full cursor-pointer">
         {/* Używamy komponentu Image z next/image */}
         <Image 
           src={imageUrl} 
