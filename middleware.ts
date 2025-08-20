@@ -11,13 +11,11 @@ const intlMiddleware = createMiddleware({
 
 export default function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  console.log(`[Middleware] Przechwycono ścieżkę: ${pathname}`);
 
   // Przekieruj z /en lub /pl do /en/search lub /pl/search
-  // if (pathname === '/en' || pathname === '/pl') {
-  //   console.log(`[Middleware] Przekierowuję z ${pathname} do ${pathname}/search`);
-  //   return NextResponse.redirect(new URL(`${pathname}/search`, request.url));
-  // }
+  if (pathname === '/en' || pathname === '/pl') {
+    return NextResponse.redirect(new URL(`${pathname}/search`, request.url));
+  }
 
   return intlMiddleware(request);
 }
