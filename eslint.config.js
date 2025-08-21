@@ -1,45 +1,43 @@
 import js from '@eslint/js';
-import globals from 'globals';
-import reactHooks from 'eslint-plugin-react-hooks';
-import reactRefresh from 'eslint-plugin-react-refresh';
-import react from 'eslint-plugin-react';
 import tseslint from 'typescript-eslint';
 import eslintPluginPrettier from 'eslint-plugin-prettier/recommended';
-import reactCompiler from 'eslint-plugin-react-compiler';
+import nextPlugin from '@next/eslint-plugin-next';
+import globals from 'globals';
 
 export default tseslint.config(
-  { ignores: ['dist', 'coverage/**'] },
   {
-    extends: [
-      js.configs.recommended,
-      ...tseslint.configs.strict,
-      eslintPluginPrettier,
-    ],
-    files: ['**/*.{ts,tsx}'],
+    // Global ignores
+    ignores: ['.next/', 'dist/', 'coverage/'],
+  },
+  // Base config for all files
+  js.configs.recommended,
+  ...tseslint.configs.recommended,
+  eslintPluginPrettier,
+  {
+    // Konfiguracja dla plików React/Next.js
+    files: ['src/**/*.{ts,tsx}'],
+    ...nextPlugin.configs.recommended,
+    ...nextPlugin.configs['core-web-vitals'],
     languageOptions: {
-      ecmaVersion: 2020,
-      globals: globals.browser,
-    },
-    plugins: {
-      react,
-      'react-hooks': reactHooks,
-      'react-refresh': reactRefresh,
-      'react-compiler': reactCompiler,
+      globals: {
+        ...globals.browser,
+      },
     },
     rules: {
-      ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
-        'warn',
-        { allowConstantExport: true },
-      ],
-      'react-compiler/react-compiler': 'error',
-      ...react.configs.recommended.rules,
-      ...react.configs['jsx-runtime'].rules,
+      // Możesz tutaj nadpisać lub dodać własne reguły
+      '@typescript-eslint/no-unused-vars': 'warn',
     },
-    settings: {
-      react: {
-        version: 'detect',
+  },
+  {
+    // Konfiguracja dla plików JS w środowisku Node.js
+    files: ['**/*.js', '**/*.cjs'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
       },
+    },
+    rules: {
+      '@typescript-eslint/no-var-requires': 'off',
     },
   }
 );

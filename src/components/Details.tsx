@@ -1,6 +1,7 @@
 'use client';
 
 import { useGetPokemonDetailsQuery } from '@/services/pokemonApi';
+import Image from 'next/image';
 import type { FetchBaseQueryError } from '@reduxjs/toolkit/query';
 import type { SerializedError } from '@reduxjs/toolkit';
 
@@ -52,10 +53,11 @@ export default function Details({ pokemonName }: { pokemonName: string }) {
       style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px' }}
     >
       <h2>{pokemon.name}</h2>
-      <img
+      <Image
         src={imageUrl}
         alt={pokemon.name}
-        style={{ width: '150px', height: '150px' }}
+        width={150}
+        height={150}
       />
       <p>
         <strong>ID:</strong> {pokemon.id}

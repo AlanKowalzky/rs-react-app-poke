@@ -20,7 +20,11 @@ export function generateStaticParams() {
 }
 
 // Generuje metadane na podstawie tłumaczeń
-export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params: { locale },
+}: {
+  params: { locale: string };
+}): Promise<Metadata> {
   unstable_setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'LocaleLayout' });
 
@@ -31,6 +35,9 @@ export async function generateMetadata({ params: { locale } }: { params: { local
 }
 
 export default async function RootLayout({
+  children,
+  params: { locale },
+}: {
   children: ReactNode;
   params: { locale: string };
 }) {
