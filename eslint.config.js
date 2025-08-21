@@ -12,7 +12,6 @@ export default tseslint.config(
   // Base config for all files
   js.configs.recommended,
   ...tseslint.configs.recommended,
-  eslintPluginPrettier,
   {
     // Konfiguracja dla plików React/Next.js
     files: ['src/**/*.{ts,tsx}'],
@@ -39,5 +38,7 @@ export default tseslint.config(
     rules: {
       '@typescript-eslint/no-var-requires': 'off',
     },
-  }
+  },
+  // Prettier musi być ostatni, aby nadpisać inne reguły formatowania
+  eslintPluginPrettier
 );
