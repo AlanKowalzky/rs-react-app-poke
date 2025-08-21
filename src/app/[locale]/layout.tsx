@@ -20,12 +20,8 @@ export function generateStaticParams() {
 }
 
 // Generuje metadane na podstawie tłumaczeń
-export async function generateMetadata({
-  params: { locale },
-}: {
-  params: { locale: string };
-}): Promise<Metadata> {
-  unstable_setRequestLocale(locale); // <-- WAŻNA ZMIANA
+export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
+  unstable_setRequestLocale(locale);
   const t = await getTranslations({ locale, namespace: 'LocaleLayout' });
 
   return {
@@ -35,14 +31,11 @@ export async function generateMetadata({
 }
 
 export default async function RootLayout({
-  children,
-  params: { locale },
-}: {
   children: ReactNode;
   params: { locale: string };
 }) {
   console.log(`[layout.tsx] Renderowanie layoutu dla locale: "${locale}"`);
-  unstable_setRequestLocale(locale); // <-- WAŻNA ZMIANA
+  unstable_setRequestLocale(locale);
   const messages = await getMessages();
 
   return (
@@ -59,7 +52,9 @@ export default async function RootLayout({
           <StoreProvider>
             <NextIntlClientProvider messages={messages}>
               <Header />
-              <main className="container mx-auto p-4 flex-grow">{children}</main>
+              <main className="container mx-auto p-4 flex-grow">
+                {children}
+              </main>
               <Footer />
             </NextIntlClientProvider>
           </StoreProvider>

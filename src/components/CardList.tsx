@@ -5,8 +5,8 @@ import React from 'react';
 import Card from './Card'; // Importujemy zmodyfikowany komponent Card
 import type { Pokemon } from '../lib/services/pokemonApi'; // Dostosuj ścieżkę importu
 // Importujemy hooki Reduxa, jeśli komponent ma dostęp do stanu/dispatch
-import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks'; 
-import { toggleItem } from '@/features/selectedItems/selectedItemsSlice'; 
+import { useAppDispatch, useAppSelector } from '@/lib/redux/hooks';
+import { toggleItem } from '@/features/selectedItems/selectedItemsSlice';
 
 interface CardListProps {
   items: Pokemon[]; // Lista pokemonów
@@ -15,7 +15,9 @@ interface CardListProps {
 const CardList: React.FC<CardListProps> = ({ items }) => {
   // Używamy hooków Reduxa do pobrania zaznaczonych elementów i funkcji dispatch
   const dispatch = useAppDispatch(); // Importuj useAppDispatch
-  const selectedItems = useAppSelector((state) => state.selectedItems.selectedIds); // Użyj useAppSelector
+  const selectedItems = useAppSelector(
+    (state) => state.selectedItems.selectedIds
+  ); // Użyj useAppSelector
 
   // Logika obsługująca zaznaczanie/odznaczanie
 

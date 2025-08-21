@@ -59,13 +59,19 @@ export default function HomePage() {
       </div>
 
       {isLoading && <Loader />}
-      {error && <div className="text-red-500">Wystąpił błąd podczas ładowania danych.</div>}
+      {error && (
+        <div className="text-red-500">
+          Wystąpił błąd podczas ładowania danych.
+        </div>
+      )}
       {!isLoading && !error && (
         <>
-          <CardList
-            items={paginatedItems}
+          <CardList items={paginatedItems} />
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
           />
-          <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={setCurrentPage} />
         </>
       )}
       <Flyout />

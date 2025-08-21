@@ -27,7 +27,9 @@ export default function LanguageSwitcher() {
       aria-label={t('label')}
     >
       {locales.map((cur) => (
-        <option key={cur} value={cur}>{t(cur)}</option>
+        <option key={cur} value={cur}>
+          {t(cur)}
+        </option>
       ))}
     </select>
   );

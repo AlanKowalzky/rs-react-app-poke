@@ -4,7 +4,7 @@
 import React from 'react';
 import { Link } from '@/navigation';
 // Importujemy Image z next/image
-import Image from 'next/image'; 
+import Image from 'next/image';
 import type { Pokemon } from '@/services/pokemonApi';
 
 interface CardProps {
@@ -36,11 +36,14 @@ const Card: React.FC<CardProps> = ({
         aria-label={`Select ${name}`}
       />
       {/* Używamy komponentu Link z next/link dla obszaru klikalnego */}
-      <Link href={`/pokemon/${name}`} className="flex items-center gap-3 w-full cursor-pointer">
+      <Link
+        href={`/pokemon/${name}`}
+        className="flex items-center gap-3 w-full cursor-pointer"
+      >
         {/* Używamy komponentu Image z next/image */}
-        <Image 
-          src={imageUrl} 
-          alt={name} 
+        <Image
+          src={imageUrl}
+          alt={name}
           width={40} // Dostosuj rozmiar
           height={40} // Dostosuj rozmiar
           className="flex-shrink-0" // Zachowaj klasę z oryginalnego img

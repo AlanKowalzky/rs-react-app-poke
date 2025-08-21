@@ -9,7 +9,7 @@ export const rootReducer = {
 
 // Zmień store na funkcję makeStore
 export const makeStore = () => {
- return configureStore({
+  return configureStore({
     reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({

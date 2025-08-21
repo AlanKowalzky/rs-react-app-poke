@@ -1,7 +1,4 @@
-import {
-  getTranslations,
-  unstable_setRequestLocale,
-} from 'next-intl/server';
+import { getTranslations, unstable_setRequestLocale } from 'next-intl/server';
 import Details from '@/components/Details';
 import type { Metadata } from 'next';
 
@@ -26,20 +23,24 @@ export async function generateStaticParams() {
 
 // Krok 2: Generowanie dynamicznych metadanych dla SEO
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  unstable_setRequestLocale(params.locale); // <-- KLUCZOWA POPRAWKA
   const t = await getTranslations({
     locale: params.locale,
     namespace: 'PokemonDetailsPage',
   });
-  const pokemonName = params.name.charAt(0).toUpperCase() + params.name.slice(1);
+  const pokemonName =
+    params.name.charAt(0).toUpperCase() + params.name.slice(1);
 
   return {
     title: t('title', { pokemonName }),
   };
 }
 
-export default function PokemonDetailsPage({ params }: Props) {
+export default function PokemonDetailsPage({
+  params: { locale, name },
+}: Props) {
   // Ta linia jest kluczowa do naprawienia błędu dla tej strony
-  unstable_setRequestLocale(params.locale);
+  unstable_setRequestLocale(locale);
 
-  return <Details pokemonName={params.name} />;
+  return <Details pokemonName={name} />;
 }

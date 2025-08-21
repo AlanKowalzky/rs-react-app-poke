@@ -7,7 +7,11 @@ import type { SerializedError } from '@reduxjs/toolkit';
 // Przykładowe komponenty do ładowania i błędów
 const LoadingSpinner = () => <div>Loading...</div>;
 
-const ErrorDisplay = ({ error }: { error: FetchBaseQueryError | SerializedError }) => {
+const ErrorDisplay = ({
+  error,
+}: {
+  error: FetchBaseQueryError | SerializedError;
+}) => {
   let errorMessage: string;
   if ('status' in error) {
     // `FetchBaseQueryError`
@@ -21,7 +25,11 @@ const ErrorDisplay = ({ error }: { error: FetchBaseQueryError | SerializedError 
 };
 
 export default function Details({ pokemonName }: { pokemonName: string }) {
-  const { data: pokemon, error, isLoading } = useGetPokemonDetailsQuery(pokemonName);
+  const {
+    data: pokemon,
+    error,
+    isLoading,
+  } = useGetPokemonDetailsQuery(pokemonName);
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -35,16 +43,35 @@ export default function Details({ pokemonName }: { pokemonName: string }) {
     return <div>Pokemon not found.</div>;
   }
 
-  const imageUrl = pokemon.sprites.other?.['official-artwork']?.front_default || pokemon.sprites.front_default;
+  const imageUrl =
+    pokemon.sprites.other?.['official-artwork']?.front_default ||
+    pokemon.sprites.front_default;
 
   return (
-    <div style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px' }}>
+    <div
+      style={{ border: '1px solid #ccc', padding: '16px', borderRadius: '8px' }}
+    >
       <h2>{pokemon.name}</h2>
-      <img src={imageUrl} alt={pokemon.name} style={{ width: '150px', height: '150px' }} />
-      <p><strong>ID:</strong> {pokemon.id}</p>
-      <p><strong>Height:</strong> {pokemon.height / 10} m</p>
-      <p><strong>Weight:</strong> {pokemon.weight / 10} kg</p>
-      <p><strong>Types:</strong> {pokemon.types.map((t: { type: { name: string } }) => t.type.name).join(', ')}</p>
+      <img
+        src={imageUrl}
+        alt={pokemon.name}
+        style={{ width: '150px', height: '150px' }}
+      />
+      <p>
+        <strong>ID:</strong> {pokemon.id}
+      </p>
+      <p>
+        <strong>Height:</strong> {pokemon.height / 10} m
+      </p>
+      <p>
+        <strong>Weight:</strong> {pokemon.weight / 10} kg
+      </p>
+      <p>
+        <strong>Types:</strong>{' '}
+        {pokemon.types
+          .map((t: { type: { name: string } }) => t.type.name)
+          .join(', ')}
+      </p>
     </div>
   );
 }

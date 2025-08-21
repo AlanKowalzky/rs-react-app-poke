@@ -4,7 +4,9 @@ import { localePrefix, locales } from './navigation'; // Upewnij się, że ten i
 
 export default function middleware(request: NextRequest) {
   console.log('--- MIDDLEWARE START ---');
-  console.log(`[Middleware] Otrzymano żądanie dla: ${request.nextUrl.pathname}`);
+  console.log(
+    `[Middleware] Otrzymano żądanie dla: ${request.nextUrl.pathname}`
+  );
 
   const handle = createMiddleware({
     locales,
@@ -14,8 +16,12 @@ export default function middleware(request: NextRequest) {
 
   try {
     const response = handle(request);
-    console.log(`[Middleware] Przetworzono żądanie. Status odpowiedzi: ${response.status}`);
-    response.headers.forEach((value, key) => console.log(`[Middleware] Nagłówek odpowiedzi: ${key}: ${value}`));
+    console.log(
+      `[Middleware] Przetworzono żądanie. Status odpowiedzi: ${response.status}`
+    );
+    response.headers.forEach((value, key) =>
+      console.log(`[Middleware] Nagłówek odpowiedzi: ${key}: ${value}`)
+    );
     console.log('--- MIDDLEWARE END ---\n');
     return response;
   } catch (error) {
