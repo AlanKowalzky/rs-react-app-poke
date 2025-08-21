@@ -1,6 +1,6 @@
 import createMiddleware from 'next-intl/middleware';
 import { NextRequest } from 'next/server';
-import { localePrefix, locales } from './src/navigation'; // Upewnij się, że ten import jest poprawny
+import { localePrefix, locales } from './navigation'; // Upewnij się, że ten import jest poprawny
 
 export default function middleware(request: NextRequest) {
   console.log('--- MIDDLEWARE START ---');

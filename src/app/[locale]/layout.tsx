@@ -41,11 +41,6 @@ export default async function RootLayout({
   params: { locale: string };
 }) {
   console.log(`[layout.tsx] Renderowanie layoutu dla locale: "${locale}"`);
-  console.log(`[layout.tsx] Renderowanie layoutu dla locale: "${locale}"`);
-  unstable_setRequestLocale(locale); // <-- WAŻNA ZMIANA
-  const messages = await getMessages();
-
-
   unstable_setRequestLocale(locale); // <-- WAŻNA ZMIANA
   const messages = await getMessages();
 
