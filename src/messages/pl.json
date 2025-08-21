@@ -22,5 +22,8 @@
   "NotFound": {
     "title": "Nie znaleziono strony",
     "message": "Niestety, strona, której szukasz, nie istnieje."
+  },
+  "PokemonDetailsPage": {
+    "title": "Szczegóły dla {pokemonName}"
   }
 }

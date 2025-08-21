@@ -1,39 +1,45 @@
-// app/[locale]/pokemon/[name]/page.tsx
-// To jest Server Component domyślnie, nie potrzebujemy 'use client';
+import {
+  getTranslations,
+  unstable_setRequestLocale,
+} from 'next-intl/server';
+import Details from '@/components/Details';
+import type { Metadata } from 'next';
 
-import { notFound } from 'next/navigation';
-// Importujemy komponent Details (Client Component)
-import Details from '@/components/Details'; 
+type Props = {
+  params: {
+    locale: string;
+    name: string;
+  };
+};
 
+// Krok 1: Generowanie statycznych ścieżek dla lepszej wydajności
+// Ta funkcja pobierze listę Pokémonów w trakcie budowania aplikacji
+// i wygeneruje dla nich statyczne strony.
+export async function generateStaticParams() {
+  const res = await fetch('https://pokeapi.co/api/v2/pokemon?limit=151');
+  const data = await res.json();
 
-interface PokemonDetailsPageProps {
-  params: Promise<{ name: string; locale: string; }>; // params to Promise, dodajemy locale
-  // searchParams: { [key: string]: string | string[] | undefined }; // Opcjonalne
+  return data.results.map((pokemon: { name: string }) => ({
+    name: pokemon.name,
+  }));
 }
 
-// Komponent strony szczegółów pokemona (Server Component)
-export default async function PokemonDetailsPage({ 
-  params,
-}: PokemonDetailsPageProps) {
+// Krok 2: Generowanie dynamicznych metadanych dla SEO
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: 'PokemonDetailsPage',
+  });
+  const pokemonName = params.name.charAt(0).toUpperCase() + params.name.slice(1);
 
-  const { name: pokemonName, locale } = await params;
-  // Opcjonalna walidacja nazwy pokemona
-  if (!pokemonName) {
-    notFound(); // Przekierowanie do strony 404
-  }
-
-  // Renderujemy komponent Details (Client Component) i przekazujemy nazwę pokemona
-  return (
-    <div>
-      {/* Nagłówek strony */}
-      <h1>Strona Szczegółów Pokemona ({locale})</h1> 
-      {/* Renderujemy komponent Details i przekazujemy mu nazwę pokemona */}
-      <Details pokemonName={pokemonName} /> 
-    </div>
-  );
+  return {
+    title: t('title', { pokemonName }),
+  };
 }
 
-// Opcjonalnie: Implementacja generateStaticParams
-// export async function generateStaticParams() {
-//   return []; // Domyślnie - renderowanie dynamiczne na żądanie
-// }
+export default function PokemonDetailsPage({ params }: Props) {
+  // Ta linia jest kluczowa do naprawienia błędu dla tej strony
+  unstable_setRequestLocale(params.locale);
+
+  return <Details pokemonName={params.name} />;
+}
