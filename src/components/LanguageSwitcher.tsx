@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale, useTranslations } from 'next-intl';
-import { usePathname, useRouter } from 'next-intl/navigation';
+import { locales, usePathname, useRouter } from '@/navigation';
 import { useTransition } from 'react';
 
 export default function LanguageSwitcher() {
@@ -12,7 +12,7 @@ export default function LanguageSwitcher() {
   const locale = useLocale();
 
   const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const nextLocale = e.target.value;
+    const nextLocale = e.target.value as (typeof locales)[number];
     startTransition(() => {
       router.replace(pathname, { locale: nextLocale });
     });
@@ -26,8 +26,9 @@ export default function LanguageSwitcher() {
       className="p-2 border rounded-md bg-background-secondary text-text-primary"
       aria-label={t('label')}
     >
-      <option value="en">English</option>
-      <option value="pl">Polski</option>
+      {locales.map((cur) => (
+        <option key={cur} value={cur}>{t(cur)}</option>
+      ))}
     </select>
   );
 }

@@ -11,10 +11,16 @@
     "description": "Przeglądaj i odkrywaj Pokémony"
   },
   "LanguageSwitcher": {
-    "label": "Zmień język"
+    "label": "Zmień język",
+    "en": "Angielski",
+    "pl": "Polski"
   },
   "Flyout": {
     "title": "Wybrane Pokémony",
     "closeButton": "Zamknij"
+  },
+  "NotFound": {
+    "title": "Nie znaleziono strony",
+    "message": "Niestety, strona, której szukasz, nie istnieje."
   }
 }

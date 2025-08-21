@@ -5,6 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
+      "clean": "rm -rf .next",
+  "dev:clean": "npm run clean && npm run dev",
     "build": "next build",
     "start": "next start",
     "lint:fix": "eslint . --ext ts,tsx --report-unused-disable-directives --max-warnings 0 --fix",

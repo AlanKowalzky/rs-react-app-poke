@@ -9,11 +9,11 @@ import { Metadata } from 'next';
 import Header from '@/components/Header';
 import { NextIntlClientProvider } from 'next-intl';
 import StoreProvider from '@/components/StoreProvider';
+import { locales } from '@/navigation';
+import { ThemeProvider } from '@/components/ThemeProvider';
+import Footer from '@/components/Footer';
 
 const inter = Inter({ subsets: ['latin'] });
-
-// Lista języków, aby uniknąć dynamicznego wywołania w generateStaticParams
-const locales = ['en', 'pl'];
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
@@ -40,18 +40,34 @@ export default async function RootLayout({
   children: ReactNode;
   params: { locale: string };
 }) {
+  console.log(`[layout.tsx] Renderowanie layoutu dla locale: "${locale}"`);
+  console.log(`[layout.tsx] Renderowanie layoutu dla locale: "${locale}"`);
+  unstable_setRequestLocale(locale); // <-- WAŻNA ZMIANA
+  const messages = await getMessages();
+
+
   unstable_setRequestLocale(locale); // <-- WAŻNA ZMIANA
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body className={inter.className}>
-        <StoreProvider>
-          <NextIntlClientProvider messages={messages}>
-            <Header />
-            <main className="container mx-auto p-4">{children}</main>
-          </NextIntlClientProvider>
-        </StoreProvider>
+    <html lang={locale} suppressHydrationWarning>
+      <body
+        className={`${inter.className} flex flex-col min-h-screen bg-background-primary`}
+      >
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <StoreProvider>
+            <NextIntlClientProvider messages={messages}>
+              <Header />
+              <main className="container mx-auto p-4 flex-grow">{children}</main>
+              <Footer />
+            </NextIntlClientProvider>
+          </StoreProvider>
+        </ThemeProvider>
       </body>
     </html>
   );

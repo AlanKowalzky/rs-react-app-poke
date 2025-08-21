@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
-import Link from 'next/link';
+import { Link } from '@/navigation';
 import LanguageSwitcher from './LanguageSwitcher';
+import ThemeSwitcher from './ThemeSwitcher';
 
 export default function Header() {
   const t = useTranslations('Header');
@@ -11,7 +12,10 @@ export default function Header() {
         <Link href="/" className="text-xl font-bold text-pokemon-orange">
           {t('title')}
         </Link>
-        <LanguageSwitcher />
+        <div className="flex items-center gap-4">
+          <LanguageSwitcher />
+          <ThemeSwitcher />
+        </div>
       </nav>
     </header>
   );
